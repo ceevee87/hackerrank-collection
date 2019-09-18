@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="ProblemSolutions\EqualStacks.cs" />
     <Compile Include="ProblemSolutions\ExtraLongFactorials.cs" />
+    <Compile Include="ProblemSolutions\LilysHomework.cs" />
     <Compile Include="ProblemSolutions\SherlockAndTheValidString.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

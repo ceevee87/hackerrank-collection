@@ -11,7 +11,6 @@ namespace HackerRankCollection
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(ProblemSolutions.SherlockAndTheValidString.isValid("waerjejlawre"));
         }
     }
 }
