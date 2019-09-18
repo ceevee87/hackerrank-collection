@@ -16,14 +16,8 @@ namespace HackerRankCollection.ProblemSolutions
             var res = new Dictionary<char, int>();
             foreach (char c in s)
             {
-                if (res.ContainsKey(c))
-                {
-                    res[c]++;
-                }
-                else
-                {
-                    res[c] = 1;
-                }
+                if (res.ContainsKey(c)) res[c]++;
+                else res[c] = 1;
             }
             return res;
         }
@@ -34,37 +28,19 @@ namespace HackerRankCollection.ProblemSolutions
             if (charHisto == null) return "NO";
             if (charHisto.Count == 1) return "YES";
 
-            bool bStringIsValid = true;
-            // if all the occurences equal this occurence count then the
-            // string is a valid string
+            List<int> lCharacterCounts = charHisto.Values.ToList();
+            lCharacterCounts.Sort();
+            lCharacterCounts.Reverse();
 
-            // we can only deviate once from matching the expected occurence
-            // count. also, this deviation can only be by +1
-
-            Dictionary<int, int> countOfCharCounts = new Dictionary<int, int>();
-            foreach (char c in charHisto.Keys)
+            // the list must be at least two long. we already trap above the
+            // case where the list count == 1 and return "YES"
+            int iHighestCharCount = lCharacterCounts.ElementAt(0);
+            for (int ii = 1; ii < lCharacterCounts.Count; ii++)
             {
-                if (countOfCharCounts.Count > 2)
-                {
-                    bStringIsValid = false;
-                    break;
-                }
-                if (countOfCharCounts.ContainsKey(charHisto[c])) countOfCharCounts[charHisto[c]]++;
-                else countOfCharCounts[charHisto[c]] = 1;
+                if (!lCharacterCounts.ElementAt(ii).Equals(iHighestCharCount - 1)) return "NO";
             }
-            if (countOfCharCounts.Count > 2) bStringIsValid = false;
-            else if (countOfCharCounts.Count == 1) bStringIsValid = true;
-            else
-            {
-                var firstval = countOfCharCounts.First().Value;
-                var firstkey = countOfCharCounts.First().Key;
-                var lastval = countOfCharCounts.Last().Value;
-                var lastkey = countOfCharCounts.Last().Key;
 
-                if (firstval == 1 && firstkey < lastkey) bStringIsValid = false;
-                if (lastval == 1 && lastval < firstkey) bStringIsValid = false;
-            }
-            return (bStringIsValid) ? "YES" : "NO";
+            return "YES";
         }
 
         public static void getStringToTestFromConsole()
