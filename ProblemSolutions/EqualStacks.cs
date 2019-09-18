@@ -8,16 +8,16 @@ namespace HackerRankCollection.ProblemSolutions
 {
     public static class EqualStacks
     {
-        private static List<int> createRunningSumList(int[] h1)
+        private static List<int> createRunningSumList(int[] arr)
         {
             List<int> res = new List<int>();
 
-            if (h1.Length == 0) return null;
+            if (arr.Length == 0) return null;
 
             int iRunningSum = 0;
-            for (int ii = 0; ii < h1.Length; ii++)
+            for (int ii = 0; ii < arr.Length; ii++)
             {
-                iRunningSum += h1[ii];
+                iRunningSum += arr[ii];
                 res.Add(iRunningSum);
             }
             return res;
@@ -45,12 +45,12 @@ namespace HackerRankCollection.ProblemSolutions
             lAllRunningSums.Reverse();
 
             Dictionary<int, int> sumHisto = new Dictionary<int, int>();
-            foreach (int v in lAllRunningSums)
+            foreach (int totalStackHeight in lAllRunningSums)
             {
-                if (sumHisto.ContainsKey(v)) sumHisto[v]++;
-                else sumHisto[v] = 1;
+                if (sumHisto.ContainsKey(totalStackHeight)) sumHisto[totalStackHeight]++;
+                else sumHisto[totalStackHeight] = 1;
 
-                if (sumHisto[v] == 3) return v;
+                if (sumHisto[totalStackHeight] == 3) return totalStackHeight;
             }
             return 0;
         }
