@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProblemSolutions\BalancedBrackets.cs" />
     <Compile Include="ProblemSolutions\EqualStacks.cs" />
     <Compile Include="ProblemSolutions\ExtraLongFactorials.cs" />
     <Compile Include="ProblemSolutions\LilysHomework.cs" />
