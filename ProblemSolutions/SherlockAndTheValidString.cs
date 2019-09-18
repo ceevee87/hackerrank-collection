@@ -28,6 +28,8 @@ namespace HackerRankCollection.ProblemSolutions
             if (charHisto == null) return "NO";
             if (charHisto.Count == 1) return "YES";
 
+            if (charHisto.Values.Distinct().Count() == 1) return "YES";
+
             List<int> lCharacterCounts = charHisto.Values.ToList();
             lCharacterCounts.Sort();
             lCharacterCounts.Reverse();
