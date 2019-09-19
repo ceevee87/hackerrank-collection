@@ -52,6 +52,10 @@ namespace HackerRankCollection.ProblemSolutions
 
         public static int[] waiter(int[] number, int q)
         {
+            aStack.Clear();
+            bStack.Clear();
+            qStack.Clear();
+            allResultStacks.Clear();
 
             // load up the A stack from number[]
             foreach (int v in number) aStack.Insert(0, v);
@@ -73,18 +77,18 @@ namespace HackerRankCollection.ProblemSolutions
                     }
                 }
                 aStack.Clear();
-                aStack.AddRange(qStack);
-                allResultStacks.Add(new List<int>(bStack));
+                if (qStack.Count > 0) aStack.AddRange(qStack);
+                if (bStack.Count > 0) allResultStacks.Add(new List<int>(bStack));
                 bStack.Clear();
             }
-            allResultStacks.Add(new List<int>(qStack));
+            if (qStack.Count > 0) allResultStacks.Add(new List<int>(qStack));
 
             List<int> lResult = new List<int>();
-            foreach (var l in allResultStacks)
+            foreach (var lStack in allResultStacks)
             {
-                foreach (var v in l)
+                foreach (var val in lStack)
                 {
-                    lResult.Add(v);
+                    lResult.Add(val);
                 }
             }
             return lResult.ToArray();
