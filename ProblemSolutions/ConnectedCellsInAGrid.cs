@@ -101,23 +101,42 @@ namespace HackerRankCollection.ProblemSolutions
             }
         }
 
-        private static IEnumerable<MatrixPoint> GetNeighborPoints(MatrixPoint p)
+        public static MatrixPoint GetPointAt(int row, int col)
+        {
+            if (row >= _numRows || row < 0) return null;
+            if (col >= _numCols || col < 0) return null;
+            return _matrix[row][col];
+        }
+
+        public static IEnumerable<MatrixPoint> GetNeighborPoints(MatrixPoint p)
         {
             // iteration is done from -1,-1 to +1, +1 points from the point p
             // that is, if the point's location is 4,5 then the iteration starts at
             // 3,4 and goes to 5,6.
             List<MatrixPoint> result = new List<MatrixPoint>();
-            for (int ii = p.Col-1; ii <= p.Col+1; ii++)
+            for (int ii = p.Row - 1; ii <= p.Row + 1; ii++)
             {
-                for (int jj = p.Row -1; jj <= p.Row+1; jj++)
+                for (int jj = p.Col - 1; jj <= p.Col + 1; jj++)
                 {
-                    if (ii == p.Col && jj == p.Row) continue;
-                    if (ii < 0 || ii >= _numRows) continue;
+                    if (jj == p.Col && ii == p.Row) continue;
                     if (jj < 0 || jj >= _numCols) continue;
+                    if (ii < 0 || ii >= _numRows) continue;
                     result.Add(_matrix[ii][jj]);
                 }
             }
             return result;
+        }
+
+        public static void PrintNeighborCoords(MatrixPoint refpoint)
+        {
+            if (refpoint != null)
+            {
+                foreach (MatrixPoint p in ConnectedCellsInAGrid.GetNeighborPoints(refpoint))
+                {
+                    string s = string.Format("({0},{1})", p.Row, p.Col);
+                    Debug.WriteLine(s);
+                }
+            }
         }
     }
 }
