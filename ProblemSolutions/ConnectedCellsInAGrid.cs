@@ -29,6 +29,8 @@ namespace HackerRankCollection.ProblemSolutions
 
     public static class ConnectedCellsInAGrid
     {
+        #region solution
+
         private static MatrixPoint[][] _matrix;
         private static int _numRows = 1;
         private static int _numCols = 1;
@@ -51,8 +53,6 @@ namespace HackerRankCollection.ProblemSolutions
                     _matrix[ii][jj] = p;
                 }
             }
-
-            PrintMatrix();
         }
 
         public static int GetMaxColoredRegionSize()
@@ -112,19 +112,6 @@ namespace HackerRankCollection.ProblemSolutions
             }
         }
 
-        public static void PrintMatrix()
-        {
-            for (int ii = 0; ii < _numRows; ii++)
-            {
-                for (int jj = 0; jj < _numCols; jj++)
-                {
-                    //Debug.Write(((_matrix[ii][jj].IsFilled) ? "1 " : "0 "));
-                    Debug.Write(_matrix[ii][jj].Color);
-                }
-                Debug.WriteLine("");
-            }
-        }
-
         public static MatrixPoint GetPointAt(int row, int col)
         {
             if (row >= _numRows || row < 0) return null;
@@ -151,6 +138,14 @@ namespace HackerRankCollection.ProblemSolutions
             return result;
         }
 
+        public static int connectedCell(int[][] matrix)
+        {
+            InitMatrix(matrix);
+            ColorMatrixRegions();
+            return GetMaxColoredRegionSize();
+        }
+        #endregion
+
         public static void PrintNeighborCoords(MatrixPoint refpoint)
         {
             if (refpoint != null)
@@ -163,41 +158,17 @@ namespace HackerRankCollection.ProblemSolutions
             }
         }
 
-        /*
-        public static void InitMatrixSize(int i, int j)
+        public static void PrintMatrix()
         {
-            _numRows = i;
-            _numCols = j;
-            _matrix = new MatrixPoint[_numRows][];
             for (int ii = 0; ii < _numRows; ii++)
             {
-                _matrix[ii] = new MatrixPoint[_numCols];
-            }
-        }
-
-        public static void InitMatrixRow(MatrixPoint[] aRowData, int row)
-        {
-            // the size of aRowData needs to be exactly _numCols
-            // we'll check for that when code refinement is done
-
-            if (row >= _numRows) return;
-            if (!(aRowData.Length == _numCols)) return;
-            for (int jj = 0; jj < ((aRowData.Length > _numCols) ? _numCols : aRowData.Length); jj++)
-            {
-                _matrix[row][jj] = aRowData[jj];
-            }
-        }
-
-        public static void resetMatrixVisitedPointsStatus()
-        {
-            for (int ii = 0; ii < _numCols; ii++)
-            {
-                for (int jj = 0; jj < _numRows; jj++)
+                for (int jj = 0; jj < _numCols; jj++)
                 {
-                    _matrix[ii][jj].Color = 0;
+                    //Debug.Write(((_matrix[ii][jj].IsFilled) ? "1 " : "0 "));
+                    Debug.Write(_matrix[ii][jj].Color);
                 }
+                Debug.WriteLine("");
             }
         }
-        */
     }
 }
