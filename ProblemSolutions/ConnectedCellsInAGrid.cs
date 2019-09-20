@@ -13,7 +13,7 @@ namespace HackerRankCollection.ProblemSolutions
         public int Col => _col;
         public int Row => _row;
         public int Color { get => _color; set => _color = value; }
-        public bool Fill { get => _fill; set => _fill = value; }
+        public bool IsFilled { get => _fill; set => _fill = value; }
         public bool IsVisited => (_color > 0);
 
 
@@ -54,50 +54,54 @@ namespace HackerRankCollection.ProblemSolutions
             PrintMatrix();
         }
 
+        public static void ColorMatrixRegions()
+        {
+            int color = 1;
+            for (int ii = 0; ii < _numCols; ii++)
+            {
+                for (int jj = 0; jj < _numRows; jj++)
+                {
+                    var p = GetPointAt(ii, jj);
+                    if (!p.IsFilled || p.IsVisited) continue;
+                    ColorRegion(p, color);
+                    color++;
+                }
+            }
+        }
+
+        public static void ColorRegion(MatrixPoint s, int color)
+        {
+            // we don't check unfilled matrix points
+            if (!s.IsFilled) return;
+            if (color < 1) return;
+
+            List<MatrixPoint> queue = new List<MatrixPoint>();
+            s.Color = color;
+            queue.Add(s);
+
+            while (queue.Count > 0)
+            {
+                var curpoint = queue[0];
+                queue.RemoveAt(0);
+                foreach (MatrixPoint p in GetNeighborPoints(curpoint))
+                {
+                    if (!p.IsFilled || p.IsVisited) continue;
+                    p.Color = color;  // mark the point as already scheduled for search
+                    queue.Add(p);
+                }
+            }
+        }
+
         public static void PrintMatrix()
         {
             for (int ii = 0; ii < _numCols; ii++)
             {
                 for (int jj = 0; jj < _numRows; jj++)
                 {
-                    Debug.Write(((_matrix[ii][jj].Fill) ? "1 " : "0 "));
+                    //Debug.Write(((_matrix[ii][jj].IsFilled) ? "1 " : "0 "));
+                    Debug.Write(_matrix[ii][jj].Color);
                 }
                 Debug.WriteLine("");
-            }
-        }
-
-        public static void InitMatrixSize(int i, int j)
-        {
-            _numRows = i;
-            _numCols = j;
-            _matrix = new MatrixPoint[_numRows][];
-            for (int ii = 0; ii < _numRows; ii++)
-            {
-                _matrix[ii] = new MatrixPoint[_numCols];
-            }
-        }
-
-        public static void InitMatrixRow(MatrixPoint[] aRowData, int row)
-        {
-            // the size of aRowData needs to be exactly _numCols
-            // we'll check for that when code refinement is done
-
-            if (row >= _numRows) return;
-            if (!(aRowData.Length == _numCols)) return;
-            for (int jj = 0; jj < ((aRowData.Length > _numCols) ? _numCols : aRowData.Length); jj++)
-            {
-                _matrix[row][jj] = aRowData[jj];
-            }
-        }
-
-        public static void resetMatrixVisitedPointsStatus()
-        {
-            for (int ii = 0; ii < _numCols; ii++)
-            {
-                for (int jj = 0; jj < _numRows; jj++)
-                {
-                    _matrix[ii][jj].Color = 0;
-                }
             }
         }
 
@@ -138,5 +142,42 @@ namespace HackerRankCollection.ProblemSolutions
                 }
             }
         }
+
+        /*
+        public static void InitMatrixSize(int i, int j)
+        {
+            _numRows = i;
+            _numCols = j;
+            _matrix = new MatrixPoint[_numRows][];
+            for (int ii = 0; ii < _numRows; ii++)
+            {
+                _matrix[ii] = new MatrixPoint[_numCols];
+            }
+        }
+
+        public static void InitMatrixRow(MatrixPoint[] aRowData, int row)
+        {
+            // the size of aRowData needs to be exactly _numCols
+            // we'll check for that when code refinement is done
+
+            if (row >= _numRows) return;
+            if (!(aRowData.Length == _numCols)) return;
+            for (int jj = 0; jj < ((aRowData.Length > _numCols) ? _numCols : aRowData.Length); jj++)
+            {
+                _matrix[row][jj] = aRowData[jj];
+            }
+        }
+
+        public static void resetMatrixVisitedPointsStatus()
+        {
+            for (int ii = 0; ii < _numCols; ii++)
+            {
+                for (int jj = 0; jj < _numRows; jj++)
+                {
+                    _matrix[ii][jj].Color = 0;
+                }
+            }
+        }
+        */
     }
 }
