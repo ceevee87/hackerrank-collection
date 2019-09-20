@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace HackerRankCollection.ProblemSolutions
 {
@@ -42,9 +43,9 @@ namespace HackerRankCollection.ProblemSolutions
                 _matrix[ii] = new MatrixPoint[_numCols];
             }
 
-            for (int ii = 0; ii < _numCols; ii++)
+            for (int ii = 0; ii < _numRows; ii++)
             {
-                for (int jj = 0; jj < _numRows; jj++)
+                for (int jj = 0; jj < _numCols; jj++)
                 {
                     var p = new MatrixPoint(ii, jj, ((matrix[ii][jj] == 1) ? true : false));
                     _matrix[ii][jj] = p;
@@ -54,12 +55,31 @@ namespace HackerRankCollection.ProblemSolutions
             PrintMatrix();
         }
 
+        public static int GetMaxColoredRegionSize()
+        {
+            Dictionary<int, int> coloredRegionSizes = new Dictionary<int, int>();
+
+            for (int ii = 0; ii < _numRows; ii++)
+            {
+                for (int jj = 0; jj < _numCols; jj++)
+                {
+                    var p = GetPointAt(ii, jj);
+                    if (!p.IsFilled || !p.IsVisited) continue;
+                    if (coloredRegionSizes.ContainsKey(p.Color)) coloredRegionSizes[p.Color]++;
+                    else coloredRegionSizes[p.Color] = 1;
+                }
+            }
+            if (coloredRegionSizes == null) return 0;
+            int result = coloredRegionSizes.Values.Max();
+            return result;
+        }
+
         public static void ColorMatrixRegions()
         {
             int color = 1;
-            for (int ii = 0; ii < _numCols; ii++)
+            for (int ii = 0; ii < _numRows; ii++)
             {
-                for (int jj = 0; jj < _numRows; jj++)
+                for (int jj = 0; jj < _numCols; jj++)
                 {
                     var p = GetPointAt(ii, jj);
                     if (!p.IsFilled || p.IsVisited) continue;
@@ -94,9 +114,9 @@ namespace HackerRankCollection.ProblemSolutions
 
         public static void PrintMatrix()
         {
-            for (int ii = 0; ii < _numCols; ii++)
+            for (int ii = 0; ii < _numRows; ii++)
             {
-                for (int jj = 0; jj < _numRows; jj++)
+                for (int jj = 0; jj < _numCols; jj++)
                 {
                     //Debug.Write(((_matrix[ii][jj].IsFilled) ? "1 " : "0 "));
                     Debug.Write(_matrix[ii][jj].Color);
