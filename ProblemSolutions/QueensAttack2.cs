@@ -114,7 +114,7 @@ namespace HackerRankCollection.ProblemSolutions
             // go down
             ii = row - 1;
             jj = col;
-            while (jj >= 0)
+            while (ii >= 0)
             {
                 if (!isLocationOnBoard(ii, col)) break;
                 if (isLocationBlocked(ii, col)) break;
@@ -147,7 +147,7 @@ namespace HackerRankCollection.ProblemSolutions
 
             // go diagonal, up and left
             ii = row + 1;
-            jj = col + 1;
+            jj = col - 1;
             while (ii < _numRows && jj >= 0)
             {
                 if (!isLocationOnBoard(ii, jj)) break;
