@@ -1,52 +1,67 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace HackerRankCollection.ProblemSolutions
 {
     public class QueensAttack2
     {
-        private class BoardPoint
+        private class BoardLoc
         {
-            public bool isBlocked;
-            public bool isAccessible;
-            public bool isQueensLocation;
+            int _row;
+            int _col;
 
-            public BoardPoint()
+            public BoardLoc(int r, int c)
             {
-                isAccessible = false;
-                isBlocked = false;
-                isQueensLocation = false;
+                _row = r;
+                _col = c;
             }
         }
 
-        private static BoardPoint[][] _matrix;
         private static int _numRows = 1;
         private static int _numCols = 1;
 
+        private static Dictionary<int, List<int>> bps = new Dictionary<int, List<int>>();
         public static void InitMatrix(int iBoardSize, int iQueenRowLocation, int iQueenColLocation, int[][] aObstacles)
         {
             _numRows = iBoardSize;
             _numCols = iBoardSize;
-            _matrix = new BoardPoint[_numRows][];
-            for (int ii = 0; ii < _numRows; ii++)
-            {
-                _matrix[ii] = new BoardPoint[_numCols];
-                for (int jj = 0; jj < _numCols; jj++)
-                {
-                    _matrix[ii][jj] = new BoardPoint();
-                }
-            }
 
-            _matrix[iQueenRowLocation][iQueenColLocation].isQueensLocation = true;
+            bps.Clear();
 
             for (int ii = 0; ii < aObstacles.Length; ii++)
             {
                 int row = aObstacles[ii][0] - 1;
                 int col = aObstacles[ii][1] - 1;
-                _matrix[row][col].isBlocked = true;
+
+                if (bps.ContainsKey(row))
+                {
+                    bps[row].Add(col);
+                }
+                else
+                {
+                    List<int> rowlist = new List<int>();
+                    rowlist.Add(col);
+                    bps.Add(row, rowlist);
+                }
             }
         }
 
+        public static void PrintObstaclesDict()
+        {
+            List<int> lKeys = bps.Keys.ToList();
+
+            lKeys.Sort();
+            foreach (var k in lKeys)
+            {
+                Debug.Write(string.Format("{0} :",k));
+                foreach (var v in bps[k])
+                {
+                    Debug.Write(string.Format("{0} ", v));
+                }
+                Debug.WriteLine("");
+            }
+        }
 
         private static bool isLocationOnBoard(int row, int col)
         {
@@ -57,12 +72,18 @@ namespace HackerRankCollection.ProblemSolutions
 
         private static bool isLocationBlocked(int row, int col)
         {
-            return _matrix[row][col].isBlocked;
-        }
-        private static IEnumerable<BoardPoint> GetAllLocationsAccessibleFromBoardLocation(int row, int col)
-        {
-            List<BoardPoint> result = new List<BoardPoint>();
+            if (!bps.ContainsKey(row)) return false;
 
+            foreach (var v in bps[row])
+            {
+                if (v == col) return true;
+            }
+            return false;
+        }
+
+        private static int GetTotalCountAllLocationsAccessibleFromBoardLocation(int row, int col)
+        {
+            int iTotalAccessibleLocationCount = 0;
             // go up
             int ii = row + 1;
             int jj = col;
@@ -70,7 +91,7 @@ namespace HackerRankCollection.ProblemSolutions
             {
                 if (!isLocationOnBoard(ii, col)) break;
                 if (isLocationBlocked(ii, col)) break;
-                result.Add(_matrix[ii][col]);
+                iTotalAccessibleLocationCount++;
                 ii++;
             }
 
@@ -81,7 +102,7 @@ namespace HackerRankCollection.ProblemSolutions
             {
                 if (!isLocationOnBoard(ii, jj)) break;
                 if (isLocationBlocked(ii, jj)) break;
-                result.Add(_matrix[ii][jj]);
+                iTotalAccessibleLocationCount++;
                 ii++;
                 jj++;
             }
@@ -93,8 +114,7 @@ namespace HackerRankCollection.ProblemSolutions
             {
                 if (!isLocationOnBoard(row, jj)) break;
                 if (isLocationBlocked(row, jj)) break;
-                _matrix[row][jj].isAccessible = true;
-                result.Add(_matrix[row][jj]);
+                iTotalAccessibleLocationCount++;
                 jj++;
             }
 
@@ -105,8 +125,7 @@ namespace HackerRankCollection.ProblemSolutions
             {
                 if (!isLocationOnBoard(ii, jj)) break;
                 if (isLocationBlocked(ii, jj)) break;
-                _matrix[ii][jj].isAccessible = true;
-                result.Add(_matrix[ii][jj]);
+                iTotalAccessibleLocationCount++;
                 ii--;
                 jj++;
             }
@@ -118,7 +137,7 @@ namespace HackerRankCollection.ProblemSolutions
             {
                 if (!isLocationOnBoard(ii, col)) break;
                 if (isLocationBlocked(ii, col)) break;
-                result.Add(_matrix[ii][col]);
+                iTotalAccessibleLocationCount++;
                 ii--;
             }
 
@@ -129,7 +148,7 @@ namespace HackerRankCollection.ProblemSolutions
             {
                 if (!isLocationOnBoard(ii, jj)) break;
                 if (isLocationBlocked(ii, jj)) break;
-                result.Add(_matrix[ii][jj]);
+                iTotalAccessibleLocationCount++;
                 ii--;
                 jj--;
             }
@@ -141,7 +160,7 @@ namespace HackerRankCollection.ProblemSolutions
             {
                 if (!isLocationOnBoard(row, jj)) break;
                 if (isLocationBlocked(row, jj)) break;
-                result.Add(_matrix[row][jj]);
+                iTotalAccessibleLocationCount++;
                 jj--;
             }
 
@@ -152,23 +171,121 @@ namespace HackerRankCollection.ProblemSolutions
             {
                 if (!isLocationOnBoard(ii, jj)) break;
                 if (isLocationBlocked(ii, jj)) break;
-                result.Add(_matrix[ii][jj]);
+                iTotalAccessibleLocationCount++;
                 ii++;
                 jj--;
             }
 
-            return result;
+            return iTotalAccessibleLocationCount;
         }
 
         public static int queensAttack(int n, int k, int r_q, int c_q, int[][] obstacles)
         {
-            InitMatrix(n, r_q-1, c_q-1, obstacles);
-            var foo = GetAllLocationsAccessibleFromBoardLocation(r_q - 1, c_q - 1);
-            foreach (BoardPoint p in foo)
-            {
-                p.isAccessible = true;
-            }
-            return foo.Count();
+            InitMatrix(n, r_q - 1, c_q - 1, obstacles);
+            return GetTotalCountAllLocationsAccessibleFromBoardLocation(r_q - 1, c_q - 1);
+
         }
+
+        //private static IEnumerable<BoardPoint> GetAllLocationsAccessibleFromBoardLocation(int row, int col)
+        //{
+        //    List<BoardPoint> result = new List<BoardPoint>();
+
+        //    // go up
+        //    int ii = row + 1;
+        //    int jj = col;
+        //    while (ii < _numRows)
+        //    {
+        //        if (!isLocationOnBoard(ii, col)) break;
+        //        if (isLocationBlocked(ii, col)) break;
+        //        result.Add(_matrix[ii][col]);
+        //        ii++;
+        //    }
+
+        //    // go diagonal, up and right
+        //    ii = row + 1;
+        //    jj = col + 1;
+        //    while (ii < _numRows && jj < _numCols)
+        //    {
+        //        if (!isLocationOnBoard(ii, jj)) break;
+        //        if (isLocationBlocked(ii, jj)) break;
+        //        result.Add(_matrix[ii][jj]);
+        //        ii++;
+        //        jj++;
+        //    }
+
+        //    // go right
+        //    ii = row;
+        //    jj = col + 1;
+        //    while (jj < _numRows)
+        //    {
+        //        if (!isLocationOnBoard(row, jj)) break;
+        //        if (isLocationBlocked(row, jj)) break;
+        //        _matrix[row][jj].isAccessible = true;
+        //        result.Add(_matrix[row][jj]);
+        //        jj++;
+        //    }
+
+        //    // go diagonal, down and right
+        //    ii = row - 1;
+        //    jj = col + 1;
+        //    while (ii >= 0 && jj < _numCols)
+        //    {
+        //        if (!isLocationOnBoard(ii, jj)) break;
+        //        if (isLocationBlocked(ii, jj)) break;
+        //        _matrix[ii][jj].isAccessible = true;
+        //        result.Add(_matrix[ii][jj]);
+        //        ii--;
+        //        jj++;
+        //    }
+
+        //    // go down
+        //    ii = row - 1;
+        //    jj = col;
+        //    while (ii >= 0)
+        //    {
+        //        if (!isLocationOnBoard(ii, col)) break;
+        //        if (isLocationBlocked(ii, col)) break;
+        //        result.Add(_matrix[ii][col]);
+        //        ii--;
+        //    }
+
+        //    // go diagonal, down and left
+        //    ii = row - 1;
+        //    jj = col - 1;
+        //    while (ii >= 0 && jj >= 0)
+        //    {
+        //        if (!isLocationOnBoard(ii, jj)) break;
+        //        if (isLocationBlocked(ii, jj)) break;
+        //        result.Add(_matrix[ii][jj]);
+        //        ii--;
+        //        jj--;
+        //    }
+
+        //    // go left
+        //    ii = row;
+        //    jj = col - 1;
+        //    while (jj >= 0)
+        //    {
+        //        if (!isLocationOnBoard(row, jj)) break;
+        //        if (isLocationBlocked(row, jj)) break;
+        //        result.Add(_matrix[row][jj]);
+        //        jj--;
+        //    }
+
+        //    // go diagonal, up and left
+        //    ii = row + 1;
+        //    jj = col - 1;
+        //    while (ii < _numRows && jj >= 0)
+        //    {
+        //        if (!isLocationOnBoard(ii, jj)) break;
+        //        if (isLocationBlocked(ii, jj)) break;
+        //        result.Add(_matrix[ii][jj]);
+        //        ii++;
+        //        jj--;
+        //    }
+
+        //    return result;
+        //}
+
     }
 }
