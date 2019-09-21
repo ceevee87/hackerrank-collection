@@ -40,9 +40,7 @@ namespace HackerRankCollection.ProblemSolutions
                 }
                 else
                 {
-                    List<int> rowlist = new List<int>();
-                    rowlist.Add(col);
-                    bps.Add(row, rowlist);
+                    bps.Add(row, new List<int> { col });
                 }
             }
         }
