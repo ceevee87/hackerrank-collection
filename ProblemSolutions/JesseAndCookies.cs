@@ -65,7 +65,8 @@ namespace HackerRankCollection.ProblemSolutions
             lCookies.Clear();
             LoadCookieData(A);
             int iNumCookieMixesCount = 0;
-            while (lCookies.Any(v => v.Key < k) && lCookies.Sum(s => s.Value) >= 2)
+
+            while (lCookies.ElementAt(0).Key < k && (lCookies.Count > 1 || lCookies.ElementAt(0).Value > 1))
             {
                 int iNewSweetnessLevel = MixCookies();
                 AddNewCookie(iNewSweetnessLevel);
