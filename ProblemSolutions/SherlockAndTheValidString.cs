@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,28 +22,36 @@ namespace HackerRankCollection.ProblemSolutions
             }
             return res;
         }
+
         public static string isValid(string s)
         {
             Dictionary<char, int> charHisto = countCharacterOccurences(s);
 
             if (charHisto == null) return "NO";
-            if (charHisto.Count == 1) return "YES";
 
             if (charHisto.Values.Distinct().Count() == 1) return "YES";
+            if (charHisto.Values.Distinct().Count() > 2) return "NO";
 
             List<int> lCharacterCounts = charHisto.Values.ToList();
-            lCharacterCounts.Sort();
-            lCharacterCounts.Reverse();
 
-            // the list must be at least two long. we already trap above the
-            // case where the list count == 1 and return "YES"
-            int iHighestCharCount = lCharacterCounts.ElementAt(0);
-            for (int ii = 1; ii < lCharacterCounts.Count; ii++)
+            int iMaxCountValue = lCharacterCounts.Max();
+            int iMinCountValue = lCharacterCounts.Min();
+
+            if (iMinCountValue > 1 && (iMaxCountValue - iMinCountValue) > 1) return "NO";
+
+            // if the min value only only occurs once we should be good.
+            if (charHisto.Where(kv => kv.Value == iMinCountValue).Count() == 1
+                || charHisto.Where(kv => kv.Value == iMaxCountValue).Count() == 1) return "YES";
+
+            return "NO";
+        }
+
+        private static void DebugPrintCharHisto(Dictionary<char, int> d)
+        {
+            foreach (var kv in d)
             {
-                if (!lCharacterCounts.ElementAt(ii).Equals(iHighestCharCount - 1)) return "NO";
+                Debug.WriteLine(string.Format("{0}:{1}", kv.Key, kv.Value));
             }
-
-            return "YES";
         }
 
         public static void getStringToTestFromConsole()
