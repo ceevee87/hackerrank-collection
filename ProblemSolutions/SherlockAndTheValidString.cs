@@ -37,11 +37,14 @@ namespace HackerRankCollection.ProblemSolutions
             int iMaxCountValue = lCharacterCounts.Max();
             int iMinCountValue = lCharacterCounts.Min();
 
-            if (iMinCountValue > 1 && (iMaxCountValue - iMinCountValue) > 1) return "NO";
+            // do not change the order of the checks below.
 
             // if the min value only only occurs once we should be good.
-            if (charHisto.Where(kv => kv.Value == iMinCountValue).Count() == 1
-                || charHisto.Where(kv => kv.Value == iMaxCountValue).Count() == 1) return "YES";
+            if (charHisto.Where(kv => kv.Value == iMinCountValue).Count() == 1) return "YES";
+
+            if ((iMaxCountValue - iMinCountValue) > 1) return "NO";
+
+            if (charHisto.Where(kv => kv.Value == iMaxCountValue).Count() == 1) return "YES";
 
             return "NO";
         }
