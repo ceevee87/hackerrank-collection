@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29230.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackerRankCollection", "HackerRankCollection.csproj", "{FACC8039-4F18-40C6-8BC3-3BADDECB40CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackerRankCollectionTests", "..\HackerRankCollectionTests\HackerRankCollectionTests.csproj", "{D17E6317-169E-4E3D-9A70-6613C615A74B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackerRankCollectionTests", "HackerRankCollectionTests\HackerRankCollectionTests.csproj", "{D17E6317-169E-4E3D-9A70-6613C615A74B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
