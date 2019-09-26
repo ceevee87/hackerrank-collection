@@ -56,19 +56,5 @@ namespace HackerRankCollection.ProblemSolutions
                 Debug.WriteLine(string.Format("{0}:{1}", kv.Key, kv.Value));
             }
         }
-
-        public static void getStringToTestFromConsole()
-        {
-            TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
-
-            string s = Console.ReadLine();
-
-            string result = isValid(s);
-
-            textWriter.WriteLine(result);
-
-            textWriter.Flush();
-            textWriter.Close();
-        }
     }
 }
