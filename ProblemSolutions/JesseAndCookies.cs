@@ -8,6 +8,7 @@ namespace HackerRankCollection.ProblemSolutions
     {
         #region solution
         private static SortedList<int, int> lCookies = new SortedList<int, int>();
+        
 
         private static void AddNewCookie(int iMixedCookieSweetness)
         {

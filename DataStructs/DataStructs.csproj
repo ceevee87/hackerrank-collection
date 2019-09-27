@@ -44,11 +44,5 @@
     <Compile Include="Heap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HackerRankCollection.csproj">
-      <Project>{facc8039-4f18-40c6-8bc3-3baddecb40ca}</Project>
-      <Name>HackerRankCollection</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
