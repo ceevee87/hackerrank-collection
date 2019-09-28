@@ -8,7 +8,6 @@ namespace HackerRankCollection.ProblemSolutions
     public class JesseAndCookies
     {
         #region solution
-        private static SortedList<int, int> lCookies = new SortedList<int, int>();
         private static IHeap _heap;
 
         private static void AddNewCookie(int iMixedCookieSweetness)
@@ -16,23 +15,8 @@ namespace HackerRankCollection.ProblemSolutions
             _heap.Push(iMixedCookieSweetness);
         }
 
-        private static void SmartRemoveElementAt(int location)
-        {
-            if (location >= lCookies.Count || location < 0) return;
-            var kvCookie = lCookies.ElementAt(location);
-            if (kvCookie.Value == 1)
-            {
-                lCookies.RemoveAt(location);
-            }
-            else
-            {
-                lCookies[kvCookie.Key]--;
-            }
-        }
-
         private static void LoadCookieData(int[] aCookieSweetnessVals)
         {
-            // we need to handle duplicate entries in the cookie sweetness list
             foreach (int v in aCookieSweetnessVals)
             {
                 _heap.Push(v);

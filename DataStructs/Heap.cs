@@ -32,7 +32,6 @@ namespace DataStructs
             this._heap = new int[capacity + 1];
             this._heap[0] = Int32.MinValue;
             this._size = 0;
-            this._capacity = capacity;
         }
 
         private void Swap(int i, int j)
@@ -118,7 +117,7 @@ namespace DataStructs
 
         public void Push(int x)
         {
-            if (_size >= _heap.Length) return;
+            if (_size >= (_heap.Length - 1)) return;
 
             _heap[++_size] = x;
             HeapifyUp(_size);
@@ -152,29 +151,6 @@ namespace DataStructs
             {
                 Swap(i, largest);
                 Heapify(largest);
-            }
-        }
-
-        private void HeapifyDown(int k)
-        {
-            int largest = k;
-            int leftIndex = 2 * k;
-            int rightIndex = 2 * k + 1;
-
-            if (leftIndex <= _heap.Length && _heap[leftIndex] > _heap[largest])
-            {
-                largest = leftIndex;
-            }
-
-            if (rightIndex <= _heap.Length && _heap[rightIndex] > _heap[largest])
-            {
-                largest = rightIndex;
-            }
-
-            if (largest != k)
-            {
-                Swap(k, largest);
-                HeapifyDown(largest);
             }
         }
 
