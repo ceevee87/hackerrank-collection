@@ -22,6 +22,14 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
         }
 
         [TestMethod]
+        public void HeapTest1()
+        {
+            JesseAndCookiesInputData x = GetCookieSweetnessDataFromFile(_sTestDataRootDir + "heap_test1_input.txt");
+            int result = JesseAndCookies.cookies(x.iMinSweetness, x.aCookies);
+            Assert.AreEqual(result, -1);
+        }
+
+        [TestMethod]
         public void Test1()
         {
             JesseAndCookiesInputData x = GetCookieSweetnessDataFromFile(_sTestDataRootDir + "sample1_input.txt");

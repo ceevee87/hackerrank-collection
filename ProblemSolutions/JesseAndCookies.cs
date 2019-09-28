@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataStructs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,18 +9,11 @@ namespace HackerRankCollection.ProblemSolutions
     {
         #region solution
         private static SortedList<int, int> lCookies = new SortedList<int, int>();
-        
+        private static IHeap _heap;
 
         private static void AddNewCookie(int iMixedCookieSweetness)
         {
-            if (lCookies.ContainsKey(iMixedCookieSweetness))
-            {
-                lCookies[iMixedCookieSweetness]++;
-            }
-            else
-            {
-                lCookies.Add(iMixedCookieSweetness, 1);
-            }
+            _heap.Push(iMixedCookieSweetness);
         }
 
         private static void SmartRemoveElementAt(int location)
@@ -41,39 +35,33 @@ namespace HackerRankCollection.ProblemSolutions
             // we need to handle duplicate entries in the cookie sweetness list
             foreach (int v in aCookieSweetnessVals)
             {
-                if (lCookies.ContainsKey(v))
-                {
-                    lCookies[v]++;
-                }
-                else
-                {
-                    lCookies.Add(v, 1);
-                }
+                _heap.Push(v);
             }
         }
         private static int MixCookies()
         {
             // get the first two cookies in the list
-            int iMixedCookieSweetness = lCookies.ElementAt(0).Key;
-            SmartRemoveElementAt(0);
-            iMixedCookieSweetness += 2 * lCookies.ElementAt(0).Key;
-            SmartRemoveElementAt(0);
+            int iMixedCookieSweetness = _heap.Pop();
+            iMixedCookieSweetness += 2 * _heap.Pop();
             return iMixedCookieSweetness;
         }
 
         public static int cookies(int k, int[] A)
         {
-            lCookies.Clear();
+            _heap = new MinHeap(A.Length);
+
             LoadCookieData(A);
+            //_heap.print();
+
             int iNumCookieMixesCount = 0;
 
-            while (lCookies.ElementAt(0).Key < k && (lCookies.Count > 1 || lCookies.ElementAt(0).Value > 1))
+            while (_heap.Peek < k && _heap.Size > 1)
             {
                 int iNewSweetnessLevel = MixCookies();
                 AddNewCookie(iNewSweetnessLevel);
                 iNumCookieMixesCount++;
             }
-            return (lCookies.Count == 1 && lCookies.ElementAt(0).Key < k) ? -1 : iNumCookieMixesCount;
+            return (_heap.Size == 1 && _heap.Peek < k) ? -1 : iNumCookieMixesCount;
         }
         #endregion
     }
