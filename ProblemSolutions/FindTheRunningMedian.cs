@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,8 +36,8 @@ namespace HackerRankCollection.ProblemSolutions
             IHeap maxHeap = new MaxHeap(a.Length);
 
             double[] result = new double[a.Length];
-            result[0] = Math.Round((double)a[0], 1);
-            result[1] = Math.Round((double)((a[0] + a[1]) / 2), 1);
+            result[0] = Math.Round((double)a[0], 1) + 0.0;
+            result[1] = 0.0 + Math.Round((double)((a[0] + a[1]) / 2), 1);
 
             double runningMedian = result[1];
 
@@ -88,5 +89,32 @@ namespace HackerRankCollection.ProblemSolutions
             }
             return result;
         }
+        static void MainXXX(string[] args)
+        {
+            // this is required for submission to hacker rank because
+            // they need formatting on the output to handle the single decimal 
+            // place even when a medium result is "12.0" or "1.0".
+            TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+            int aCount = Convert.ToInt32(Console.ReadLine());
+
+            int[] a = new int[aCount];
+
+            for (int aItr = 0; aItr < aCount; aItr++)
+            {
+                int aItem = Convert.ToInt32(Console.ReadLine());
+                a[aItr] = aItem;
+            }
+
+            double[] result = runningMedian(a);
+
+            // get all the double values and convert them to strings with a single decimal point.
+            string[] res3 = result.Select(v => String.Format("{0:#.0}", v)).ToArray();
+            textWriter.WriteLine(string.Join("\n", res3));
+
+            textWriter.Flush();
+            textWriter.Close();
+        }
+
     }
 }

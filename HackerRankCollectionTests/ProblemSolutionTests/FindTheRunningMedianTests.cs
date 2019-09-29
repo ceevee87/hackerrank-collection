@@ -19,10 +19,19 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             CollectionAssert.AreEqual(expected, result);
         }
 
+        [TestMethod]
+        public void SampleTestB()
+        {
+            int[] arr = GetInputArray(_sTestDataRootDir + "sampleB_input.txt");
+            double[] result = FindTheRunningMedian.runningMedian(arr);
+            double[] expected = new double[] { 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5 };
+            CollectionAssert.AreEqual(expected, result);
+        }
+
         private int[] GetInputArray(string inFile)
         {
             // zero error catching here ... make sure your input is legit
-            int[] arr ;
+            int[] arr;
             using (StreamReader file = new StreamReader(inFile))
             {
                 int n = Convert.ToInt32(file.ReadLine());
