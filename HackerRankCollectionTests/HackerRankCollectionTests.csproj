@@ -55,6 +55,7 @@
     <Compile Include="ProblemSolutionTests\ContactsTests.cs" />
     <Compile Include="ProblemSolutionTests\EqualStacksTests.cs" />
     <Compile Include="ProblemSolutionTests\ExtraLongFactorialTests.cs" />
+    <Compile Include="ProblemSolutionTests\FindTheRunningMedianTests.cs" />
     <Compile Include="ProblemSolutionTests\HackerlandRadioTransmittersTests.cs" />
     <Compile Include="ProblemSolutionTests\JesseAndCookiesTests.cs" />
     <Compile Include="ProblemSolutionTests\LilysHomeworkTests.cs" />

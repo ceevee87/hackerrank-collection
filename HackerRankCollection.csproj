@@ -49,6 +49,7 @@
     <Compile Include="ProblemSolutions\Contacts.cs" />
     <Compile Include="ProblemSolutions\EqualStacks.cs" />
     <Compile Include="ProblemSolutions\ExtraLongFactorials.cs" />
+    <Compile Include="ProblemSolutions\FindTheRunningMedian.cs" />
     <Compile Include="ProblemSolutions\HackerlandRadioTransmitters.cs" />
     <Compile Include="ProblemSolutions\JesseAndCookies.cs" />
     <Compile Include="ProblemSolutions\LilysHomework.cs" />
