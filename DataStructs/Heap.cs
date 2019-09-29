@@ -18,7 +18,6 @@ namespace DataStructs
     {
         private int[] _heap;
         private int _size;
-        private int _capacity;
 
         private int Parent(int i) { return i / 2; }
         private int Left(int i) { return 2 * i; }

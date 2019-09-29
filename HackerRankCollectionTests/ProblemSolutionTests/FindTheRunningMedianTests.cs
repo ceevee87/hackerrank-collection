@@ -22,11 +22,17 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
         private int[] GetInputArray(string inFile)
         {
             // zero error catching here ... make sure your input is legit
-            int[] arr;
+            int[] arr ;
             using (StreamReader file = new StreamReader(inFile))
             {
                 int n = Convert.ToInt32(file.ReadLine());
-                arr = Array.ConvertAll(file.ReadLine().Split(' '), a => Convert.ToInt32(a));
+                arr = new int[n];
+                string line;
+                int ii = 0;
+                while ((line = file.ReadLine()) != null && ii < n)
+                {
+                    arr[ii++] = Convert.ToInt32(line);
+                }
             }
             return arr;
         }
