@@ -51,6 +51,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
         {
             int[] arr = GetInputArray(_sTestDataRootDir + "hackerrank1_abbrev_input.txt");
             double[] result = FindTheRunningMedian.runningMedian(arr);
+
             string[] res3 = result.Select(v => String.Format("{0:#.0}", v)).ToArray();
 
             TextWriter textWriter = new StreamWriter(_sTestDataRootDir + "hackerrank1_test_output.txt", true);
