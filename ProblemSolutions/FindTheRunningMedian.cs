@@ -77,6 +77,9 @@ namespace HackerRankCollection.ProblemSolutions
                         minHeap.Push(maxHeap.Pop());
                     }
                     // now they are the same size
+                }
+                if (minHeap.Size == maxHeap.Size)
+                {
                     runningMedian = Math.Round((double)(minHeap.Peek + maxHeap.Peek) / 2.0, 1);
                 }
                 else
@@ -110,8 +113,8 @@ namespace HackerRankCollection.ProblemSolutions
 
             // get all the double values and convert them to strings with a single decimal point.
             string[] res3 = result.Select(v => String.Format("{0:#.0}", v)).ToArray();
-            textWriter.WriteLine(string.Join("\n", res3));
 
+            textWriter.WriteLine(string.Join("\n", res3));
             textWriter.Flush();
             textWriter.Close();
         }
