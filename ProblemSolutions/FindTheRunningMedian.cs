@@ -20,7 +20,7 @@ namespace HackerRankCollection.ProblemSolutions
             {
                 double[] result = new double[2];
                 result[0] = Math.Round((double)a[0], 1);
-                result[1] = Math.Round((double)((a[0] + a[1]) / 2), 1);
+                result[1] = Math.Round((double)((a[0] + a[1]) / 2.0), 1);
                 return result;
             }
 
@@ -37,7 +37,7 @@ namespace HackerRankCollection.ProblemSolutions
 
             double[] result = new double[a.Length];
             result[0] = Math.Round((double)a[0], 1) + 0.0;
-            result[1] = 0.0 + Math.Round((double)((a[0] + a[1]) / 2), 1);
+            result[1] = Math.Round((double)((a[0] + a[1]) / 2.0), 1);
 
             double runningMedian = result[1];
 
@@ -77,7 +77,7 @@ namespace HackerRankCollection.ProblemSolutions
                         minHeap.Push(maxHeap.Pop());
                     }
                     // now they are the same size
-                    runningMedian = Math.Round((double)(minHeap.Peek + maxHeap.Peek) / 2, 1);
+                    runningMedian = Math.Round((double)(minHeap.Peek + maxHeap.Peek) / 2.0, 1);
                 }
                 else
                 {
