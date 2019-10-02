@@ -53,6 +53,7 @@
     <Compile Include="ProblemSolutions\HackerlandRadioTransmitters.cs" />
     <Compile Include="ProblemSolutions\JesseAndCookies.cs" />
     <Compile Include="ProblemSolutions\LilysHomework.cs" />
+    <Compile Include="ProblemSolutions\QHeap1.cs" />
     <Compile Include="ProblemSolutions\QueensAttack2.cs" />
     <Compile Include="ProblemSolutions\SherlockAndTheValidString.cs" />
     <Compile Include="ProblemSolutions\Waiter.cs" />
