@@ -8,9 +8,11 @@ namespace HackerRankCollection.ProblemSolutions
 {
     public class HackerlandRadioTransmitters
     {
-        private static int _numCities;
+        private static int _numHouses;
         private static int _towerRadius;
         private static int[] _homeLocations;
+
+        private enum SearchDirection { Left, Right };
 
         private static List<int> getEnabledTowers()
         {
@@ -35,7 +37,7 @@ namespace HackerRankCollection.ProblemSolutions
             // with the first tower, we'll just be working from the end of the 
             // array backwards
             int lastTower = -1;
-            for (int ii = _numCities - 1; ii >= _numCities - _towerRadius; ii--)
+            for (int ii = _numHouses - 1; ii >= _numHouses - _towerRadius; ii--)
             {
                 // check if the current city has an electrical tower
                 if (_homeLocations[ii] > 0)
@@ -88,6 +90,25 @@ namespace HackerRankCollection.ProblemSolutions
             return null;
         }
 
+        private static int GetFarthestHouseCoveredFromLocation(int iHouse, SearchDirection eSearchDir)
+        {
+            int iIncrementVal = (eSearchDir == SearchDirection.Right) ? 1 : -1;
+
+            // iHouse is the i-th house in a sorted list of house locations
+            // _homeLocations[iHouse] is the location of the house (at slot 4 or slot 10)
+
+
+            if (iHouse < 0 || iHouse >= _numHouses) return -1;
+            int ii = 1;
+            int iNextHouse = iHouse + iIncrementVal;
+            while ((iNextHouse < _numHouses && iNextHouse >= 0)
+                        && Math.Abs(_homeLocations[iNextHouse] - _homeLocations[iHouse]) <= _towerRadius)
+                iNextHouse += iIncrementVal;
+
+            return iNextHouse - iIncrementVal;
+        }
+
+
         // Complete the hackerlandRadioTransmitters function below.
         public static int hackerlandRadioTransmitters(int[] aHomeLocations, int iTransmitDistance)
         {
@@ -95,11 +116,19 @@ namespace HackerRankCollection.ProblemSolutions
             // electrical towers they have. If there is a zero value then
             // there are no tower locations.
             _homeLocations = aHomeLocations;
-            _numCities = _homeLocations.Length;
+            _numHouses = _homeLocations.Length;
             _towerRadius = iTransmitDistance;
 
-            return 972;
+            int iNumTransmittersRequired = 0;
+            int ii = 0; // i-th house
+            while (ii < _numHouses)
+            {
+                ii = GetFarthestHouseCoveredFromLocation(ii, SearchDirection.Right);
+                ii = GetFarthestHouseCoveredFromLocation(ii, SearchDirection.Right);
+                iNumTransmittersRequired++;
+                ii++;
+            }
+            return iNumTransmittersRequired;
         }
-
     }
 }
