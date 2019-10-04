@@ -1,22 +1,21 @@
 ﻿using HackerRankCollection.ProblemSolutions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Numerics;
+using NUnit.Framework;
 
 namespace HackerRankCollectionTests.ProblemSolutionTests
 {
-    [TestClass]
+    [TestFixture]
     public class ExtraLongFactorialTests
     {
-        [DataRow(0)]
-        [DataRow(1)]
-        [DataTestMethod]
+        [TestCase(0)]
+        [TestCase(1)]
         public void BaseCase(int n)
         {
             BigInteger res = ExtraLongFactorials.CalcExtraLongFactorial(n);
-            Assert.AreEqual(1, res);
+            Assert.AreEqual(new BigInteger(1), res);
         }
 
-        [TestMethod]
+        [Test]
         public void Test50()
         {
             BigInteger res = ExtraLongFactorials.CalcExtraLongFactorial(50);
@@ -24,7 +23,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(ans, res);
         }
 
-        [TestMethod]
+        [Test]
         public void Test25()
         {
             BigInteger res = ExtraLongFactorials.CalcExtraLongFactorial(25);
@@ -32,7 +31,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(ans, res);
         }
 
-        [TestMethod]
+        [Test]
         public void Test30()
         {
             BigInteger res = ExtraLongFactorials.CalcExtraLongFactorial(30);

@@ -1,37 +1,37 @@
 ﻿using HackerRankCollection.ProblemSolutions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace HackerRankCollectionTests.ProblemSolutionTests
 {
-    [TestClass]
+    [TestFixture]
     public class BalancedBracketsTests
     {
-        [DataRow("{[()]}")]
-        [DataRow("{{[[(())]]}}")]
-        [DataRow("{{([])}}")]
-        [DataRow("{(([])[])[]}")]
-        [DataRow("{(([])[])[]}[]")]
-        [DataTestMethod]
+        [TestCase("{[()]}")]
+        [TestCase("{{[[(())]]}}")]
+        [TestCase("{{([])}}")]
+        [TestCase("{(([])[])[]}")]
+        [TestCase("{(([])[])[]}[]")]
+        // [DataTestMethod]
         public void ParamBracketsMatch(string s)
         {
             string res = BalancedBrackets.isBalanced(s);
             Assert.AreEqual("YES", res);
         }
 
-        [DataRow("{[(])}")]
-        [DataRow("{{[{(())]]}}")]
-        [DataRow("{(([])[])[]]}")]
-        [DataRow("{{)[](}}")]
-        [DataTestMethod]
+        [TestCase("{[(])}")]
+        [TestCase("{{[{(())]]}}")]
+        [TestCase("{(([])[])[]]}")]
+        [TestCase("{{)[](}}")]
+        // [DataTestMethod]
         public void ParamBracketsDoNotMatch(string s)
         {
             string res = BalancedBrackets.isBalanced(s);
             Assert.AreEqual("NO", res);
         }
 
-        [DataRow("])}")]
-        [DataRow("(")]
-        [DataTestMethod]
+        [TestCase("])}")]
+        [TestCase("(")]
+        // [DataTestMethod]
         public void ParamBracketsDoNotMatchTricky(string s)
         {
             string res = BalancedBrackets.isBalanced(s);

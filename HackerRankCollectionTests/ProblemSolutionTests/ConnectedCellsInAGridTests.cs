@@ -1,17 +1,19 @@
 ﻿using HackerRankCollection.ProblemSolutions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
 using System.IO;
+using NUnit.Framework;
 
 namespace HackerRankCollectionTests.ProblemSolutionTests
 {
-    [TestClass]
+    [TestFixture]
     public class ConnectedCellsInAGridTests
     {
-        private string _sTestDataRootDir = @"..\..\TestData\ConnectedCellsInAGrid\";
+        string _sTestDataRootDir = string.Format(@"{0}\{1}\"
+                    , Path.GetDirectoryName(Directory.GetParent(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)).FullName)
+                    , @"TestData\ConnectedCellsInAGrid");
 
-        [TestMethod]
+        [Test]
         public void PrintNeighborPointCoordsTest()
         {
             int[][] m = GetInputMatrixFromFile(_sTestDataRootDir + "sample1_input.txt");
@@ -36,7 +38,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.IsTrue(true);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankSampleATest()
         {
             int[][] m = GetInputMatrixFromFile(_sTestDataRootDir + "sample1_input.txt");
@@ -45,7 +47,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, expectedResult);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankSampleBTest()
         {
             int[][] m = GetInputMatrixFromFile(_sTestDataRootDir + "sample2_input.txt");
@@ -54,7 +56,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, expectedResult);
         }
 
-        [TestMethod]
+        [Test]
         public void Circle1Test()
         {
             int[][] m = GetInputMatrixFromFile(_sTestDataRootDir + "circle1_input.txt");
@@ -68,7 +70,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, expectedResult);
         }
 
-        [TestMethod]
+        [Test]
         public void Rectangle1MultipleRegionsTest()
         {
             int[][] m = GetInputMatrixFromFile(_sTestDataRootDir + "rectangle_size1_input.txt");
@@ -82,7 +84,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, expectedResult);
         }
 
-        [TestMethod]
+        [Test]
         public void Rectangle2MultipleRegionsTest()
         {
             int[][] m = GetInputMatrixFromFile(_sTestDataRootDir + "rectangle_size2_input.txt");
@@ -96,7 +98,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, expectedResult);
         }
 
-        [TestMethod]
+        [Test]
         public void Rectangle3MultipleRegionsTest()
         {
             int[][] m = GetInputMatrixFromFile(_sTestDataRootDir + "rectangle_size3_input.txt");

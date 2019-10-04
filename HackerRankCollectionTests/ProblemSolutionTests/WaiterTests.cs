@@ -1,13 +1,13 @@
 ﻿using HackerRankCollection.ProblemSolutions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
+using NUnit.Framework;
 
 namespace HackerRankCollectionTests.ProblemSolutionTests
 {
-    [TestClass]
+    [TestFixture]
     public class WaiterTests
     {
-        [TestMethod]
+        [Test]
         public void SieveOfEratosthenesTest1()
         {
             // 9739 generates 1201 prime numbers
@@ -22,7 +22,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             CollectionAssert.AreEqual(foo, aExpected);
         }
 
-        [TestMethod]
+        [Test]
         public void WaiterTest1()
         {
             int[] nums = new int[] { 3, 4, 7, 6, 5 };
@@ -33,7 +33,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             CollectionAssert.AreEqual(Waiter.waiter(nums, q), aExpected);
         }
 
-        [TestMethod]
+        [Test]
         public void WaiterTest2()
         {
             int[] nums = new int[] { 3, 3, 4, 4, 9 };

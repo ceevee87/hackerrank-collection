@@ -1,13 +1,13 @@
 ﻿using HackerRankCollection.ProblemSolutions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace HackerRankCollectionTests.ProblemSolutionTests
 {
-    [TestClass]
+    [TestFixture]
     public class EqualStacksTests
     {
 
-        [TestMethod]
+        [Test]
         public void PassTest1()
         {
             int[] stack1 = new int[] { 3, 2, 1, 1, 1 };

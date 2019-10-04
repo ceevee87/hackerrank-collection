@@ -1,14 +1,17 @@
 ﻿using HackerRankCollection.ProblemSolutions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
+using NUnit.Framework;
 
 namespace HackerRankCollectionTests.ProblemSolutionTests
 {
-    [TestClass]
+    [TestFixture]
     public class JesseAndCookiesTests
     {
-        private string _sTestDataRootDir = @"..\..\TestData\JesseAndCookies\";
+        string _sTestDataRootDir = string.Format(@"{0}\{1}\"
+                    , Path.GetDirectoryName(Directory.GetParent(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)).FullName)
+                    , @"TestData\JesseAndCookies");
+
         private class JesseAndCookiesInputData
         {
             public readonly int[] aCookies;
@@ -21,7 +24,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void HeapTest1()
         {
             JesseAndCookiesInputData x = GetCookieSweetnessDataFromFile(_sTestDataRootDir + "heap_test1_input.txt");
@@ -29,7 +32,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, -1);
         }
 
-        [TestMethod]
+        [Test]
         public void Test1()
         {
             JesseAndCookiesInputData x = GetCookieSweetnessDataFromFile(_sTestDataRootDir + "sample1_input.txt");
@@ -37,7 +40,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result,2);
         }
 
-        [TestMethod]
+        [Test]
         public void ImpossibleTest1()
         {
             JesseAndCookiesInputData x = GetCookieSweetnessDataFromFile(_sTestDataRootDir + "impossible1_input.txt");
@@ -45,7 +48,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, -1);
         }
 
-        [TestMethod]
+        [Test]
         public void BasicTest1()
         {
             JesseAndCookiesInputData x = GetCookieSweetnessDataFromFile(_sTestDataRootDir + "basic1_input.txt");
@@ -53,7 +56,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, 0);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTest11()
         {
             JesseAndCookiesInputData x = GetCookieSweetnessDataFromFile(_sTestDataRootDir + "testcase11_input.txt");
@@ -61,7 +64,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, -1);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTest18()
         {
             JesseAndCookiesInputData x = GetCookieSweetnessDataFromFile(_sTestDataRootDir + "testcase18_input.txt");
@@ -69,7 +72,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, 99999);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTest15()
         {
             // fails HackerRank performance test
@@ -79,7 +82,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, 98189);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTest21()
         {
             // fails HackerRank performance test
@@ -89,7 +92,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, 615271);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTest22()
         {
             // fails HackerRank performance test

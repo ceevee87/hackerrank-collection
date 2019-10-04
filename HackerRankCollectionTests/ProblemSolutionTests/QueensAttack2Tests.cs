@@ -1,14 +1,16 @@
 ﻿using HackerRankCollection.ProblemSolutions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
+using NUnit.Framework;
 
 namespace HackerRankCollectionTests.ProblemSolutionTests
 {
-    [TestClass]
+    [TestFixture]
     public class QueensAttack2Tests
     {
-        private string _sTestDataRootDir = @"..\..\TestData\QueensAttack2\";
+        string _sTestDataRootDir = string.Format(@"{0}\{1}\"
+                        , Path.GetDirectoryName(Directory.GetParent(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)).FullName)
+                        , @"TestData\QueensAttack2");
 
         private class QueensAttackInputData
         {
@@ -28,16 +30,16 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankSampleATest()
         {
             QueensAttackInputData oData = GetInputMatrixFromFile(_sTestDataRootDir + "sample1_input.txt");
-            
+
             int result = QueensAttack2.queensAttack(oData.iBoardSize, oData.iNumObstacles, oData.iQueenRow, oData.iQueenCol, oData.aObstacleLocations);
             Assert.AreEqual(result, 10);
         }
 
-        [TestMethod]
+        [Test]
         public void HugeTest1()
         {
             QueensAttackInputData oData = GetInputMatrixFromFile(_sTestDataRootDir + "huge1_input.txt");
@@ -46,7 +48,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, 31294);
         }
 
-        [TestMethod]
+        [Test]
         public void HugeTest2()
         {
             QueensAttackInputData oData = GetInputMatrixFromFile(_sTestDataRootDir + "huge2_input.txt");
@@ -55,7 +57,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, 27475);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTestCase19()
         {
             QueensAttackInputData oData = GetInputMatrixFromFile(_sTestDataRootDir + "testcase19_input.txt");
@@ -64,7 +66,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, 30544);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTestCase13()
         {
             QueensAttackInputData oData = GetInputMatrixFromFile(_sTestDataRootDir + "testcase13_input.txt");
@@ -73,7 +75,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, 307303);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTestCase5()
         {
             QueensAttackInputData oData = GetInputMatrixFromFile(_sTestDataRootDir + "testcase5_input.txt");
@@ -82,7 +84,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, 21);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTestCase6()
         {
             // test case 6 answer is 40 from hackerrank 

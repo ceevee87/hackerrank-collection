@@ -1,17 +1,19 @@
 ﻿using HackerRankCollection.ProblemSolutions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Linq;
+using NUnit.Framework;
 
 namespace HackerRankCollectionTests.ProblemSolutionTests
 {
-    [TestClass]
+    [TestFixture]
     public class FindTheRunningMedianTests
     {
-        private string _sTestDataRootDir = @"..\..\TestData\FindTheRunningMedian\";
+        string _sTestDataRootDir = string.Format(@"{0}\{1}\"
+                    , Path.GetDirectoryName(Directory.GetParent(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)).FullName)
+                    , @"TestData\FindTheRunningMedian");
 
-        [TestMethod]
+        [Test]
         public void SampleTestA()
         {
             int[] arr = GetInputArray(_sTestDataRootDir + "sampleA_input.txt");
@@ -20,7 +22,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             CollectionAssert.AreEqual(expected, result);
         }
 
-        [TestMethod]
+        [Test]
         public void SampleTestB()
         {
             int[] arr = GetInputArray(_sTestDataRootDir + "sampleB_input.txt");
@@ -29,7 +31,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             CollectionAssert.AreEqual(expected, result);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTest1()
         {
             int[] arr = GetInputArray(_sTestDataRootDir + "hackerrank1_input.txt");
@@ -37,16 +39,10 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
 
             double[] result = FindTheRunningMedian.runningMedian(arr);
 
-            //string[] res3 = result.Select(v => String.Format("{0:#.0}", v)).ToArray();
-            //TextWriter textWriter = new StreamWriter(_sTestDataRootDir + "hackerrank1_test_output.txt", false);
-            //textWriter.WriteLine(string.Join("\n", res3));
-            //textWriter.Flush();
-            //textWriter.Close();
-
             CollectionAssert.AreEqual(expected, result);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTest1Abbrev()
         {
             int[] arr = GetInputArray(_sTestDataRootDir + "hackerrank1_abbrev_input.txt");
@@ -54,16 +50,11 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
 
             string[] res3 = result.Select(v => String.Format("{0:#.0}", v)).ToArray();
 
-            TextWriter textWriter = new StreamWriter(_sTestDataRootDir + "hackerrank1_test_output.txt", true);
-            textWriter.WriteLine(string.Join("\n", res3));
-            textWriter.Flush();
-            textWriter.Close();
-
             double[] expected = new double[] { 94455.0, 57505.0, 20555.0, 36840.0 };
             CollectionAssert.AreEqual(expected, result);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTest2()
         {
             int[] arr = GetInputArray(_sTestDataRootDir + "hackerrank2_input.txt");
@@ -73,7 +64,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             CollectionAssert.AreEqual(expected, result);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTest3()
         {
             int[] arr = GetInputArray(_sTestDataRootDir + "hackerrank3_input.txt");
@@ -83,7 +74,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             CollectionAssert.AreEqual(expected, result);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTest4()
         {
             int[] arr = GetInputArray(_sTestDataRootDir + "hackerrank4_input.txt");
@@ -93,7 +84,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             CollectionAssert.AreEqual(expected, result);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTest5()
         {
             int[] arr = GetInputArray(_sTestDataRootDir + "hackerrank5_input.txt");

@@ -1,17 +1,19 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HackerRankCollection.ProblemSolutions;
+﻿using HackerRankCollection.ProblemSolutions;
 using System.IO;
 using System;
 using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace HackerRankCollectionTests.ProblemSolutionTests
 {
-    [TestClass]
+    [TestFixture]
     public class ContactsTests
     {
-        private string sTestDataRootDir = @"..\..\TestData\Contacts\";
+        string _sTestDataRootDir = string.Format(@"{0}\{1}\"
+                    , Path.GetDirectoryName(Directory.GetParent(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)).FullName)
+                    , @"TestData\Contacts");
 
-        [TestMethod]
+        [Test]
         public void Test1()
         {
             string[][] aQueries = new string[4][];
@@ -23,7 +25,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             CollectionAssert.AreEqual(Contacts.contacts(aQueries), new int[] { 2, 0 });
         }
 
-        [TestMethod]
+        [Test]
         public void Test2()
         {
             string[][] aQueries = new string[11][];
@@ -45,21 +47,21 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
 
         // test passes below but runs too slow for HackerRank
         // it took about 1 minute on my computer.
-        [TestMethod]
+        [Test]
         public void Test2HackerRank()
         {
-            string[][] aQueries = GetInputQueryOperations(sTestDataRootDir + "contacts.testcase2.input.txt");
-            int[] aExpected = GetExpectedResultsFromFile(sTestDataRootDir + "contacts.testcase2.output.txt");
+            string[][] aQueries = GetInputQueryOperations(_sTestDataRootDir + "contacts.testcase2.input.txt");
+            int[] aExpected = GetExpectedResultsFromFile(_sTestDataRootDir + "contacts.testcase2.output.txt");
             CollectionAssert.AreEqual(Contacts.contacts(aQueries), aExpected);
 
         }
         // test passes below but runs too slow for HackerRank
         // it took about 6 minutes on my computer.
-        [TestMethod]
+        [Test]
         public void Test9HackerRank()
         {
-            string[][] aQueries = GetInputQueryOperations(sTestDataRootDir + "contacts.testcase9.input.txt");
-            int[] aExpected = GetExpectedResultsFromFile(sTestDataRootDir + "contacts.testcase9.output.txt");
+            string[][] aQueries = GetInputQueryOperations(_sTestDataRootDir + "contacts.testcase9.input.txt");
+            int[] aExpected = GetExpectedResultsFromFile(_sTestDataRootDir + "contacts.testcase9.output.txt");
             CollectionAssert.AreEqual(Contacts.contacts(aQueries), aExpected);
 
         }

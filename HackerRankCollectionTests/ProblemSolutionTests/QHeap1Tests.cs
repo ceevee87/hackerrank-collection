@@ -1,17 +1,19 @@
 ﻿using HackerRankCollection.ProblemSolutions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using NUnit.Framework;
 
 namespace HackerRankCollectionTests.ProblemSolutionTests
 {
-    [TestClass]
+    [TestFixture]
     public class QHeap1Tests
     {
-        private string _sTestDataRootDir = @"..\..\TestData\QHeap1\";
+        string _sTestDataRootDir = string.Format(@"{0}\{1}\"
+                    , Path.GetDirectoryName(Directory.GetParent(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)).FullName)
+                    ,@"TestData\QHeap1");
 
-        [TestMethod]
+        [Test]
         public void SampleATest()
         {
             string[] queries = new string[] { "1 4", "1 9", "3", "2 4", "3" };
@@ -20,7 +22,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             CollectionAssert.AreEqual(expected, result);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTest14()
         {
             string[] queries = GetInputData(_sTestDataRootDir + "hackerrank14_input.txt");
@@ -29,7 +31,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             CollectionAssert.AreEqual(expected, result);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTest16()
         {
             string[] queries = GetInputData(_sTestDataRootDir + "hackerrank16_input.txt");

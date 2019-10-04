@@ -1,24 +1,26 @@
 ﻿using HackerRankCollection.ProblemSolutions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using NUnit.Framework;
 
 namespace HackerRankCollectionTests.ProblemSolutionTests
 {
-    [TestClass]
+    [TestFixture]
     public class SherlockAndTheValidStringTests
     {
-        private string _sTestDataRootDir = @"..\..\TestData\SherlockAndTheValidString\";
+        string _sTestDataRootDir = string.Format(@"{0}\{1}\"
+                        , Path.GetDirectoryName(Directory.GetParent(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)).FullName)
+                        , @"TestData\SherlockAndTheValidString");
 
-        [TestMethod]
+        [Test]
         public void FailIsValid()
         {
             string res = SherlockAndTheValidString.isValid("ebbccdda");
             Assert.AreEqual("NO", res);
         }
 
-        [DataRow("aaaaaaaaaaaabbbcccddd")]
-        [DataRow("aaaaabcdefg")]
-        [DataTestMethod]
+        [TestCase("aaaaaaaaaaaabbbcccddd")]
+        [TestCase("aaaaabcdefg")]
+        // [DataTestMethod]
         public void Trickey1Test(string s)
         {
             string res = SherlockAndTheValidString.isValid(s);
@@ -26,21 +28,21 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
         }
 
 
-        [DataRow("ebbccdda")]
-        [DataRow("abbcccdddd")]
-        [DataRow("cccbbaaz")]
-        [DataRow("aaaabbcc")]   // HackerRank test 3
-        [DataRow("aaaaabc")]    // HackerRank test 5
-        [DataTestMethod]
+        [TestCase("ebbccdda")]
+        [TestCase("abbcccdddd")]
+        [TestCase("cccbbaaz")]
+        [TestCase("aaaabbcc")]   // HackerRank test 3
+        [TestCase("aaaaabc")]    // HackerRank test 5
+        // [DataTestMethod]
         public void BigStringIsNotValid(string s)
         {
             string res = SherlockAndTheValidString.isValid(s);
             Assert.AreEqual("NO", res);
         }
 
-        [DataRow("abbccdd")]
-        [DataRow("bbccdda")]
-        [DataTestMethod]
+        [TestCase("abbccdd")]
+        [TestCase("bbccdda")]
+        // [DataTestMethod]
         public void RemoveLastCharTest(string s)
         {
             string res = SherlockAndTheValidString.isValid(s);
@@ -48,24 +50,24 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
         }
 
 
-        [DataRow("a")]
-        [DataRow("bb")]
-        [DataRow("ccccc")]
-        [DataTestMethod]
+        [TestCase("a")]
+        [TestCase("bb")]
+        [TestCase("ccccc")]
+        // [DataTestMethod]
         public void BigSameCharStringIsValid(string s)
         {
             string res = SherlockAndTheValidString.isValid(s);
             Assert.AreEqual("YES", res);
         }
 
-        [DataRow("bcdaa")]
-        [DataRow("aabcd")]
-        [DataRow("abcda")]
-        [DataRow("zzzaabbcc")]
-        [DataRow("abcdef")]
-        [DataRow("xxabcdef")]
-        [DataRow("aaaabbbcccddd")]
-        [DataTestMethod]
+        [TestCase("bcdaa")]
+        [TestCase("aabcd")]
+        [TestCase("abcda")]
+        [TestCase("zzzaabbcc")]
+        [TestCase("abcdef")]
+        [TestCase("xxabcdef")]
+        [TestCase("aaaabbbcccddd")]
+        // [DataTestMethod]
         public void BigStringIsValid(string s)
         {
             string res = SherlockAndTheValidString.isValid(s);
@@ -73,14 +75,14 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
         }
 
         // 
-        [TestMethod]
+        [Test]
         public void HackerRankTest4()
         {
             string res = SherlockAndTheValidString.isValid("aabbc");
             Assert.AreEqual("YES", res);
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTest7()
         {
             // input string is 1000 chars long
@@ -89,7 +91,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, "YES");
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTest13()
         {
             // input string is 10K chars long
@@ -98,7 +100,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, "YES");
         }
 
-        [TestMethod]
+        [Test]
         public void HackerRankTest16()
         {
             string res = SherlockAndTheValidString.isValid("abbac");
