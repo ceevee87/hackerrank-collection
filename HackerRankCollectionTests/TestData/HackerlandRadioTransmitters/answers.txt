@@ -1,0 +1,5 @@
+test case 00 - 2
+test case 2 - 4
+test case 3 - 1
+test case 6 - 620
+test case 7 - 972
