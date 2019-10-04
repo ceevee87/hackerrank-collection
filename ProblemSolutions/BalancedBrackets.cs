@@ -46,6 +46,7 @@ namespace HackerRankCollection.ProblemSolutions
         public static string isBalanced(string s)
         {
             var bracketStack = new BracketStack();
+            int discard;
             foreach (char c in s)
             {
                 if (c == '{' || c == '(' || c == '[')
@@ -57,7 +58,7 @@ namespace HackerRankCollection.ProblemSolutions
                 {
                     if (bracketStack.CanPop(c))
                     {
-                        _ = bracketStack.Pop();
+                        discard = bracketStack.Pop();
                     } else
                     {
                         return "NO";

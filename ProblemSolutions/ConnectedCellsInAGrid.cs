@@ -13,8 +13,16 @@ namespace HackerRankCollection.ProblemSolutions
 
         public int Col => _col;
         public int Row => _row;
-        public int Color { get => _color; set => _color = value; }
-        public bool IsFilled { get => _fill; set => _fill = value; }
+        public int Color
+        {
+            get { return _color; }
+            set { _color = value; }
+        }
+        public bool IsFilled
+        {
+            get { return _fill; }
+            set { _fill = value; }
+        }
         public bool IsVisited => (_color > 0);
 
 
