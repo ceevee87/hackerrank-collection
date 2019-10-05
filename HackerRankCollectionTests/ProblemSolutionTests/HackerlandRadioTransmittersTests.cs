@@ -28,8 +28,13 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
         public void HackerRankTest00()
         {
             HackerlandRadioTransmitterInputData data = GetInputData(_sTestDataRootDir + "hackerrank00_input.txt");
-            int result = HackerlandRadioTransmitters.hackerlandRadioTransmitters(data._homeLocations, data._transmitterDistance);
+            HackerlandRadioTransmitters.NumHouses = data._homeLocations.Length;
+            HackerlandRadioTransmitters.TowerRadius = data._transmitterDistance;
+            HackerlandRadioTransmitters.HomeLocations = data._homeLocations;
+
+            int result = HackerlandRadioTransmitters.hackerlandRadioTransmitters();
             int expected = 2;
+
             Assert.AreEqual(result, expected);
         }
 
@@ -37,8 +42,13 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
         public void HackerRankTest2()
         {
             HackerlandRadioTransmitterInputData data = GetInputData(_sTestDataRootDir + "hackerrank2_input.txt");
-            int result = HackerlandRadioTransmitters.hackerlandRadioTransmitters(data._homeLocations, data._transmitterDistance);
+            HackerlandRadioTransmitters.NumHouses = data._homeLocations.Length;
+            HackerlandRadioTransmitters.TowerRadius = data._transmitterDistance;
+            HackerlandRadioTransmitters.HomeLocations = data._homeLocations;
+
+            int result = HackerlandRadioTransmitters.hackerlandRadioTransmitters();
             int expected = 4;
+
             Assert.AreEqual(result, expected);
         }
 
@@ -46,7 +56,11 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
         public void HackerRankTest3()
         {
             HackerlandRadioTransmitterInputData data = GetInputData(_sTestDataRootDir + "hackerrank3_input.txt");
-            int result = HackerlandRadioTransmitters.hackerlandRadioTransmitters(data._homeLocations, data._transmitterDistance);
+            HackerlandRadioTransmitters.NumHouses = data._homeLocations.Length;
+            HackerlandRadioTransmitters.TowerRadius = data._transmitterDistance;
+            HackerlandRadioTransmitters.HomeLocations = data._homeLocations;
+
+            int result = HackerlandRadioTransmitters.hackerlandRadioTransmitters();
             int expected = 1;
             Assert.AreEqual(result, expected);
         }
@@ -55,7 +69,11 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
         public void HackerRankTest6()
         {
             HackerlandRadioTransmitterInputData data = GetInputData(_sTestDataRootDir + "hackerrank6_input.txt");
-            int result = HackerlandRadioTransmitters.hackerlandRadioTransmitters(data._homeLocations, data._transmitterDistance);
+            HackerlandRadioTransmitters.NumHouses = data._homeLocations.Length;
+            HackerlandRadioTransmitters.TowerRadius = data._transmitterDistance;
+            HackerlandRadioTransmitters.HomeLocations = data._homeLocations;
+
+            int result = HackerlandRadioTransmitters.hackerlandRadioTransmitters();
             int expected = 620;
             Assert.AreEqual(result, expected);
         }
@@ -64,7 +82,11 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
         public void HackerRankTest7()
         {
             HackerlandRadioTransmitterInputData data = GetInputData(_sTestDataRootDir + "hackerrank7_input.txt");
-            int result = HackerlandRadioTransmitters.hackerlandRadioTransmitters(data._homeLocations, data._transmitterDistance);
+            HackerlandRadioTransmitters.NumHouses = data._homeLocations.Length;
+            HackerlandRadioTransmitters.TowerRadius = data._transmitterDistance;
+            HackerlandRadioTransmitters.HomeLocations = data._homeLocations;
+
+            int result = HackerlandRadioTransmitters.hackerlandRadioTransmitters();
             int expected = 972;
             Assert.AreEqual(result, expected);
         }

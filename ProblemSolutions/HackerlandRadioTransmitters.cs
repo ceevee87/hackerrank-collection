@@ -12,83 +12,15 @@ namespace HackerRankCollection.ProblemSolutions
         private static int _towerRadius;
         private static int[] _homeLocations;
 
-        private enum SearchDirection { Left, Right };
-
-        private static List<int> getEnabledTowers()
+        public static int NumHouses { get => _numHouses; set => _numHouses = value; }
+        public static int TowerRadius { get => _towerRadius; set => _towerRadius = value; }
+        public static int[] HomeLocations
         {
-            var res = new List<int>();
-            var firstTower = -1;
-
-            // find the first tower that we need to turn on.
-            for (int ii = 0; ii < _towerRadius; ii++)
-            {
-                // check if the current city has an electrical tower
-                if (_homeLocations[ii] > 0)
-                    firstTower = ii;
-            }
-
-            // we were unable to find a city with an electrical tower
-            // within _towerRadius distance from the origin.
-            if (firstTower == -1)
-                return null;
-            res.Add(firstTower);
-
-            // let's find the last tower. this will be similar to what we did 
-            // with the first tower, we'll just be working from the end of the 
-            // array backwards
-            int lastTower = -1;
-            for (int ii = _numHouses - 1; ii >= _numHouses - _towerRadius; ii--)
-            {
-                // check if the current city has an electrical tower
-                if (_homeLocations[ii] > 0)
-                    lastTower = ii;
-            }
-
-            // we were unable to find a city with an electrical tower
-            // within _towerRadius distance from the end.
-            if (lastTower == -1)
-                return null;
-
-            // for the algorithm to proceed we need to have distinct first and
-            // last towers such that the last tower follows the first tower.
-            if (lastTower <= firstTower)
-                return res;
-            res.Add(lastTower);
-
-            bool done = false;
-            bool fail = false;
-            var prevTower = firstTower;
-            while (!done)
-            {
-                // curTower is an offset relative to the previous tower that
-                // we activated (turned on).
-                int curTower = 0;
-                int ii = 0;
-                for (ii = 0; ii < 2 * _towerRadius; ii++)
-                {
-                    if (ii + prevTower == lastTower)
-                        return res;
-                    else if (_homeLocations[ii + prevTower] != 0)
-                        curTower = ii;
-                }
-                // if we couldn't find a tower to turn on within the range
-                // of 2*_towerRadius then curTower will be stuck at 0.
-                // we can stop then
-                if (curTower > 0)
-                {
-                    prevTower += curTower;
-                    res.Add(prevTower);
-                }
-                else
-                {
-                    done = true;
-                    fail = true;
-                }
-            }
-            if (res.Count > 0 && !fail)
-                return res;
-            return null;
+            get => _homeLocations;
+            set { _homeLocations = value; Array.Sort(_homeLocations); }
         }
+
+        private enum SearchDirection { Left, Right };
 
         private static int GetFarthestHouseCoveredFromLocation(int iHouse, SearchDirection eSearchDir)
         {
@@ -100,10 +32,10 @@ namespace HackerRankCollection.ProblemSolutions
             // think of iHouse as the index into the array of _homeLocations
             // _homeLocations[iHouse] is the location of the house at index iHouse
 
-            if (iHouse < 0 || iHouse >= _numHouses) return -1;
+            if (iHouse < 0 || iHouse >= NumHouses) return -1;
             int iNextHouse = iHouse + iIncrementVal;
-            while ((iNextHouse < _numHouses && iNextHouse >= 0)
-                    && Math.Abs(_homeLocations[iNextHouse] - _homeLocations[iHouse]) <= _towerRadius)
+            while ((iNextHouse < NumHouses && iNextHouse >= 0)
+                    && Math.Abs(HomeLocations[iNextHouse] - HomeLocations[iHouse]) <= TowerRadius)
             {
                 iNextHouse += iIncrementVal;
             }
@@ -111,23 +43,16 @@ namespace HackerRankCollection.ProblemSolutions
         }
 
         // Complete the hackerlandRadioTransmitters function below.
-        public static int hackerlandRadioTransmitters(int[] aHomeLocations, int iTransmitDistance)
+        public static int hackerlandRadioTransmitters()
         {
-            // this is an array that designates for each city how many
-            // electrical towers they have. If there is a zero value then
-            // there are no tower locations.
-            _homeLocations = aHomeLocations;
-            _numHouses = _homeLocations.Length;
-            _towerRadius = iTransmitDistance;
-
-            Array.Sort(aHomeLocations);
-
             int iNumTransmittersRequired = 0;
             int ii = 0; // i-th house
-            while (ii < _numHouses)
+            while (ii < NumHouses)
             {
                 ii = GetFarthestHouseCoveredFromLocation(ii, SearchDirection.Right);
+                if (ii == -1) break;
                 ii = GetFarthestHouseCoveredFromLocation(ii, SearchDirection.Right);
+                if (ii == -1) break;
                 iNumTransmittersRequired++;
                 ii++;
             }
