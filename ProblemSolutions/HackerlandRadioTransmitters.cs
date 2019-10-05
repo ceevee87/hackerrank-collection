@@ -92,22 +92,23 @@ namespace HackerRankCollection.ProblemSolutions
 
         private static int GetFarthestHouseCoveredFromLocation(int iHouse, SearchDirection eSearchDir)
         {
+            // i put this in in case I have to solve this problem
+            // iterating from left to right or right to left in the _homeLocations array
             int iIncrementVal = (eSearchDir == SearchDirection.Right) ? 1 : -1;
 
             // iHouse is the i-th house in a sorted list of house locations
-            // _homeLocations[iHouse] is the location of the house (at slot 4 or slot 10)
-
+            // think of iHouse as the index into the array of _homeLocations
+            // _homeLocations[iHouse] is the location of the house at index iHouse
 
             if (iHouse < 0 || iHouse >= _numHouses) return -1;
-            int ii = 1;
             int iNextHouse = iHouse + iIncrementVal;
             while ((iNextHouse < _numHouses && iNextHouse >= 0)
-                        && Math.Abs(_homeLocations[iNextHouse] - _homeLocations[iHouse]) <= _towerRadius)
+                    && Math.Abs(_homeLocations[iNextHouse] - _homeLocations[iHouse]) <= _towerRadius)
+            {
                 iNextHouse += iIncrementVal;
-
+            }
             return iNextHouse - iIncrementVal;
         }
-
 
         // Complete the hackerlandRadioTransmitters function below.
         public static int hackerlandRadioTransmitters(int[] aHomeLocations, int iTransmitDistance)
@@ -118,6 +119,8 @@ namespace HackerRankCollection.ProblemSolutions
             _homeLocations = aHomeLocations;
             _numHouses = _homeLocations.Length;
             _towerRadius = iTransmitDistance;
+
+            Array.Sort(aHomeLocations);
 
             int iNumTransmittersRequired = 0;
             int ii = 0; // i-th house
