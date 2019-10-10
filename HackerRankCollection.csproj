@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProblemSolutions\ACMICPCTeam.cs" />
     <Compile Include="ProblemSolutions\BalancedBrackets.cs" />
     <Compile Include="ProblemSolutions\ConnectedCellsInAGrid.cs" />
     <Compile Include="ProblemSolutions\Contacts.cs" />
