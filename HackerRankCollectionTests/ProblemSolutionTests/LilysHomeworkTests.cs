@@ -5,8 +5,8 @@ using NUnit.Framework;
 
 namespace HackerRankCollectionTests.ProblemSolutionTests
 {
-    [TestFixture]
-    public class LilysHomeworkTests
+    //[TestFixture]
+    class LilysHomeworkTests
     {
         string _sTestDataRootDir = string.Format(@"{0}\{1}\"
             , Path.GetDirectoryName(Directory.GetParent(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)).FullName)
