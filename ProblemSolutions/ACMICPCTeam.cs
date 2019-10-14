@@ -66,7 +66,7 @@ namespace HackerRankCollection.ProblemSolutions
                 for (int jj = ii + 1; jj < teamSkills.Length; jj++)
                 {
                     BitArray tmp = new BitArray(teamSkills[ii]);
-                    _ = tmp.Or(teamSkills[jj]);
+                    tmp.Or(teamSkills[jj]);
                     int skillcount = GetCardinality(tmp);
                     if (skillcount > maxskillcount)
                     {
