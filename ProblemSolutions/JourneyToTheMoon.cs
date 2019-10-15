@@ -1,46 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace HackerRankCollection.ProblemSolutions
 {
     public static class JourneyToTheMoon
     {
         static int[] astronautsByCountry;
-        static List<int>[] astronautPairs;
+        static Dictionary<int, int> astronautCountsByCountry;
+
         static int countryId = 100;
         static int countrIdIncrAmt = 100;
-
-        //private static void SortAstronautsByCountry()
-        //{
-        //    for (int ii = 0; ii < astronautsByCountry.Length; ii++)
-        //    {
-        //        if (astronautsByCountry[ii].Length > 0)
-        //        {
-        //            Array.Sort(astronautsByCountry[ii]);
-        //        }
-        //    }
-        //}
-
-        private static bool AreAstronautsAlreadyPaired(int countryId1, int countryId2)
-        {
-            if (countryId1 == countryId2) return false;
-            int searchId1;
-            int searchId2;
-            if (countryId1 < countryId2)
-            {
-                searchId1 = countryId1;
-                searchId2 = countryId2;
-            }
-            else
-            {
-                searchId1 = countryId2;
-                searchId2 = countryId1;
-            }
-
-            if (astronautPairs[searchId1].Count == 0) return false;
-            return astronautPairs[searchId1].Contains(searchId2);
-        }
 
         private static bool IsLegalAstronautPair(int astronautId1, int astronautId2)
         {
@@ -49,28 +20,10 @@ namespace HackerRankCollection.ProblemSolutions
                 || astronautId1 < 0 || astronautId2 < 0)
                 return false;
 
-            return (astronautsByCountry[astronautId1]==astronautsByCountry[astronautId2]);
+            return (astronautsByCountry[astronautId1] == astronautsByCountry[astronautId2]);
         }
 
-        private static void InitAstronautPairs(int n)
-        {
-            astronautPairs = new List<int>[n];
-            for (int ii = 0; ii < n; ii++) astronautPairs[ii] = new List<int>();
-        }
-
-        private static void AddAstronautPair(int countryId1, int countryId2)
-        {
-            int searchId1 = (countryId1 < countryId2) ? countryId1 : countryId2;
-            int searchId2 = (countryId1 >= countryId2) ? countryId1 : countryId2;
-
-            foreach (int id in astronautPairs[searchId1])
-            {
-                astronautPairs[id].Add(searchId2);
-            }
-            astronautPairs[searchId1].Add(searchId2);
-        }
-
-        private static void LoadAstronutsByCountry(int n, int[][] astronaut)
+        private static void BuildAstronutsByCountry(int n, int[][] astronaut)
         {
             astronautsByCountry = new int[n];
 
@@ -129,30 +82,43 @@ namespace HackerRankCollection.ProblemSolutions
                 }
             }
         }
+        private static void BuildAstronautCountsByCountry()
+        {
+            astronautCountsByCountry = new Dictionary<int, int>();
+            for (int astronautId = 0; astronautId < astronautsByCountry.Length; astronautId++)
+            {
+                int countryId = astronautsByCountry[astronautId];
+                if (astronautCountsByCountry.ContainsKey(countryId))
+                {
+                    astronautCountsByCountry[countryId]++;
+                }
+                else
+                {
+                    astronautCountsByCountry.Add(countryId, 1);
+                }
+            }
+        }
 
         public static int journeyToMoon(int n, int[][] astronaut)
         {
-            LoadAstronutsByCountry(n, astronaut);
+            BuildAstronutsByCountry(n, astronaut);
             AssignCountryIdsToRemainingAstronauts();
+            BuildAstronautCountsByCountry();
 
-            InitAstronautPairs(n);
+            int pairCount = 0;
+            int[] countryIds = astronautCountsByCountry.Keys.ToArray();
+            Array.Sort(countryIds);
 
-            //int count = 0;
-            //for (int ii = 0; ii < n - 1; ii++)
-            //{
-            //    for (int astroId= 0; astroId < n; astroId++)
-            //    {
-            //        for (int jj = ii + 1; jj < n; jj++)
-            //        {
-            //            if (!IsLegalAstronautPair(astroId, jj)) continue;
-            //            if (AreAstronautsAlreadyPaired(astroId, jj)) continue;
-            //            Debug.WriteLine($"{astroId}, {jj}");
-            //            AddAstronautPair(astroId, jj);
-            //            count++;
-            //        }
-            //    }
-            //}
-            return 5;
+            for (int ii = 0; ii < countryIds.Length - 1; ii++)
+            {
+                int countryId1 = countryIds[ii];
+                for (int jj = ii + 1; jj < countryIds.Length; jj++)
+                {
+                    int countryId2 = countryIds[jj];
+                    pairCount += astronautCountsByCountry[countryId1] * astronautCountsByCountry[countryId2];
+                }
+            }
+            return pairCount;
         }
 
     }

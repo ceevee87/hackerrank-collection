@@ -23,7 +23,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
         {
             TestInputData oData = BadVibes(_sTestDataRootDir + "sample1_input.txt");
             int result = JourneyToTheMoon.journeyToMoon(oData.numAstronauts, oData.astronautPairData);
-            int expected = 5;
+            int expected = 6;
             Assert.AreEqual(result, expected);
         }
 
@@ -33,6 +33,60 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             TestInputData oData = BadVibes(_sTestDataRootDir + "sample2_input.txt");
             int result = JourneyToTheMoon.journeyToMoon(oData.numAstronauts, oData.astronautPairData);
             int expected = 5;
+            Assert.AreEqual(result, expected);
+        }
+
+        [Test]
+        public void HackerRankTest1()
+        {
+            TestInputData oData = BadVibes(_sTestDataRootDir + "hackerrank1_input.txt");
+            int result = JourneyToTheMoon.journeyToMoon(oData.numAstronauts, oData.astronautPairData);
+            int expected = 23;
+            Assert.AreEqual(result, expected);
+        }
+
+        [Test]
+        public void HackerRankTest2()
+        {
+            TestInputData oData = BadVibes(_sTestDataRootDir + "hackerrank2_input.txt");
+            int result = JourneyToTheMoon.journeyToMoon(oData.numAstronauts, oData.astronautPairData);
+            int expected = 3984;
+            Assert.AreEqual(result, expected);
+        }
+
+        [Test]
+        public void HackerRankTest3()
+        {
+            TestInputData oData = BadVibes(_sTestDataRootDir + "hackerrank3_input.txt");
+            int result = JourneyToTheMoon.journeyToMoon(oData.numAstronauts, oData.astronautPairData);
+            int expected = 43723;
+            Assert.AreEqual(result, expected);
+        }
+
+        [Test]
+        public void HackerRankTest8()
+        {
+            TestInputData oData = BadVibes(_sTestDataRootDir + "hackerrank8_input.txt");
+            int result = JourneyToTheMoon.journeyToMoon(oData.numAstronauts, oData.astronautPairData);
+            int expected = 49977764;
+            Assert.AreEqual(result, expected);
+        }
+
+        [Test]
+        public void HackerRankTest9()
+        {
+            TestInputData oData = BadVibes(_sTestDataRootDir + "hackerrank9_input.txt");
+            int result = JourneyToTheMoon.journeyToMoon(oData.numAstronauts, oData.astronautPairData);
+            int expected = 44974622;
+            Assert.AreEqual(result, expected);
+        }
+
+        [Test]
+        public void HackerRankTest13()
+        {
+            TestInputData oData = BadVibes(_sTestDataRootDir + "hackerrank13_input.txt");
+            int result = JourneyToTheMoon.journeyToMoon(oData.numAstronauts, oData.astronautPairData);
+            int expected = 4527147;
             Assert.AreEqual(result, expected);
         }
 
