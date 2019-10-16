@@ -12,11 +12,19 @@ namespace HackerRankCollection.ProblemSolutions
         private static int _towerRadius;
         private static int[] _homeLocations;
 
-        public static int NumHouses { get => _numHouses; set => _numHouses = value; }
-        public static int TowerRadius { get => _towerRadius; set => _towerRadius = value; }
+        public static int NumHouses
+        {
+            get { return _numHouses; }
+            set { _numHouses = value; }
+        }
+        public static int TowerRadius
+        {
+            get { return _towerRadius; }
+            set { _towerRadius = value; }
+        }
         public static int[] HomeLocations
         {
-            get => _homeLocations;
+            get { return _homeLocations; }
             set { _homeLocations = value; Array.Sort(_homeLocations); }
         }
 

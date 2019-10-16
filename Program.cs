@@ -1,5 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HackerRankCollection.ProblemSolutions;
+using System;
+using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Text;
