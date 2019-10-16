@@ -160,14 +160,13 @@ namespace HackerRankCollection.ProblemSolutions
             int[] countryIds = astronautCountsByCountry.Keys.ToArray();
             Array.Sort(countryIds);
 
+            int totalAstronautSubSum = astronautCountsByCountry.Values.Sum();
+             
             for (int ii = 0; ii < countryIds.Length - 1; ii++)
             {
                 int countryId1 = countryIds[ii];
-                for (int jj = ii + 1; jj < countryIds.Length; jj++)
-                {
-                    int countryId2 = countryIds[jj];
-                    pairCount += astronautCountsByCountry[countryId1] * astronautCountsByCountry[countryId2];
-                }
+                totalAstronautSubSum -= astronautCountsByCountry[countryId1];
+                pairCount += astronautCountsByCountry[countryId1] * totalAstronautSubSum;
             }
             return pairCount;
         }
