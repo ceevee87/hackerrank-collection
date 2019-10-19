@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HackerRankCollection.ProblemSolutions2
 {
@@ -41,48 +38,26 @@ namespace HackerRankCollection.ProblemSolutions2
 
         #endregion
 
-        // Complete the roadsAndLibraries function below.
-        public static long roadsAndLibraries(int n, int c_lib, int c_road, int[][] cities)
+        private static long calcCostForRoadsAndLibraries(int numCities, int roadCost, int libraryCost)
         {
-            InitAdjList(n);
-            InitCityClusterCounts();
-            CityClusterId = 1;
+            if (numCities == 1) return libraryCost;
 
-            // load up the adjList
-            for (int ii = 0; ii < cities.Length; ii++)
+            if (roadCost >= libraryCost)
             {
-                // no guards to check length of array. fyi.
-                int cityId1 = cities[ii][0];
-                int cityId2 = cities[ii][1];
-
-                AddCityRoadToAdjList(cityId1 - 1, cityId2 - 1);
-                AddCityRoadToAdjList(cityId2 - 1, cityId1 - 1);
+                return libraryCost * numCities;
             }
+            return (libraryCost + roadCost * (numCities - 1));
 
-            MarkCityClusters();
-            int result = 0;
-            foreach (int clusterId in CityClusterSizes.Keys)
-            {
-                result += calcCostForRoadsAndLibraries(CityClusterSizes[clusterId], c_road, c_lib);
-            }
-
-            return result;
-        }
-
-        private static int calcCostForRoadsAndLibraries(int numCities, int roadCost, int libraryCost)
-        {
             // if Clib > Croad + (Clib - Croad)/numCities ==> do all roads + 1 library
             // otherwise do all libraries and no road
-
-            float v1 = (float)libraryCost;
-            float v2 = (float)roadCost;
-            float v3 = (float)(libraryCost - roadCost) / (float)numCities;
-
-            if (v1 > v2 + v3)
-            {
-                return (libraryCost + roadCost * (numCities - 1));
-            }
-            return libraryCost * numCities;
+            //float v1 = (float)libraryCost;
+            //float v2 = (float)roadCost;
+            //float v3 = (float)(libraryCost - roadCost) / (float)numCities;
+            //if (v1 > v2 + v3)
+            //{
+            //    return (libraryCost + roadCost * (numCities - 1));
+            //}
+            //return libraryCost * numCities;
         }
 
 
@@ -121,7 +96,7 @@ namespace HackerRankCollection.ProblemSolutions2
             }
         }
 
-        private static int BFS(City c, int id)
+        private static int GroupCitiesIntoClusters(City c, int id)
         {
             // Basically, a BFS algorithm.
 
@@ -155,32 +130,45 @@ namespace HackerRankCollection.ProblemSolutions2
             int cityClusterId = 1;
             for (int ii = 0; ii < adjList.Count; ii++)
             {
-                if (adjList[ii].Count == 1) continue;
+                if (adjList[ii].Count == 1)
+                {
+                    if (!CityClusterSizes.ContainsKey(cityClusterId)) CityClusterSizes.Add(cityClusterId++, 1);
+                    continue;
+                }
                 if (adjList[ii].ElementAt(0).CityClusterId == 0)
                 {
-                    int count = BFS(adjList[ii].ElementAt(0), cityClusterId);
+                    int count = GroupCitiesIntoClusters(adjList[ii].ElementAt(0), cityClusterId);
                     if (!CityClusterSizes.ContainsKey(cityClusterId)) CityClusterSizes.Add(cityClusterId, count);
                     cityClusterId++;
                 }
             }
         }
-
-        private static void BuildCityClusterCounts()
+        // Complete the roadsAndLibraries function below.
+        public static long roadsAndLibraries(int n, int c_lib, int c_road, int[][] cities)
         {
-            for (int ii = 0; ii < adjList.Count; ii++)
+            InitAdjList(n);
+            InitCityClusterCounts();
+            CityClusterId = 1;
+
+            // load up the adjList
+            for (int ii = 0; ii < cities.Length; ii++)
             {
-                if (adjList[ii].Count == 1) continue;
-                int clusterId = adjList[ii].ElementAt(0).CityClusterId;
-                if (CityClusterSizes.ContainsKey(clusterId))
-                {
-                    continue;
-                    //CityClusterSizes[clusterId] += adjList[ii].Count;
-                }
-                else
-                {
-                    CityClusterSizes.Add(clusterId, adjList[ii].Count);
-                }
+                // no guards to check length of array. fyi.
+                int cityId1 = cities[ii][0];
+                int cityId2 = cities[ii][1];
+
+                AddCityRoadToAdjList(cityId1 - 1, cityId2 - 1);
+                AddCityRoadToAdjList(cityId2 - 1, cityId1 - 1);
             }
+
+            MarkCityClusters();
+            long result = 0;
+            foreach (int clusterId in CityClusterSizes.Keys)
+            {
+                result += calcCostForRoadsAndLibraries(CityClusterSizes[clusterId], c_road, c_lib);
+            }
+
+            return result;
         }
     }
 }

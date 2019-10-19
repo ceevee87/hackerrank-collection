@@ -37,7 +37,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
             {
                 result[ii] = RoadsAndLibraries.roadsAndLibraries(oData[ii].numCities, oData[ii].costLibrary, oData[ii].costRoad, oData[ii].cityPairs);
             }
-            long[] expected = new long[1] { 16 };
+            long[] expected = new long[1] { 19 };
             CollectionAssert.AreEqual(expected, result);
         }
 
@@ -46,11 +46,52 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
         {
             InputDataRoadsAndLibraries[] oData = GetInputData(_sTestDataRootDir + "sample1_input.txt");
             long[] result = new long[oData.Length];
-            for (int ii = 0; ii < oData.Length; ii++ )
+            for (int ii = 0; ii < oData.Length; ii++)
             {
                 result[ii] = RoadsAndLibraries.roadsAndLibraries(oData[ii].numCities, oData[ii].costLibrary, oData[ii].costRoad, oData[ii].cityPairs);
             }
             long[] expected = new long[2] { 4, 12 };
+            CollectionAssert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void sample2Test()
+        {
+            InputDataRoadsAndLibraries[] oData = GetInputData(_sTestDataRootDir + "sample2_input.txt");
+            long[] result = new long[oData.Length];
+            for (int ii = 0; ii < oData.Length; ii++)
+            {
+                result[ii] = RoadsAndLibraries.roadsAndLibraries(oData[ii].numCities, oData[ii].costLibrary, oData[ii].costRoad, oData[ii].cityPairs);
+            }
+            long[] expected = new long[1] { 15 };
+            CollectionAssert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void hackerrank3Test()
+        {
+            InputDataRoadsAndLibraries[] oData = GetInputData(_sTestDataRootDir + "hackerrank3_input.txt");
+            long[] result = new long[oData.Length];
+            for (int ii = 0; ii < oData.Length; ii++)
+            {
+                result[ii] = RoadsAndLibraries.roadsAndLibraries(oData[ii].numCities, oData[ii].costLibrary, oData[ii].costRoad, oData[ii].cityPairs);
+            }
+            long[] expected = new long[10] { 7850257285, 6785201034, 813348013, 4211840970, 8610471142, 7263742960, 4331105640, 1226092626, 7288635830, 8276704464 };
+
+            CollectionAssert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void hackerrank4Test()
+        {
+            InputDataRoadsAndLibraries[] oData = GetInputData(_sTestDataRootDir + "hackerrank4_input.txt");
+            long[] result = new long[oData.Length];
+            for (int ii = 0; ii < oData.Length; ii++)
+            {
+                result[ii] = RoadsAndLibraries.roadsAndLibraries(oData[ii].numCities, oData[ii].costLibrary, oData[ii].costRoad, oData[ii].cityPairs);
+            }
+            long[] expected = new long[10] { 9234981465, 5854508506, 7754252297, 8085193494, 9504556779, 8011172848, 9123393445, 7326423794, 8259748808, 8049633228 };
+
             CollectionAssert.AreEqual(expected, result);
         }
 
