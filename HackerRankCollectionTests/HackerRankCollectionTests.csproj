@@ -64,6 +64,7 @@
     <Compile Include="ProblemSolutionTests1\QueensAttack2Tests.cs" />
     <Compile Include="ProblemSolutionTests1\SherlockAndTheValidStringTests.cs" />
     <Compile Include="ProblemSolutionTests1\WaiterTests.cs" />
+    <Compile Include="ProblemSolutionTests2\RoadsAndLibrariesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +76,7 @@
       <Name>HackerRankCollection</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

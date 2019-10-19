@@ -12,7 +12,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             , Path.GetDirectoryName(Directory.GetParent(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)).FullName)
             , @"TestData\LilyHomeworkTests");
 
-        [Test]
+        // [Test] 
         public void ProblemExplanationTest()
         {
             int[] arr = new int[] { 7, 15, 12, 3};
@@ -20,7 +20,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(2, res);
         }
 
-        [Test]
+        // [Test] 
         public void SolutionExampleATest()
         {
             int[] arr = new int[] { 2, 5, 3, 1};
@@ -28,7 +28,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(2, res);
         }
 
-        [Test]
+        // [Test] 
         public void HackerRankTest3()
         {
             int[] arr = GetInputArray(_sTestDataRootDir + "testcase3_input.txt");
@@ -36,7 +36,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, 99985);
         }
 
-        [Test]
+        // [Test] 
         public void HackerRankTest7()
         {
             int[] arr = GetInputArray(_sTestDataRootDir + "testcase7_input.txt");
@@ -44,7 +44,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, 0);
         }
 
-        [Test]
+        // [Test] 
         public void HackerRankTest8()
         {
             int[] arr = GetInputArray(_sTestDataRootDir + "testcase8_input.txt");
@@ -52,7 +52,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, 100);
         }
 
-        [Test]
+        // [Test] 
         public void HackerRankTest9()
         {
             int[] arr = GetInputArray(_sTestDataRootDir + "testcase9_input.txt");
@@ -60,7 +60,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests
             Assert.AreEqual(result, 100);
         }
 
-        [Test]
+        // [Test] 
         public void HackerRankTest11()
         {
             int[] arr = GetInputArray(_sTestDataRootDir + "testcase11_input.txt");
