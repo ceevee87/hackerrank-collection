@@ -45,21 +45,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProblemSolutions\ACMICPCTeam.cs" />
-    <Compile Include="ProblemSolutions\BalancedBrackets.cs" />
-    <Compile Include="ProblemSolutions\ConnectedCellsInAGrid.cs" />
-    <Compile Include="ProblemSolutions\Contacts.cs" />
-    <Compile Include="ProblemSolutions\EqualStacks.cs" />
-    <Compile Include="ProblemSolutions\ExtraLongFactorials.cs" />
-    <Compile Include="ProblemSolutions\FindTheRunningMedian.cs" />
-    <Compile Include="ProblemSolutions\HackerlandRadioTransmitters.cs" />
-    <Compile Include="ProblemSolutions\JesseAndCookies.cs" />
-    <Compile Include="ProblemSolutions\JourneyToTheMoon.cs" />
-    <Compile Include="ProblemSolutions\LilysHomework.cs" />
-    <Compile Include="ProblemSolutions\QHeap1.cs" />
-    <Compile Include="ProblemSolutions\QueensAttack2.cs" />
-    <Compile Include="ProblemSolutions\SherlockAndTheValidString.cs" />
-    <Compile Include="ProblemSolutions\Waiter.cs" />
+    <Compile Include="ProblemSolutions1\ACMICPCTeam.cs" />
+    <Compile Include="ProblemSolutions1\BalancedBrackets.cs" />
+    <Compile Include="ProblemSolutions1\ConnectedCellsInAGrid.cs" />
+    <Compile Include="ProblemSolutions1\Contacts.cs" />
+    <Compile Include="ProblemSolutions1\EqualStacks.cs" />
+    <Compile Include="ProblemSolutions1\ExtraLongFactorials.cs" />
+    <Compile Include="ProblemSolutions1\FindTheRunningMedian.cs" />
+    <Compile Include="ProblemSolutions1\HackerlandRadioTransmitters.cs" />
+    <Compile Include="ProblemSolutions1\JesseAndCookies.cs" />
+    <Compile Include="ProblemSolutions1\JourneyToTheMoon.cs" />
+    <Compile Include="ProblemSolutions1\LilysHomework.cs" />
+    <Compile Include="ProblemSolutions1\QHeap1.cs" />
+    <Compile Include="ProblemSolutions1\QueensAttack2.cs" />
+    <Compile Include="ProblemSolutions1\SherlockAndTheValidString.cs" />
+    <Compile Include="ProblemSolutions1\Waiter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -50,20 +50,20 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProblemSolutionTests\BalancedBracketsTests.cs" />
-    <Compile Include="ProblemSolutionTests\ConnectedCellsInAGridTests.cs" />
-    <Compile Include="ProblemSolutionTests\ContactsTests.cs" />
-    <Compile Include="ProblemSolutionTests\EqualStacksTests.cs" />
-    <Compile Include="ProblemSolutionTests\ExtraLongFactorialTests.cs" />
-    <Compile Include="ProblemSolutionTests\FindTheRunningMedianTests.cs" />
-    <Compile Include="ProblemSolutionTests\HackerlandRadioTransmittersTests.cs" />
-    <Compile Include="ProblemSolutionTests\JesseAndCookiesTests.cs" />
-    <Compile Include="ProblemSolutionTests\JourneyToTheMoonTests.cs" />
-    <Compile Include="ProblemSolutionTests\LilysHomeworkTests.cs" />
-    <Compile Include="ProblemSolutionTests\QHeap1Tests.cs" />
-    <Compile Include="ProblemSolutionTests\QueensAttack2Tests.cs" />
-    <Compile Include="ProblemSolutionTests\SherlockAndTheValidStringTests.cs" />
-    <Compile Include="ProblemSolutionTests\WaiterTests.cs" />
+    <Compile Include="ProblemSolutionTests1\BalancedBracketsTests.cs" />
+    <Compile Include="ProblemSolutionTests1\ConnectedCellsInAGridTests.cs" />
+    <Compile Include="ProblemSolutionTests1\ContactsTests.cs" />
+    <Compile Include="ProblemSolutionTests1\EqualStacksTests.cs" />
+    <Compile Include="ProblemSolutionTests1\ExtraLongFactorialTests.cs" />
+    <Compile Include="ProblemSolutionTests1\FindTheRunningMedianTests.cs" />
+    <Compile Include="ProblemSolutionTests1\HackerlandRadioTransmittersTests.cs" />
+    <Compile Include="ProblemSolutionTests1\JesseAndCookiesTests.cs" />
+    <Compile Include="ProblemSolutionTests1\JourneyToTheMoonTests.cs" />
+    <Compile Include="ProblemSolutionTests1\LilysHomeworkTests.cs" />
+    <Compile Include="ProblemSolutionTests1\QHeap1Tests.cs" />
+    <Compile Include="ProblemSolutionTests1\QueensAttack2Tests.cs" />
+    <Compile Include="ProblemSolutionTests1\SherlockAndTheValidStringTests.cs" />
+    <Compile Include="ProblemSolutionTests1\WaiterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
