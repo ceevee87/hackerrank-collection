@@ -56,6 +56,15 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
         }
 
         [Test]
+        public void HackerrankTest6()
+        {
+            InputDataMedianUpdate oData = GetInputData(_sTestDataRootDir + "hackerrank6_input.txt");
+            string[] result = MedianUpdates.ProcessHeapCommands(oData.actions, oData.heapArgs);
+            string[] expected = GetAnswerData(_sTestDataRootDir + "hackerrank6_answer.txt", oData.actions.Length);
+            CollectionAssert.AreEqual(expected, result);
+        }
+
+        [Test]
         public void HackerrankTest8()
         {
             InputDataMedianUpdate oData = GetInputData(_sTestDataRootDir + "hackerrank8_input.txt");
