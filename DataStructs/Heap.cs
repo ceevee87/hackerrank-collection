@@ -166,6 +166,7 @@ namespace DataStructs
 
 
     // this data struct is used to solve the Hackerrank problem 'QHeap'
+    // later updated to use in the Hackerrank problem 'Median Update'
     public class QMinHeap : IQHeap
     {
         private int[] _heap;
@@ -255,5 +256,91 @@ namespace DataStructs
 
     }
 
+    public class QMaxHeap : IQHeap
+    {
+        private int[] _heap;
+        private int _size;
 
+        private int Parent(int i) { return i / 2; }
+        private int Left(int i) { return 2 * i; }
+        private int Right(int i) { return ((2 * i) + 1); }
+
+        public int Size => _size;
+        public int Peek => _heap[1];
+
+
+        public QMaxHeap(int capacity)
+        {
+            this._heap = new int[capacity + 1];
+            this._heap[0] = Int32.MaxValue;
+            this._size = 0;
+        }
+
+        public void RemoveAt(int x)
+        {
+            if (x >= (_heap.Length - 1) || x < 1) return;
+            if (_size >= (_heap.Length - 1) || _size == 0) return;
+
+            _heap[x] = _heap[_size--];
+            Heapify(x);
+        }
+
+        public int Find(int x)
+        {
+            for (int ii = 1; ii <= _size; ii++)
+            {
+                if (_heap[ii] == x) return ii;
+            }
+            return -1;
+        }
+
+        private void Swap(int i, int j)
+        {
+            int tmp = _heap[i];
+            _heap[i] = _heap[j];
+            _heap[j] = tmp;
+        }
+
+        private void Heapify(int i)
+        {
+            int left = Left(i);
+            int right = Right(i);
+            int largest;
+            largest = (left <= _size && _heap[left] >= _heap[i]) ? left : i;
+
+            if (right <= _size && _heap[right] > _heap[largest]) largest = right;
+
+            if (largest != i)
+            {
+                Swap(i, largest);
+                Heapify(largest);
+            }
+        }
+
+        private void HeapifyUp(int k)
+        {
+            while (_heap[k] > _heap[k / 2])
+            {
+                Swap(k, k / 2);
+                k = k / 2;
+            }
+        }
+
+        public void Push(int x)
+        {
+            if (_size >= (_heap.Length - 1)) return;
+            _heap[++_size] = x;
+            HeapifyUp(_size);
+        }
+
+        public int Pop()
+        {
+            int head = _heap[1];
+            _heap[1] = _heap[_size--];
+            Heapify(1);
+
+            return head;
+        }
+
+    }
 }
