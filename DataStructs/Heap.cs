@@ -29,7 +29,7 @@ namespace DataStructs
             _heap[j] = tmp;
         }
 
-        private void Heapify(int i)
+        private void HeapifyDown(int i)
         {
             int left = Left(i);
             int right = Right(i);
@@ -41,17 +41,17 @@ namespace DataStructs
             if (smallest != i)
             {
                 Swap(i, smallest);
-                Heapify(smallest);
+                HeapifyDown(smallest);
             }
         }
 
 
         private void HeapifyUp(int k)
         {
-            while (_heap[k] < _heap[k / 2])
+            while (_heap[k] < _heap[Parent(k)])
             {
-                Swap(k, k / 2);
-                k = k / 2;
+                Swap(k, Parent(k));
+                k = Parent(k);
             }
         }
 
@@ -76,7 +76,7 @@ namespace DataStructs
         {
             int head = _heap[1];
             _heap[1] = _heap[_size--];
-            Heapify(1);
+            HeapifyDown(1);
 
             return head;
         }
@@ -95,7 +95,7 @@ namespace DataStructs
             this._size = 0;
         }
 
-        private int Parent(int i) { return i / 2;  }
+        private int Parent(int i) { return i / 2; }
         private int Left(int i) { return 2 * i; }
         private int Right(int i) { return ((2 * i) + 1); }
 
@@ -114,7 +114,7 @@ namespace DataStructs
         {
             int head = _heap[1];
             _heap[1] = _heap[_size--];
-            Heapify(1);
+            HeapifyDown(1);
 
             return head;
         }
@@ -125,7 +125,7 @@ namespace DataStructs
             _heap[j] = tmp;
         }
 
-        private void Heapify(int i)
+        private void HeapifyDown(int i)
         {
             int left = Left(i);
             int right = Right(i);
@@ -137,16 +137,16 @@ namespace DataStructs
             if (largest != i)
             {
                 Swap(i, largest);
-                Heapify(largest);
+                HeapifyDown(largest);
             }
         }
 
         private void HeapifyUp(int k)
         {
-            while (_heap[k] > _heap[k / 2])
+            while (_heap[k] > _heap[Parent(k)])
             {
-                Swap(k, k / 2);
-                k = k / 2;
+                Swap(k, Parent(k));
+                k = Parent(k);
             }
         }
 
@@ -224,8 +224,9 @@ namespace DataStructs
             _heap[x] = _heap[_size--];
             if (_heap[x] > _heap[Parent(x)])
             {
-                Heapify(x);
-            } else
+                HeapifyDown(x);
+            }
+            else
             {
                 HeapifyUp(x);
             }
@@ -247,7 +248,7 @@ namespace DataStructs
             _heap[j] = tmp;
         }
 
-        private void Heapify(int i)
+        private void HeapifyDown(int i)
         {
             int left = Left(i);
             int right = Right(i);
@@ -259,7 +260,7 @@ namespace DataStructs
             if (smallest != i)
             {
                 Swap(i, smallest);
-                Heapify(smallest);
+                HeapifyDown(smallest);
             }
         }
 
@@ -277,23 +278,16 @@ namespace DataStructs
         {
             if (_size >= (_heap.Length - 1)) return;
 
-            int ii = ++_size;
-            while (ii > 1 && _heap[Parent(ii)] > x)
-            {
-                _heap[ii] = _heap[Parent(ii)];
-                ii = Parent(ii);
-            }
-            _heap[ii] = x;
+            _heap[++_size] = x;
+            HeapifyUp(_size);
 
-            //_heap[++_size] = x;
-            //HeapifyUp(_size);
         }
 
         public int Pop()
         {
             int head = _heap[1];
             _heap[1] = _heap[_size--];
-            Heapify(1);
+            HeapifyDown(1);
 
             return head;
         }
@@ -358,14 +352,14 @@ namespace DataStructs
             _heap[x] = _heap[_size--];
             if (_heap[x] < _heap[Parent(x)])
             {
-                Heapify(x);
+                HeapifyDown(x);
             }
             else
             {
                 HeapifyUp(x);
             }
 
-            Heapify(x);
+            HeapifyDown(x);
         }
 
         public int Find(int x)
@@ -384,7 +378,7 @@ namespace DataStructs
             _heap[j] = tmp;
         }
 
-        private void Heapify(int i)
+        private void HeapifyDown(int i)
         {
             int left = Left(i);
             int right = Right(i);
@@ -396,16 +390,16 @@ namespace DataStructs
             if (largest != i)
             {
                 Swap(i, largest);
-                Heapify(largest);
+                HeapifyDown(largest);
             }
         }
 
         private void HeapifyUp(int k)
         {
-            while (_heap[k] > _heap[k / 2])
+            while (_heap[k] > _heap[Parent(k)])
             {
-                Swap(k, k / 2);
-                k = k / 2;
+                Swap(k, Parent(k));
+                k = Parent(k);
             }
         }
 
@@ -420,7 +414,7 @@ namespace DataStructs
         {
             int head = _heap[1];
             _heap[1] = _heap[_size--];
-            Heapify(1);
+            HeapifyDown(1);
 
             return head;
         }
