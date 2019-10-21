@@ -102,7 +102,6 @@ namespace DataStructs
         public int Peek => _heap[1];
         public int Size => _size;
 
-
         public void Push(int x)
         {
             if (_size >= (_heap.Length - 1)) return;
@@ -179,6 +178,36 @@ namespace DataStructs
         public int Size => _size;
         public int Peek => _heap[1];
 
+        public int Get(int n)
+        {
+            return _heap[n];
+        }
+
+        public int WhereIsHeapNotValid()
+        {
+            for (int ii = 2; ii <= _size; ii++)
+            {
+                if (!(_heap[Parent(ii)] <= _heap[ii])) return ii;
+            }
+            return -1;
+        }
+
+        public bool isHeapValid()
+        {
+            for (int ii = 2; ii <= _size; ii++)
+            {
+                if (!(_heap[Parent(ii)] <= _heap[ii])) return false;
+            }
+            return true;
+        }
+
+        public int[] getSortedHeapEntries()
+        {
+            int[] result = new int[_size];
+            Array.Copy(sourceArray: _heap, 1, result, 0, _size);
+            Array.Sort(result);
+            return result;
+        }
 
         public QMinHeap(int capacity)
         {
@@ -217,7 +246,7 @@ namespace DataStructs
             int left = Left(i);
             int right = Right(i);
             int smallest;
-            smallest = (left <= _size && _heap[left] <= _heap[i]) ? left : i;
+            smallest = (left <= _size && _heap[left] < _heap[i]) ? left : i;
 
             if (right <= _size && _heap[right] < _heap[smallest]) smallest = right;
 
@@ -241,8 +270,17 @@ namespace DataStructs
         public void Push(int x)
         {
             if (_size >= (_heap.Length - 1)) return;
-            _heap[++_size] = x;
-            HeapifyUp(_size);
+
+            int ii = ++_size;
+            while (ii > 1 && _heap[Parent(ii)] > x)
+            {
+                _heap[ii] = _heap[Parent(ii)];
+                ii = Parent(ii);
+            }
+            _heap[ii] = x;
+
+            //_heap[++_size] = x;
+            //HeapifyUp(_size);
         }
 
         public int Pop()
@@ -264,10 +302,40 @@ namespace DataStructs
         private int Parent(int i) { return i / 2; }
         private int Left(int i) { return 2 * i; }
         private int Right(int i) { return ((2 * i) + 1); }
+        public int Get(int n)
+        {
+            return _heap[n];
+        }
+
 
         public int Size => _size;
         public int Peek => _heap[1];
 
+        public int WhereIsHeapNotValid()
+        {
+            for (int ii = 2; ii <= _size; ii++)
+            {
+                if (!(_heap[Parent(ii)] >= _heap[ii])) return ii;
+            }
+            return -1;
+        }
+
+        public bool isHeapValid()
+        {
+            for (int ii = 2; ii <= _size; ii++)
+            {
+                if (!(_heap[Parent(ii)] >= _heap[ii])) return false;
+            }
+            return true;
+        }
+
+        public int[] getSortedHeapEntries()
+        {
+            int[] result = new int[_size];
+            Array.Copy(sourceArray: _heap, 1, result, 0, _size);
+            Array.Sort(result);
+            return result;
+        }
 
         public QMaxHeap(int capacity)
         {

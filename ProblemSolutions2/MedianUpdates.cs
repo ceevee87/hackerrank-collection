@@ -13,6 +13,7 @@ namespace HackerRankCollection.ProblemSolutions2
     {
         private static IQHeap minHeap;
         private static IQHeap maxHeap;
+        private static List<int> theNums;
 
         private static bool atLeastOneHeapEmpty = true;
         private static bool bothHeapsEmpty = true;
@@ -24,6 +25,15 @@ namespace HackerRankCollection.ProblemSolutions2
             // 64K size heaps
             minHeap = new QMinHeap(2 + n / 2);
             maxHeap = new QMaxHeap(2 + n / 2);
+
+            if (theNums == null)
+            {
+                theNums = new List<int>();
+            }
+            else
+            {
+                theNums.Clear();
+            }
         }
 
         private static bool RemoveArg(int val)
@@ -160,6 +170,24 @@ namespace HackerRankCollection.ProblemSolutions2
 
         private static string getCurrentMedian()
         {
+            /*
+            if (theNums.Count == 0) return "Wrong!";
+            if (theNums.Count == 1) return theNums.ElementAt(0).ToString();
+
+            var theNumsArray = theNums.ToArray();
+            Array.Sort(theNumsArray);
+
+            if (theNumsArray.Length % 2 == 1)
+            {
+                return theNumsArray[theNumsArray.Length / 2].ToString();
+            }
+
+            long v = (long)theNumsArray[theNumsArray.Length / 2] + (long)theNumsArray[(theNumsArray.Length / 2) - 1];
+            double v2 = Math.Round((double)v / 2.0, 1);
+            return v2.ToString();
+
+                */
+
             if (bothHeapsEmpty)
             {
                 return "Wrong!";
@@ -182,16 +210,20 @@ namespace HackerRankCollection.ProblemSolutions2
             // is at the top of the heavy heap.
             double runningMedian = (maxHeap.Size > minHeap.Size) ? Math.Round((double)maxHeap.Peek, 1) : Math.Round((double)minHeap.Peek, 1);
             return runningMedian.ToString();
+
         }
 
         private static string ProcessHeapCommand(string heapCmd, int heapArg)
         {
             if (heapCmd.Equals("r"))
             {
+                //if (!theNums.Remove(heapArg)) return "Wrong!";
+                _ = theNums.Remove(heapArg);
                 if (!RemoveArg(heapArg)) return "Wrong!";
             }
             if (heapCmd.Equals("a"))
             {
+                theNums.Add(heapArg);
                 AddArg(heapArg);
             }
 
@@ -206,22 +238,56 @@ namespace HackerRankCollection.ProblemSolutions2
             string[] res = new string[heapCmd.Length];
             for (int ii = 0; ii < heapCmd.Length; ii++)
             {
+                //if (ii == 1326 || heapArg[ii] == 0) 
+                //    minHeap.DoubleCheckAndFix();
                 res[ii] = ProcessHeapCommand(heapCmd[ii], heapArg[ii]);
+                if (!minHeap.isHeapValid())
+                {
+                    //if (ii == 1326)
+                    //{
+                    var theNumsArray = theNums.ToArray();
+                    Array.Sort(theNumsArray);
+                    Debug.WriteLine(string.Format("Stopping at ii = {0}", ii));
+                    Debug.WriteLine(string.Format("number of items so far: {0}", theNumsArray.Length));
+                    Debug.WriteLine(string.Format("elem {0} : {2}, elem {1}: {3}"
+                                , theNumsArray.Length / 2, (theNumsArray.Length / 2) + 1
+                                , theNumsArray[theNumsArray.Length / 2]
+                                , theNumsArray[(theNumsArray.Length / 2) - 1]));
+
+                    var theMinHeapArray = minHeap.getSortedHeapEntries();
+                    var theMaxHeapArray = maxHeap.getSortedHeapEntries();
+                    for (int jj = 0; jj < theNumsArray.Length; jj++)
+                    {
+                        Debug.WriteLine(theNumsArray[jj]);
+                    }
+                    for (int jj = 0; jj < theMinHeapArray.Length; jj++)
+                    {
+                        Debug.WriteLine(theMinHeapArray[jj]);
+                    }
+
+                    //    for (int jj = 0; jj < theMaxHeapArray.Length; jj++)
+                    //    {
+                    //        Debug.WriteLine(theMaxHeapArray[jj]);
+                    //    }
+                    //    Debug.Write("mad **ish");
+                    //}
+                    //}
+                }
             }
             return res;
         }
 
         public static void median(string[] a, int[] x)
-        {
-            InitHeaps(a.Length);
-
-            string[] res = ProcessHeapCommands(a, x);
-
-            for (int ii = 0; ii < a.Length; ii++)
             {
-                Debug.WriteLine(res[ii]);
+                InitHeaps(a.Length);
+
+                string[] res = ProcessHeapCommands(a, x);
+
+                for (int ii = 0; ii < a.Length; ii++)
+                {
+                    Debug.WriteLine(res[ii]);
+                }
             }
+            #endregion
         }
-        #endregion
     }
-}
