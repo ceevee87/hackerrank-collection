@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HackerRankCollection.ProblemSolutions2;
 using NUnit.Framework;
+using System.Reflection;
 
 namespace HackerRankCollectionTests.ProblemSolutionTests2
 {
@@ -32,7 +33,16 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
         public void sample1Test()
         {
             InputDataMedianUpdate oData = GetInputData(_sTestDataRootDir + "sample1_input.txt");
-            string[] result = MedianUpdates.ProcessHeapCommands(oData.actions, oData.heapArgs);
+
+            //var type = typeof(MedianUpdates);
+            //MethodInfo method = type.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
+            //                .Where(x => x.Name == "ProcessHeapCommands" && x.IsPrivate)
+            //                .FirstOrDefault();
+
+            //if (method == null) Assert.Fail("Could not instance of MedianUpdate class.");
+            //string[] result = (string[])method.Invoke(null, new object[] { oData.actions, oData.heapArgs });
+
+            string[] result = MedianUpdates.medianTest(oData.actions, oData.heapArgs);
             string[] expected = GetAnswerData(_sTestDataRootDir + "sample1_answer.txt", oData.actions.Length);
             CollectionAssert.AreEqual(expected, result);
         }
@@ -41,7 +51,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
         public void HackerrankTest1()
         {
             InputDataMedianUpdate oData = GetInputData(_sTestDataRootDir + "hackerrank1_input.txt");
-            string[] result = MedianUpdates.ProcessHeapCommands(oData.actions, oData.heapArgs);
+            string[] result = MedianUpdates.medianTest(oData.actions, oData.heapArgs);
             string[] expected = GetAnswerData(_sTestDataRootDir + "hackerrank1_answer.txt", oData.actions.Length);
             CollectionAssert.AreEqual(expected, result);
         }
@@ -50,7 +60,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
         public void HackerrankTest4()
         {
             InputDataMedianUpdate oData = GetInputData(_sTestDataRootDir + "hackerrank4_input.txt");
-            string[] result = MedianUpdates.ProcessHeapCommands(oData.actions, oData.heapArgs);
+            string[] result = MedianUpdates.medianTest(oData.actions, oData.heapArgs);
             string[] expected = GetAnswerData(_sTestDataRootDir + "hackerrank4_answer.txt", oData.actions.Length);
             CollectionAssert.AreEqual(expected, result);
         }
@@ -59,7 +69,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
         public void HackerrankTest6()
         {
             InputDataMedianUpdate oData = GetInputData(_sTestDataRootDir + "hackerrank6_input.txt");
-            string[] result = MedianUpdates.ProcessHeapCommands(oData.actions, oData.heapArgs);
+            string[] result = MedianUpdates.medianTest(oData.actions, oData.heapArgs);
             string[] expected = GetAnswerData(_sTestDataRootDir + "hackerrank6_answer.txt", oData.actions.Length);
             CollectionAssert.AreEqual(expected, result);
         }
@@ -68,7 +78,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
         public void HackerrankTest8()
         {
             InputDataMedianUpdate oData = GetInputData(_sTestDataRootDir + "hackerrank8_input.txt");
-            string[] result = MedianUpdates.ProcessHeapCommands(oData.actions, oData.heapArgs);
+            string[] result = MedianUpdates.medianTest(oData.actions, oData.heapArgs);
             string[] expected = GetAnswerData(_sTestDataRootDir + "hackerrank8_answer.txt", oData.actions.Length);
             CollectionAssert.AreEqual(expected, result);
         }
