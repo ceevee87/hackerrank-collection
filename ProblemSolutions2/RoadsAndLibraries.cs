@@ -29,10 +29,20 @@ namespace HackerRankCollection.ProblemSolutions2
             private int _cityNumber;
             private int _cityClusterId;
 
-            public int CityNumber { get => _cityNumber; set => _cityNumber = value; }
-            public int CityClusterId { get => _cityClusterId; set => _cityClusterId = value; }
+            public int CityNumber
+            {
+                get { return _cityNumber; }
+                set
+                {
+                    _cityNumber = value;
+                }
+            }
+            public int CityClusterId
+            {
+                get { return _cityClusterId; }
+                set { _cityClusterId = value; }
+            }
         }
-
         #endregion
 
         private static long calcRoadAndLibraryCostForCityCluster(int numCities, int roadCost, int libraryCost)

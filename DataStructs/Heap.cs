@@ -204,7 +204,7 @@ namespace DataStructs
         public int[] getSortedHeapEntries()
         {
             int[] result = new int[_size];
-            Array.Copy(sourceArray: _heap, 1, result, 0, _size);
+            Array.Copy(_heap, 1, result, 0, _size);
             Array.Sort(result);
             return result;
         }
@@ -222,7 +222,13 @@ namespace DataStructs
             if (_size >= (_heap.Length - 1) || _size == 0) return;
 
             _heap[x] = _heap[_size--];
-            Heapify(x);
+            if (_heap[x] > _heap[Parent(x)])
+            {
+                Heapify(x);
+            } else
+            {
+                HeapifyUp(x);
+            }
         }
 
         public int Find(int x)
@@ -260,10 +266,10 @@ namespace DataStructs
 
         private void HeapifyUp(int k)
         {
-            while (_heap[k] < _heap[k / 2])
+            while (_heap[k] < _heap[Parent(k)])
             {
-                Swap(k, k / 2);
-                k = k / 2;
+                Swap(k, Parent(k));
+                k = Parent(k);
             }
         }
 
@@ -332,7 +338,7 @@ namespace DataStructs
         public int[] getSortedHeapEntries()
         {
             int[] result = new int[_size];
-            Array.Copy(sourceArray: _heap, 1, result, 0, _size);
+            Array.Copy(_heap, 1, result, 0, _size);
             Array.Sort(result);
             return result;
         }
@@ -350,6 +356,15 @@ namespace DataStructs
             if (_size >= (_heap.Length - 1) || _size == 0) return;
 
             _heap[x] = _heap[_size--];
+            if (_heap[x] < _heap[Parent(x)])
+            {
+                Heapify(x);
+            }
+            else
+            {
+                HeapifyUp(x);
+            }
+
             Heapify(x);
         }
 

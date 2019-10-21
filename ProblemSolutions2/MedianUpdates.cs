@@ -218,7 +218,7 @@ namespace HackerRankCollection.ProblemSolutions2
             if (heapCmd.Equals("r"))
             {
                 //if (!theNums.Remove(heapArg)) return "Wrong!";
-                _ = theNums.Remove(heapArg);
+                theNums.Remove(heapArg);
                 if (!RemoveArg(heapArg)) return "Wrong!";
             }
             if (heapCmd.Equals("a"))
@@ -241,7 +241,7 @@ namespace HackerRankCollection.ProblemSolutions2
                 //if (ii == 1326 || heapArg[ii] == 0) 
                 //    minHeap.DoubleCheckAndFix();
                 res[ii] = ProcessHeapCommand(heapCmd[ii], heapArg[ii]);
-                if (!minHeap.isHeapValid())
+                if (!maxHeap.isHeapValid())
                 {
                     //if (ii == 1326)
                     //{
