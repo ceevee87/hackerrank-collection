@@ -11,6 +11,7 @@ namespace HackerRankCollection.ProblemSolutions2
     // this problem is rated Hard and worth 70 points on Hacker Rank
     public static class MedianUpdates
     {
+        #region MedianTrackerCollection
         internal class MedianTracker
         {
             private IQHeap minHeap;
@@ -185,8 +186,9 @@ namespace HackerRankCollection.ProblemSolutions2
             }
         }
 
-        #region solution
+        #endregion
 
+        #region solution
         private static string ProcessHeapCommand(string heapCmd, int heapArg, MedianTracker medianTracker)
         {
             if (heapCmd.Equals("r"))
@@ -218,16 +220,16 @@ namespace HackerRankCollection.ProblemSolutions2
         }
 
         public static void median(string[] a, int[] x)
+        {
+            MedianTracker medianTracker = new MedianTracker(a.Length);
+
+            string[] res = ProcessHeapCommands(a, x, medianTracker);
+
+            for (int ii = 0; ii < a.Length; ii++)
             {
-                MedianTracker medianTracker = new MedianTracker(a.Length);
-
-                string[] res = ProcessHeapCommands(a, x, medianTracker);
-
-                for (int ii = 0; ii < a.Length; ii++)
-                {
-                    Debug.WriteLine(res[ii]);
-                }
+                Debug.WriteLine(res[ii]);
             }
-            #endregion
         }
+        #endregion
     }
+}
