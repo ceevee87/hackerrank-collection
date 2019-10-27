@@ -24,20 +24,6 @@ namespace HackerRankCollection.ProblemSolutions2
 
     public static class MinimumAverageWaitTime
     {
-        /*
-         * Definitely not necessary to use dynamic 
-         * programming. Can be solved in O(n log n) 
-         * by creating and sorting a list of 
-         * the (arrival, cook_time) pairs by arrival, 
-         * then using a small min-heap, sorted by cook time, 
-         * to keep track of the people who are currently in 
-         * the pizza shop (i.e.whose arrival time < the total time elapsed) 
-         * by using the list as a stack.This is O(n log n + n log p) 
-         * time where p is the number of people in the shop 
-         * at any given time, and since p <= n, the 
-         * algorithm is O(n log n). Here is the code:
-         */
-
         public enum HeapType { ByArrivalTime, ByOrderLength };
 
         #region CustomerCollection
@@ -147,7 +133,11 @@ namespace HackerRankCollection.ProblemSolutions2
         }
 
         /*
-         * Complete the minimumAverage function below.
+         * create a min heap of all customers based on their arrival time. 
+         * then using a second min-heap, based on cook time, 
+         * keep track of the people who are currently in 
+         * the pizza shop (i.e.whose arrival time < the total time elapsed) 
+         * process the people in the order determined by the 2nd min heap.
          */
         public static long minimumAverage(int[][] aCustomers)
         {
@@ -160,6 +150,9 @@ namespace HackerRankCollection.ProblemSolutions2
             long totalTimeElapsed = custsByArrivalTime.Peek.ArrivalTime;
             while (custsByArrivalTime.Size > 0 || custsByOrderLength.Size > 0)
             {
+                // this handles the disjoint case where N customers come into 
+                // the store all at exclusive times during the day (none of the customers
+                // see each other in the restaurant)
                 if (custsByOrderLength.Size == 0 && custsByArrivalTime.Size > 0)
                 {
                     custsByOrderLength.Push(custsByArrivalTime.Pop());
@@ -173,8 +166,9 @@ namespace HackerRankCollection.ProblemSolutions2
                 // get all customers who arrive while the current customer's 
                 // order is being prepared (customer arrival time + order length)
 
-                // now get all the customers and order them by order length and put them into
-                // the order queue.
+                // all customers who are in the restaurant at the same time are ordered by
+                // the length of their food order. always pick orders that have the
+                // shortest prep time. 
                 while (custsByArrivalTime.Size > 0 && custsByArrivalTime.Peek.ArrivalTime <= totalTimeElapsed)
                 {
                     custsByOrderLength.Push(custsByArrivalTime.Pop());
