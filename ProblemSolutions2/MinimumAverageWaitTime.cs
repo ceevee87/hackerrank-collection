@@ -154,15 +154,17 @@ namespace HackerRankCollection.ProblemSolutions2
             int numCustomers = aCustomers.Length;
 
             CustomerCollection custsByArrivalTime = InitCustomerCollection(aCustomers, HeapType.ByArrivalTime);
-
             CustomerCollection custsByOrderLength = new CustomerCollection(aCustomers.Length, HeapType.ByOrderLength);
 
-            custsByOrderLength.Push(custsByArrivalTime.Pop());
-
             long  waitTimeTotal = 0;
-            long totalTimeElapsed = custsByOrderLength.Peek.ArrivalTime;
-            while (custsByOrderLength.Size > 0)
+            long totalTimeElapsed = custsByArrivalTime.Peek.ArrivalTime;
+            while (custsByArrivalTime.Size > 0 || custsByOrderLength.Size > 0)
             {
+                if (custsByOrderLength.Size == 0 && custsByArrivalTime.Size > 0)
+                {
+                    custsByOrderLength.Push(custsByArrivalTime.Pop());
+                }
+
                 Customer currentCustomer = custsByOrderLength.Pop();
 
                 totalTimeElapsed += currentCustomer.OrderLength;
