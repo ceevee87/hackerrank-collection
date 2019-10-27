@@ -83,6 +83,17 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
 
         }
 
+        [Test]
+        public void HackerrankTest12()
+        {
+            int[][] oData = GetInputData(_sTestDataRootDir + "hackerrank12_input.txt");
+            long result = MinimumAverageWaitTime.minimumAverage(oData);
+
+            long expected = 6;
+            Assert.AreEqual(expected, result);
+
+        }
+
         private int[][] GetInputData(string inFile)
         {
             int[][] customers;

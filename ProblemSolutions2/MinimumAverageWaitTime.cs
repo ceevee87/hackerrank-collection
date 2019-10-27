@@ -154,24 +154,16 @@ namespace HackerRankCollection.ProblemSolutions2
             int numCustomers = aCustomers.Length;
 
             CustomerCollection custsByArrivalTime = InitCustomerCollection(aCustomers, HeapType.ByArrivalTime);
-            CustomerCollection debugIsh = InitCustomerCollection(aCustomers, HeapType.ByArrivalTime);
-
-            while (debugIsh.Size > 0)
-            {
-                Debug.WriteLine(debugIsh.Pop().ArrivalTime);
-            }
 
             CustomerCollection custsByOrderLength = new CustomerCollection(aCustomers.Length, HeapType.ByOrderLength);
-            List<Customer> customerOrderQueue = new List<Customer>();
 
-            customerOrderQueue.Add(custsByArrivalTime.Pop());
+            custsByOrderLength.Push(custsByArrivalTime.Pop());
 
             long  waitTimeTotal = 0;
-            long totalTimeElapsed = customerOrderQueue.ElementAt(0).ArrivalTime;
-            while (customerOrderQueue.Count > 0)
+            long totalTimeElapsed = custsByOrderLength.Peek.ArrivalTime;
+            while (custsByOrderLength.Size > 0)
             {
-                Customer currentCustomer = customerOrderQueue.ElementAt(0);
-                customerOrderQueue.RemoveAt(0);
+                Customer currentCustomer = custsByOrderLength.Pop();
 
                 totalTimeElapsed += currentCustomer.OrderLength;
                 waitTimeTotal += (totalTimeElapsed - currentCustomer.ArrivalTime);
@@ -179,17 +171,13 @@ namespace HackerRankCollection.ProblemSolutions2
                 // get all customers who arrive while the current customer's 
                 // order is being prepared (customer arrival time + order length)
 
+                // now get all the customers and order them by order length and put them into
+                // the order queue.
                 while (custsByArrivalTime.Size > 0 && custsByArrivalTime.Peek.ArrivalTime <= totalTimeElapsed)
                 {
                     custsByOrderLength.Push(custsByArrivalTime.Pop());
                 }
 
-                // now get all the customers and order them by order length and put them into
-                // the order queue.
-                while (custsByOrderLength.Size > 0)
-                {
-                    customerOrderQueue.Add(custsByOrderLength.Pop());
-                }
             }
             return waitTimeTotal / numCustomers;
         }
