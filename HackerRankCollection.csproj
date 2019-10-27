@@ -61,6 +61,7 @@
     <Compile Include="ProblemSolutions1\SherlockAndTheValidString.cs" />
     <Compile Include="ProblemSolutions1\Waiter.cs" />
     <Compile Include="ProblemSolutions2\MedianUpdates.cs" />
+    <Compile Include="ProblemSolutions2\MinimumAverageWaitTime.cs" />
     <Compile Include="ProblemSolutions2\RoadsAndLibraries.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
