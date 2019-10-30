@@ -12,16 +12,17 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
                     , Path.GetDirectoryName(Directory.GetParent(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)).FullName)
                     , @"TestData\NoPrefixSet");
 
+
         [Test]
-        public void hackerrank41Test()
+        public void hackerrank16Test()
         {
-            string[] oData = GetInputData(_sTestDataRootDir + "hackerrank41_input.txt");
+            string[] oData = GetInputData(_sTestDataRootDir + "hackerrank16_input.txt");
             PrefixCheckResult result = NoPrefixSet.DoBadPrefixCheck(oData);
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(true, result._result);
-                Assert.IsTrue(true);
+                Assert.AreEqual(false, result._result);
+                Assert.AreEqual("jiechedejbbeaabeef", result._word);
             });
 
         }
@@ -50,6 +51,20 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
             {
                 Assert.AreEqual(false, result._result);
                 Assert.AreEqual("aacghgh", result._word);
+            });
+
+        }
+
+        [Test]
+        public void hackerrank41Test()
+        {
+            string[] oData = GetInputData(_sTestDataRootDir + "hackerrank41_input.txt");
+            PrefixCheckResult result = NoPrefixSet.DoBadPrefixCheck(oData);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(true, result._result);
+                Assert.IsTrue(true);
             });
 
         }
