@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HackerRankCollection.ProblemSolutions2
 {
@@ -20,39 +17,52 @@ namespace HackerRankCollection.ProblemSolutions2
 
     public static class NoPrefixSet
     {
-        private static Dictionary<string, byte> _prefixDict = new Dictionary<string, byte>();
+        private static HashSet<string> _prefixes = new HashSet<string>();
+        private static HashSet<string> _words = new HashSet<string>();
 
-        private static bool IsWordSafeToAddToPrefixHash(string word)
+        private static void InitPrefixAndWordCollections()
         {
-            if (_prefixDict.ContainsKey(word)) return false;
+            if (_prefixes == null)
+            {
+                _prefixes = new HashSet<string>();
+            }
+            _prefixes.Clear();
 
-            // check if any prefixes of the current word are in the 
-            // dictionary stored as an entire word.
+            if (_words == null)
+            {
+                _words = new HashSet<string>();
+            }
+            _words.Clear();
+        }
+
+        private static bool RecordWordAndPrefixes(string word)
+        {
+            if (_words.Contains(word)) return false;
+            if (_prefixes.Contains(word)) return false;
+
+            _words.Add(word);
+
             for (int ii = 1; ii < word.Length; ii++)
             {
                 string prefix = word.Substring(0, ii);
-                if (_prefixDict.ContainsKey(prefix) && _prefixDict[prefix] == 1)
+                if (_words.Contains(prefix)) return false;
+                if (!_prefixes.Contains(prefix))
                 {
-                    return false;
+                    _prefixes.Add(prefix);
                 }
             }
             return true;
         }
 
-        private static void UpdatePreFixHash(string word)
+        public static PrefixCheckResult DoBadPrefixCheck(string[] words)
         {
-            if (!_prefixDict.ContainsKey(word))
+            InitPrefixAndWordCollections();
+            foreach (string w in words)
             {
-                _prefixDict.Add(word, 1);
+                // check if word exists in the prefix dictionary as a "prefix" type
+                if (!RecordWordAndPrefixes(w)) return new PrefixCheckResult(false, w);
             }
-            for (int ii = 1; ii < word.Length; ii++)
-            {
-                string prefix = word.Substring(0, ii);
-                if (!_prefixDict.ContainsKey(prefix))
-                {
-                    _prefixDict.Add(prefix, 0);
-                }
-            }
+            return new PrefixCheckResult(true, string.Empty);
         }
 
         private static string[] GetInputData()
@@ -66,32 +76,9 @@ namespace HackerRankCollection.ProblemSolutions2
             return result;
         }
 
-        private static void InitPrefixMap()
-        {
-            if (_prefixDict == null)
-            {
-                _prefixDict = new Dictionary<string, byte>();
-            }
-            _prefixDict.Clear();
-        }
-
-        public static PrefixCheckResult DoBadPrefixCheck(string[] words)
-        {
-            InitPrefixMap();
-            foreach (string w in words)
-            {
-                // check if word exists in the prefix dictionary as a "prefix" type
-                if (!IsWordSafeToAddToPrefixHash(w)) return new PrefixCheckResult(false, w);
-
-                // insert all possible prefix combinations of the words into the dictionary
-                UpdatePreFixHash(w);
-            }
-            return new PrefixCheckResult(true, string.Empty);
-        }
-
         public static void ProcessNoPrefixSet(string[] args)
         {
-            InitPrefixMap();
+            InitPrefixAndWordCollections();
             string[] words = GetInputData();
             PrefixCheckResult res = DoBadPrefixCheck(words);
             if (!res._result)

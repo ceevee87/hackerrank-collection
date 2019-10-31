@@ -14,6 +14,34 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
 
 
         [Test]
+        public void hackerrank1Test()
+        {
+            string[] oData = GetInputData(_sTestDataRootDir + "hackerrank1_input.txt");
+            PrefixCheckResult result = NoPrefixSet.DoBadPrefixCheck(oData);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(false, result._result);
+                Assert.AreEqual("d", result._word);
+            });
+
+        }
+
+        [Test]
+        public void hackerrank2Test()
+        {
+            string[] oData = GetInputData(_sTestDataRootDir + "hackerrank2_input.txt");
+            PrefixCheckResult result = NoPrefixSet.DoBadPrefixCheck(oData);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(false, result._result);
+                Assert.AreEqual("ej", result._word);
+            });
+
+        }
+
+        [Test]
         public void hackerrank16Test()
         {
             string[] oData = GetInputData(_sTestDataRootDir + "hackerrank16_input.txt");
