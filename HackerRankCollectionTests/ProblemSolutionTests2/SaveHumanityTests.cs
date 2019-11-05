@@ -50,6 +50,29 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
         }
 
         [Test]
+        public void HackerrankTest4()
+        {
+            List<string[]> oData = GetInputData(_sTestDataRootDir + "hackerrank4_input.txt");
+
+            List<string[]> result = new List<string[]>();
+            List<string[]> expected = GetAnswerData(_sTestDataRootDir + "hackerrank4_answer.txt", oData.Count);
+
+            foreach (string[] arr in oData)
+            {
+                int[] r = SaveHumanity.GetVirusIndices(arr[0], arr[1]);
+                if (r[0] == -1)
+                {
+                    result.Add(new string[1] { "No Match!" });
+                }
+                else
+                {
+                    result.Add(r.Select(i => i.ToString()).ToArray());
+                }
+            }
+            CollectionAssert.AreEqual(expected, result);
+        }
+
+        [Test]
         public void sampleInput1()
         {
             List<string[]> oData = GetInputData(_sTestDataRootDir + "sampleinput01_input.txt");
@@ -116,6 +139,26 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
                 {
                     string[] pv = fsr.ReadLine().Split(' ');
                     res.Add(pv);
+                }
+            }
+            return res;
+        }
+
+        private List<string[]> GetAnswerData(string ansFile, int numResults)
+        {
+            List<string[]> res = new List<string[]>();
+
+            using (StreamReader fsr = new StreamReader(ansFile))
+            {
+                for (int ii = 0; ii < numResults; ii++)
+                {
+                    string line = fsr.ReadLine();
+                    if (line.Equals("No Match!"))
+                    {
+                        res.Add(new string[1] { "No Match!" });
+                        continue;
+                    }
+                    res.Add(line.Split(' '));
                 }
             }
             return res;
