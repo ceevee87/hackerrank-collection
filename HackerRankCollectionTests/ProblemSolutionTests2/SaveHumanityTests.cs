@@ -17,6 +17,39 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
             , @"TestData\SaveHumanity");
 
         [Test]
+        public void stringHashTest1()
+        {
+            SaveHumanity.InitPowers(5);
+            SaveHumanity.BigPrime = 536870923;
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(3752127, SaveHumanity.CalculateStringHash("hello"));
+                Assert.AreEqual(2504317, SaveHumanity.CalculateStringHash("ellow"));
+                Assert.AreEqual(5705377, SaveHumanity.CalculateStringHash("llowo"));
+                Assert.AreEqual(5763308, SaveHumanity.CalculateStringHash("lowor"));
+                Assert.AreEqual(7269508, SaveHumanity.CalculateStringHash("oworl"));
+                Assert.AreEqual(10786572, SaveHumanity.CalculateStringHash("world"));
+            });
+        }
+
+        [Test]
+        public void rollingStringHashTest1()
+        {
+            SaveHumanity.InitPowers(5);
+            SaveHumanity.BigPrime = 536870923;
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(2504317,  SaveHumanity.CalculateNewRollingHash(3752127, "hellow", 4));
+                Assert.AreEqual(5705377,  SaveHumanity.CalculateNewRollingHash(2504317, "ellowo", 4));
+                Assert.AreEqual(5763308,  SaveHumanity.CalculateNewRollingHash(5705377, "llowor",4));
+                Assert.AreEqual(7269508,  SaveHumanity.CalculateNewRollingHash(5763308, "loworl",4));
+                Assert.AreEqual(10786572, SaveHumanity.CalculateNewRollingHash(7269508, "oworld",4));
+            });
+        }
+
+        [Test]
         public void sampleInput1()
         {
             List<string[]> oData = GetInputData(_sTestDataRootDir + "sampleinput01_input.txt");
@@ -57,6 +90,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
 
             foreach (string[] arr in oData)
             {
+
                 int[] r = SaveHumanity.GetVirusIndices(arr[0], arr[1]);
                 if (r[0] == -1)
                 {

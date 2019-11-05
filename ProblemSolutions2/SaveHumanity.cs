@@ -8,17 +8,23 @@ namespace HackerRankCollection.ProblemSolutions2
 {
     public static class SaveHumanity
     {
-        private static long bigPrime = 7379219697821987;
+        private static long _bigPrime = 536870923; //7379219697821987;
         private static long[] _powers;
         private static long _exponentBase = 26;
         private static long _maxHashDistance;
+
+        public static long BigPrime
+        {
+            set { _bigPrime = value; }
+            get { return _bigPrime; }
+        }
 
         private static void InitMaxHashDistance(int length)
         {
             _maxHashDistance = (long)('z' - 'a') * _powers[length - 1];
         }
 
-        private static void InitPowers(int n)
+        public static void InitPowers(int n)
         {
             // this going to calculate the exponent component of the
             // Rabin-Karp rolling hash. the module with a prime is already 
@@ -30,7 +36,7 @@ namespace HackerRankCollection.ProblemSolutions2
             {
                 for (int ee = 0; ee < ii; ee++)
                 {
-                    _powers[ii] = (_powers[ii] * _exponentBase) % bigPrime;
+                    _powers[ii] = (_powers[ii] * _exponentBase) % _bigPrime;
                 }
             }
         }
@@ -41,7 +47,7 @@ namespace HackerRankCollection.ProblemSolutions2
             return (long)c - 96;
         }
 
-        private static long CalculateStringHash(string v)
+        public static long CalculateStringHash(string v)
         {
             long res = 0;
 
@@ -56,7 +62,7 @@ namespace HackerRankCollection.ProblemSolutions2
             return res;
         }
 
-        private static long CalculateNewRollingHash(long rollingHash, string sub, int n)
+        public static long CalculateNewRollingHash(long rollingHash, string sub, int n)
         {
             long res;
             res = _exponentBase * (rollingHash - getCharValueForHashCalculation(sub[0]) * _powers[n]) + getCharValueForHashCalculation(sub[sub.Length - 1]);
@@ -89,7 +95,7 @@ namespace HackerRankCollection.ProblemSolutions2
             long virusHash = CalculateStringHash(v);
             long rollingHash = CalculateStringHash(p.Substring(0, v.Length));
 
-            for (int ii = 0; ii < p.Length - v.Length; ii++)
+            for (int ii = 0; ii <= p.Length - v.Length; ii++)
             {
                 // calculate the hash
                 if (ii > 0)
