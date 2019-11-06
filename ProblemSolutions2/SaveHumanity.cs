@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,20 @@ namespace HackerRankCollection.ProblemSolutions2
         private static long[] _powers;
         private static long _exponentBase = 26;
         private static long _maxHashDistance;
+        public static uint _toleranceCheckCounter;
+        public static uint _equalityCheckCounter;
+
+        public static uint EqualityCheckCounter
+        {
+            set { _equalityCheckCounter = value; }
+            get { return _equalityCheckCounter; }
+        }
+
+        public static uint ToleranceCheckCounter
+        {
+            set { _toleranceCheckCounter = value; }
+            get { return _toleranceCheckCounter;  }
+        }
 
         public static long BigPrime
         {
@@ -26,10 +41,13 @@ namespace HackerRankCollection.ProblemSolutions2
 
         public static void InitPowers(int n)
         {
+            Stopwatch sw = new Stopwatch();
             // this going to calculate the exponent component of the
             // Rabin-Karp rolling hash. the module with a prime is already 
             // included in these values. 
             _powers = new long[n];
+
+            sw.Start();
             for (int ii = 0; ii < _powers.Length; ii++) _powers[ii] = 1;
 
             for (int ii = 0; ii < _powers.Length; ii++)
@@ -39,6 +57,8 @@ namespace HackerRankCollection.ProblemSolutions2
                     _powers[ii] = (_powers[ii] * _exponentBase) % _bigPrime;
                 }
             }
+            sw.Stop();
+            Debug.WriteLine(string.Format("InitPowers : Time elapsed: {0} seconds", (float)sw.ElapsedMilliseconds / 1000.0));
         }
 
         private static long getCharValueForHashCalculation(char c)
@@ -55,10 +75,18 @@ namespace HackerRankCollection.ProblemSolutions2
             // is v[ii] - 97 > 0?
             // is 0 <= ii < 26 ?
             // is v null?
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
             for (int ii = 0; ii < v.Length; ii++)
             {
                 res += getCharValueForHashCalculation(v[ii]) * _powers[v.Length - ii - 1];
             }
+
+            sw.Stop();
+            Debug.WriteLine(string.Format("CalculateStringHash : Time elapsed: {0} seconds", (float)sw.ElapsedMilliseconds / 1000.0));
+
             return res;
         }
 
@@ -72,6 +100,7 @@ namespace HackerRankCollection.ProblemSolutions2
         private static bool WithinTolerance(string sub, string v, long rollinghash, long virushash)
         {
             if (Math.Abs(rollinghash - virushash) > _maxHashDistance) return false;
+            _toleranceCheckCounter++;
 
             sbyte count = 1;
             for (int ii = 0; ii < v.Length; ii++)
@@ -105,6 +134,7 @@ namespace HackerRankCollection.ProblemSolutions2
                 string sub = p.Substring(ii, v.Length);
                 if (virusHash == rollingHash)
                 {
+                    _equalityCheckCounter++;
                     if (sub.Equals(v))
                     {
                         lResult.Add(ii);
