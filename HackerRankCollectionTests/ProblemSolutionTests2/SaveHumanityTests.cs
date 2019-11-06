@@ -50,6 +50,110 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
         }
 
         [Test]
+        public void sampleInputX_()
+        {
+            List<string[]> oData = GetInputData(_sTestDataRootDir + "sampleinputX_input.txt");
+
+            List<string[]> expected = GetAnswerData(_sTestDataRootDir + "hackerrankX_answer.txt", oData.Count);
+
+            int testCounter = 0;
+            Assert.Multiple(() =>
+            {
+                foreach (string[] arr in oData)
+                {
+                    int[] r = SaveHumanity.GetVirusIndices(arr[0], arr[1]);
+                    if (r[0] == -1)
+                    {
+                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), new string[1] { "No Match!" });
+                    }
+                    else
+                    {
+                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), r.Select(i => i.ToString()).ToArray());
+                    }
+                    testCounter++;
+                }
+            });
+        }
+
+        [Test]
+        public void HackerrankTest2()
+        {
+            List<string[]> oData = GetInputData(_sTestDataRootDir + "hackerrank2_input.txt");
+
+            List<string[]> expected = GetAnswerData(_sTestDataRootDir + "hackerrank2_answer.txt", oData.Count);
+
+            int testCounter = 0;
+            Assert.Multiple(() =>
+            {
+                foreach (string[] arr in oData)
+                {
+                    int[] r = SaveHumanity.GetVirusIndices(arr[0], arr[1]);
+                    if (r[0] == -1)
+                    {
+                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), new string[1] { "No Match!" });
+                    }
+                    else
+                    {
+                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), r.Select(i => i.ToString()).ToArray());
+                    }
+                    testCounter++;
+                }
+            });
+        }
+
+        [Test]
+        public void HackerrankTest3()
+        {
+            List<string[]> oData = GetInputData(_sTestDataRootDir + "hackerrank3_input.txt");
+
+            List<string[]> expected = GetAnswerData(_sTestDataRootDir + "hackerrank3_answer.txt", oData.Count);
+
+            int testCounter = 0;
+            Assert.Multiple(() =>
+            {
+                foreach (string[] arr in oData)
+                {
+                    int[] r = SaveHumanity.GetVirusIndices(arr[0], arr[1]);
+                    if (r[0] == -1)
+                    {
+                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), new string[1] { "No Match!" });
+                    }
+                    else
+                    {
+                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), r.Select(i => i.ToString()).ToArray());
+                    }
+                    testCounter++;
+                }
+            });
+        }
+
+        [Test]
+        public void HackerrankTest8()
+        {
+            List<string[]> oData = GetInputData(_sTestDataRootDir + "hackerrank8_input.txt");
+
+            List<string[]> expected = GetAnswerData(_sTestDataRootDir + "hackerrank8_answer.txt", oData.Count);
+
+            int testCounter = 0;
+            Assert.Multiple(() =>
+            {
+                foreach (string[] arr in oData)
+                {
+                    int[] r = SaveHumanity.GetVirusIndices(arr[0], arr[1]);
+                    if (r[0] == -1)
+                    {
+                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), new string[1] { "No Match!" });
+                    }
+                    else
+                    {
+                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), r.Select(i => i.ToString()).ToArray());
+                    }
+                    testCounter++;
+                }
+            });
+        }
+
+        [Test]
         public void HackerrankTest4()
         {
             List<string[]> oData = GetInputData(_sTestDataRootDir + "hackerrank4_input.txt");
