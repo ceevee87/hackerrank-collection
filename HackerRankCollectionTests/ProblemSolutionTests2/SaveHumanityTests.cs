@@ -77,26 +77,30 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
         {
             List<string[]> oData = GetInputData(_sTestDataRootDir + "sampleinput01_input.txt");
 
-            List<string[]> result = new List<string[]>();
             List<string[]> expected = new List<string[]>();
 
             expected.Add(new string[2] { "1", "2" });
             expected.Add(new string[1] { "No Match!" });
             expected.Add(new string[2] { "0", "2" });
 
-            foreach (string[] arr in oData)
+            int testCounter = 0;
+            Assert.Multiple(() =>
             {
-                int[] r = SaveHumanity.GetVirusIndices(arr[0], arr[1]);
-                if (r[0] == -1)
+
+                foreach (string[] arr in oData)
                 {
-                    result.Add(new string[1] { "No Match!" });
+                    int[] r = SaveHumanity.GetVirusIndices(arr[0], arr[1]);
+                    if (r[0] == -1)
+                    {
+                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), new string[1] { "No Match!" });
+                    }
+                    else
+                    {
+                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), r.Select(i => i.ToString()).ToArray());
+                    }
+                    testCounter++;
                 }
-                else
-                {
-                    result.Add(r.Select(i => i.ToString()).ToArray());
-                }
-            }
-            CollectionAssert.AreEqual(expected, result);
+            });
         }
 
         [Test]
