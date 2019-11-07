@@ -16,6 +16,21 @@ namespace HackerRankCollection.ProblemSolutions2
         public static uint _toleranceCheckCounter;
         public static uint _equalityCheckCounter;
         private static string _debugMsg;
+        private static long _minHash;
+        private static long _maxHash;
+
+        public static long BigPrime
+        {
+            set { _bigPrime = value; }
+            get { return _bigPrime; }
+        }
+
+        public static long ExponentBase
+        {
+            set { _exponentBase = value; }
+            get { return _exponentBase; }
+        }
+
 
         public static uint EqualityCheckCounter
         {
@@ -29,15 +44,31 @@ namespace HackerRankCollection.ProblemSolutions2
             get { return _toleranceCheckCounter; }
         }
 
-        public static long BigPrime
-        {
-            set { _bigPrime = value; }
-            get { return _bigPrime; }
-        }
-
         private static void InitMaxHashDistance(int length)
         {
             _maxHashDistance = (long)('z' - 'a') * _powers[length - 1];
+        }
+
+        private static void InitMaxHashDistance(string v)
+        {
+            long highRangePoint = 0;
+            long lowRangePoint = long.MaxValue;
+
+            StringBuilder vprime = new StringBuilder(v);
+            for (int ii=0; ii< v.Length; ii++)
+            {
+                vprime[ii] = 'a';
+                long h1 = CalculateStringHash(vprime.ToString());
+                vprime[ii] = 'z';
+                long h2 = CalculateStringHash(vprime.ToString());
+
+                highRangePoint = Math.Max(Math.Max(h1, h2), highRangePoint);
+                lowRangePoint = Math.Min(Math.Min(h1, h2), lowRangePoint);
+
+                vprime[ii] = v[ii];
+            }
+            _minHash = lowRangePoint;
+            _maxHash = highRangePoint;
         }
 
         public static void InitPowers(int n)
@@ -79,25 +110,33 @@ namespace HackerRankCollection.ProblemSolutions2
 
             for (int ii = 0; ii < v.Length; ii++)
             {
-                res += getCharValueForHashCalculation(v[ii]) * _powers[v.Length - ii - 1];
+                res += ( getCharValueForHashCalculation(v[ii]) * _powers[v.Length - ii - 1] );
             }
+
+            res %= _bigPrime;
 
             //sw.Stop();
             //Debug.WriteLine(string.Format("CalculateStringHash ({0}): Time elapsed: {1} milliseconds", _debugMsg, sw.ElapsedMilliseconds));
 
-            return res;
+            return res ;
         }
 
         public static long CalculateNewRollingHash(long rollingHash, string sub, int n)
         {
-            long res;
-            res = _exponentBase * (rollingHash - getCharValueForHashCalculation(sub[0]) * _powers[n]) + getCharValueForHashCalculation(sub[sub.Length - 1]);
+            long res = rollingHash - getCharValueForHashCalculation(sub[0]) * _powers[n];
+            res *= _exponentBase;
+            res += getCharValueForHashCalculation(sub[sub.Length - 1]);
+            res %= _bigPrime;
+
             return res;
         }
 
         private static bool WithinTolerance(string sub, string v, long rollinghash, long virushash)
         {
             //if (Math.Abs(rollinghash - virushash) > _maxHashDistance) return false;
+
+            if (rollinghash > _maxHash || rollinghash < _minHash) return false;
+
             _toleranceCheckCounter++;
 
             sbyte count = 1;
@@ -117,7 +156,7 @@ namespace HackerRankCollection.ProblemSolutions2
             List<int> lResult = new List<int>();
 
             InitPowers(v.Length);
-            InitMaxHashDistance(v.Length);
+            InitMaxHashDistance(v);
 
             _debugMsg = "virus hash";
             long virusHash = CalculateStringHash(v);
@@ -128,10 +167,6 @@ namespace HackerRankCollection.ProblemSolutions2
             for (int ii = 0; ii <= p.Length - v.Length; ii++)
             {
                 string sub = p.Substring(ii, v.Length);
-                //if (ii > 0)
-                //{
-                //    rollingHash = CalculateStringHash(sub);
-                //}
                 if (virusHash == rollingHash)
                 {
                     _equalityCheckCounter++;

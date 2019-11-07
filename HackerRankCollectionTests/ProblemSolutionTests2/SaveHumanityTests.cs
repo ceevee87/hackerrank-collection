@@ -56,6 +56,35 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
             });
         }
 
+
+        [Test]
+        public void stringHashvRollingTest1()
+        {
+            int sLength = 50;
+            SaveHumanity.InitPowers(sLength);
+            SaveHumanity.BigPrime = 536870923;
+
+            StringBuilder s1 = new StringBuilder(sLength);
+
+            for (int ii = 0; ii < sLength; ii++)
+            {
+                s1.Append('a');
+            }
+            StringBuilder s2 = new StringBuilder(s1.ToString());
+            s2.Append('z');
+
+            long s1HashCalculated = SaveHumanity.CalculateStringHash(s1.ToString());
+            s1[s1.Length - 1] = 'z';
+            long s1ShiftedHashCalculated = SaveHumanity.CalculateStringHash(s1.ToString());
+
+            long s2ShiftedHashCalculated = SaveHumanity.CalculateNewRollingHash(s1HashCalculated, s2.ToString(), sLength - 1);
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(s1ShiftedHashCalculated, s2ShiftedHashCalculated);
+            });
+        }
+
         [Test]
         public void rollingStringHashTest1()
         {
