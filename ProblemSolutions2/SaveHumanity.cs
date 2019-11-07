@@ -74,16 +74,16 @@ namespace HackerRankCollection.ProblemSolutions2
             // is 0 <= ii < 26 ?
             // is v null?
 
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+            //Stopwatch sw = new Stopwatch();
+            //sw.Start();
 
             for (int ii = 0; ii < v.Length; ii++)
             {
                 res += getCharValueForHashCalculation(v[ii]) * _powers[v.Length - ii - 1];
             }
 
-            sw.Stop();
-            Debug.WriteLine(string.Format("CalculateStringHash ({0}): Time elapsed: {1} milliseconds", _debugMsg, sw.ElapsedMilliseconds));
+            //sw.Stop();
+            //Debug.WriteLine(string.Format("CalculateStringHash ({0}): Time elapsed: {1} milliseconds", _debugMsg, sw.ElapsedMilliseconds));
 
             return res;
         }
@@ -97,7 +97,7 @@ namespace HackerRankCollection.ProblemSolutions2
 
         private static bool WithinTolerance(string sub, string v, long rollinghash, long virushash)
         {
-            if (Math.Abs(rollinghash - virushash) > _maxHashDistance) return false;
+            //if (Math.Abs(rollinghash - virushash) > _maxHashDistance) return false;
             _toleranceCheckCounter++;
 
             sbyte count = 1;
@@ -127,28 +127,31 @@ namespace HackerRankCollection.ProblemSolutions2
 
             for (int ii = 0; ii <= p.Length - v.Length; ii++)
             {
-                // calculate the hash
-                if (ii > 0)
-                {
-                    rollingHash = CalculateNewRollingHash(rollingHash, p.Substring(ii - 1, v.Length + 1), v.Length - 1);
-                }
                 string sub = p.Substring(ii, v.Length);
+                //if (ii > 0)
+                //{
+                //    rollingHash = CalculateStringHash(sub);
+                //}
                 if (virusHash == rollingHash)
                 {
                     _equalityCheckCounter++;
                     if (sub.Equals(v))
                     {
                         lResult.Add(ii);
-                        continue;
                     }
                 }
-
-                if (WithinTolerance(sub, v, rollingHash, virusHash))
+                else if (WithinTolerance(sub, v, rollingHash, virusHash))
                 {
                     lResult.Add(ii);
-                    continue;
+                }
+
+                // calculate the hash
+                if (ii < p.Length - v.Length)
+                {
+                    rollingHash = CalculateNewRollingHash(rollingHash, p.Substring(ii, v.Length + 1), v.Length - 1);
                 }
             }
+
             if (lResult.Count == 0)
             {
                 lResult.Add(-1);

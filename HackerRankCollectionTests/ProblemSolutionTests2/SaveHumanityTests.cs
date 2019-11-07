@@ -73,32 +73,6 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
         }
 
         [Test]
-        public void sampleInputX_()
-        {
-            List<string[]> oData = GetInputData(_sTestDataRootDir + "sampleinputX_input.txt");
-
-            List<string[]> expected = GetAnswerData(_sTestDataRootDir + "hackerrankX_answer.txt", oData.Count);
-
-            int testCounter = 0;
-            Assert.Multiple(() =>
-            {
-                foreach (string[] arr in oData)
-                {
-                    int[] r = SaveHumanity.GetVirusIndices(arr[0], arr[1]);
-                    if (r[0] == -1)
-                    {
-                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), new string[1] { "No Match!" });
-                    }
-                    else
-                    {
-                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), r.Select(i => i.ToString()).ToArray());
-                    }
-                    testCounter++;
-                }
-            });
-        }
-
-        [Test]
         public void HackerrankTest2()
         {
             List<string[]> oData = GetInputData(_sTestDataRootDir + "hackerrank2_input.txt");
@@ -184,39 +158,45 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
             List<string[]> result = new List<string[]>();
             List<string[]> expected = GetAnswerData(_sTestDataRootDir + "hackerrank4_answer.txt", oData.Count);
 
-
             int testCounter = 0;
             Stopwatch sw = new Stopwatch();
-            foreach (string[] arr in oData)
+            Assert.Multiple(() =>
             {
-                Debug.WriteLine(string.Format("Test number: {0}", testCounter + 1));
-                Debug.WriteLine(string.Format("Size of human DNA strand: {0}", arr[0].Length));
-                Debug.WriteLine(string.Format("Size of virus DNA strand: {0}", arr[1].Length));
-                Debug.WriteLine(string.Format("Ratio of virus length to human dna length: {0}", (float)arr[1].Length / (float)arr[0].Length));
-                SaveHumanity.ToleranceCheckCounter = 0;
-                SaveHumanity.EqualityCheckCounter = 0;
+                foreach (string[] arr in oData)
+                {
+                    Debug.WriteLine(string.Format("Test number: {0}", testCounter + 1));
+                    Debug.WriteLine(string.Format("Size of human DNA strand: {0}", arr[0].Length));
+                    Debug.WriteLine(string.Format("Size of virus DNA strand: {0}", arr[1].Length));
+                    Debug.WriteLine(string.Format("Ratio of virus length to human dna length: {0}", (float)arr[1].Length / (float)arr[0].Length));
+                    SaveHumanity.ToleranceCheckCounter = 0;
+                    SaveHumanity.EqualityCheckCounter = 0;
 
-                sw.Start();
-                int[] r = SaveHumanity.GetVirusIndices(arr[0], arr[1]);
-                if (r[0] == -1)
-                {
-                    result.Add(new string[1] { "No Match!" });
+                    sw.Start();
+                    string sFailMsg = string.Format("Failed on sub-test {0}", testCounter + 1);
+
+                    int[] r = SaveHumanity.GetVirusIndices(arr[0], arr[1]);
+                    if (r[0] == -1)
+                    {
+                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), new string[1] { "No Match!" }, sFailMsg);
+                    }
+                    else
+                    {
+                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), r.Select(i => i.ToString()).ToArray(), sFailMsg);
+
+                    }
+                    sw.Stop();
+
+                    string dbgResult = (r[0] == -1) ? "No Match!" : string.Format("{0} locations found.", r.Length);
+                    Debug.WriteLine(string.Format("Number of checks done because hash was within tolerance: {0}", SaveHumanity.ToleranceCheckCounter));
+                    Debug.WriteLine(string.Format("Number of equality checks performed: {0}", SaveHumanity.EqualityCheckCounter));
+                    Debug.WriteLine(dbgResult);
+                    Debug.WriteLine(string.Format("Time elapsed: {0} seconds", (float)sw.ElapsedMilliseconds / 1000.0));
+                    Debug.WriteLine("");
+                    testCounter++;
+
+                    sw.Reset();
                 }
-                else
-                {
-                    result.Add(r.Select(i => i.ToString()).ToArray());
-                }
-                sw.Stop();
-                string dbgResult = (r[0] == -1) ? "No Match!" : string.Format("{0} locations found.", r.Length);
-                Debug.WriteLine(string.Format("Number of checks done because hash was within tolerance: {0}", SaveHumanity.ToleranceCheckCounter));
-                Debug.WriteLine(string.Format("Number of equality checks performed: {0}", SaveHumanity.EqualityCheckCounter));
-                Debug.WriteLine(dbgResult);
-                Debug.WriteLine(string.Format("Time elapsed: {0} seconds", (float)sw.ElapsedMilliseconds / 1000.0));
-                Debug.WriteLine("");
-                sw.Reset();
-                testCounter++;
-            }
-            CollectionAssert.AreEqual(expected, result);
+            });
         }
 
         [Test]
