@@ -15,6 +15,7 @@ namespace HackerRankCollection.ProblemSolutions2
         private static long _maxHashDistance;
         public static uint _toleranceCheckCounter;
         public static uint _equalityCheckCounter;
+        private static string _debugMsg;
 
         public static uint EqualityCheckCounter
         {
@@ -25,7 +26,7 @@ namespace HackerRankCollection.ProblemSolutions2
         public static uint ToleranceCheckCounter
         {
             set { _toleranceCheckCounter = value; }
-            get { return _toleranceCheckCounter;  }
+            get { return _toleranceCheckCounter; }
         }
 
         public static long BigPrime
@@ -50,12 +51,9 @@ namespace HackerRankCollection.ProblemSolutions2
             sw.Start();
             for (int ii = 0; ii < _powers.Length; ii++) _powers[ii] = 1;
 
-            for (int ii = 0; ii < _powers.Length; ii++)
+            for (int ii = 1; ii < _powers.Length; ii++)
             {
-                for (int ee = 0; ee < ii; ee++)
-                {
-                    _powers[ii] = (_powers[ii] * _exponentBase) % _bigPrime;
-                }
+                _powers[ii] = (_powers[ii - 1] * _exponentBase) % _bigPrime;
             }
             sw.Stop();
             Debug.WriteLine(string.Format("InitPowers : Time elapsed: {0} seconds", (float)sw.ElapsedMilliseconds / 1000.0));
@@ -85,7 +83,7 @@ namespace HackerRankCollection.ProblemSolutions2
             }
 
             sw.Stop();
-            Debug.WriteLine(string.Format("CalculateStringHash : Time elapsed: {0} seconds", (float)sw.ElapsedMilliseconds / 1000.0));
+            Debug.WriteLine(string.Format("CalculateStringHash ({0}): Time elapsed: {1} milliseconds", _debugMsg, sw.ElapsedMilliseconds));
 
             return res;
         }
@@ -121,8 +119,11 @@ namespace HackerRankCollection.ProblemSolutions2
             InitPowers(v.Length);
             InitMaxHashDistance(v.Length);
 
+            _debugMsg = "virus hash";
             long virusHash = CalculateStringHash(v);
+            _debugMsg = "initial dna hash";
             long rollingHash = CalculateStringHash(p.Substring(0, v.Length));
+            _debugMsg = string.Empty;
 
             for (int ii = 0; ii <= p.Length - v.Length; ii++)
             {
