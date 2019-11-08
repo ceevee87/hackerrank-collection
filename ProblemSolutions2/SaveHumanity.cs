@@ -79,15 +79,15 @@ namespace HackerRankCollection.ProblemSolutions2
             // included in these values. 
             _powers = new long[n];
 
-            sw.Start();
             for (int ii = 0; ii < _powers.Length; ii++) _powers[ii] = 1;
 
             for (int ii = 1; ii < _powers.Length; ii++)
             {
                 _powers[ii] = (_powers[ii - 1] * _exponentBase) % _bigPrime;
             }
-            sw.Stop();
-            Debug.WriteLine(string.Format("InitPowers : Time elapsed: {0} seconds", (float)sw.ElapsedMilliseconds / 1000.0));
+            //sw.Start();
+            //sw.Stop();
+            //Debug.WriteLine(string.Format("InitPowers : Time elapsed: {0} seconds", (float)sw.ElapsedMilliseconds / 1000.0));
         }
 
         private static long getCharValueForHashCalculation(char c)
@@ -123,10 +123,10 @@ namespace HackerRankCollection.ProblemSolutions2
 
         public static long CalculateNewRollingHash(long rollingHash, string sub, int n)
         {
-            long res = rollingHash - getCharValueForHashCalculation(sub[0]) * _powers[n];
-            res *= _exponentBase;
-            res += getCharValueForHashCalculation(sub[sub.Length - 1]);
-            res %= _bigPrime;
+            //long res = rollingHash - getCharValueForHashCalculation(sub[0]) * _powers[n];
+            //res *= _exponentBase;
+            //res += getCharValueForHashCalculation(sub[sub.Length - 1]);
+            //res %= _bigPrime;
 
             //siga = (siga + Q - pow * (ulong)A[j - 1] % Q) % Q;
             //siga = (siga * D + (ulong)A[j + B.Length - 1]) % Q;

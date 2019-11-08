@@ -17,6 +17,112 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
             , Path.GetDirectoryName(Directory.GetParent(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)).FullName)
             , @"TestData\SaveHumanity");
 
+
+        [TestCase(3)]
+        [TestCase(4)]
+        [TestCase(8)]
+        public void PerformanceHackerrankTests(int testNum)
+        {
+            string inFile = string.Format("{0}hackerrank{1}_input.txt", _sTestDataRootDir, testNum);
+            List<string[]> oData = GetInputData(inFile);
+
+            int testCounter = 0;
+            foreach (string[] arr in oData)
+            {
+                Stopwatch swInitPowers = new Stopwatch();
+                Stopwatch swCalcRollingHash = new Stopwatch();
+                Stopwatch swCalcVirusHash = new Stopwatch();
+
+                string p = arr[0];
+                string v = arr[1];
+
+                swInitPowers.Start();
+                SaveHumanity.InitPowers(v.Length);
+                swInitPowers.Stop();
+
+                SaveHumanity.BigPrime = 536870923;
+
+                swCalcVirusHash.Start();
+                long rollingHash = SaveHumanity.CalculateStringHash(p.Substring(0, v.Length));
+                swCalcVirusHash.Stop();
+
+                swCalcRollingHash.Start();
+                for (int ii = 0; ii <= p.Length - v.Length; ii++)
+                {
+                    string sub = p.Substring(ii, v.Length);
+                    if (ii < p.Length - v.Length)
+                    {
+                        rollingHash = SaveHumanity.CalculateNewRollingHash(rollingHash, p.Substring(ii, v.Length + 1), v.Length - 1);
+                    }
+                }
+                swCalcRollingHash.Stop();
+
+                Debug.WriteLine(string.Format("Test case {0} : InitPowers (ms): {1}", testCounter, swInitPowers.ElapsedMilliseconds));
+                Debug.WriteLine(string.Format("Test case {0} : Calc Virus Hash (ms): {1}", testCounter, swCalcVirusHash.ElapsedMilliseconds));
+                Debug.WriteLine(string.Format("Test case {0} : Total rollinghash calc time (s): {1}", testCounter, (float)swCalcRollingHash.ElapsedMilliseconds / 1000.0));
+                Debug.WriteLine("");
+
+                testCounter++;
+            }
+            Assert.IsTrue(true);
+        }
+
+        [TestCase(3)]
+        [TestCase(4)]
+        [TestCase(8)]
+        public void RollingHashHackerrankTests(int testNum)
+        {
+            string inFile = string.Format("{0}hackerrank{1}_input.txt", _sTestDataRootDir, testNum);
+            List<string[]> oData = GetInputData(inFile);
+
+            int testCounter = 0;
+
+            Assert.Multiple(() =>
+            {
+                foreach (string[] arr in oData)
+                {
+                    int mismatchHashCount = 0;
+
+                    string p = arr[0];
+                    string v = arr[1];
+
+                    SaveHumanity.InitPowers(v.Length);
+                    SaveHumanity.BigPrime = 536870923;
+
+                    long rollingHash = SaveHumanity.CalculateStringHash(p.Substring(0, v.Length));
+
+                    Stopwatch swCalcHash = new Stopwatch();
+                    swCalcHash.Start();
+                    for (int ii = 0; ii <= p.Length - v.Length; ii++)
+                    {
+                        string sub = p.Substring(ii, v.Length);
+
+                        if (!swCalcHash.IsRunning) swCalcHash.Start();
+                        long subHash = SaveHumanity.CalculateStringHash(sub);
+                        swCalcHash.Stop();
+
+                        if (subHash != rollingHash)
+                        {
+                            mismatchHashCount++;
+                        }
+                        if (ii < p.Length - v.Length)
+                        {
+                            rollingHash = SaveHumanity.CalculateNewRollingHash(rollingHash, p.Substring(ii, v.Length + 1), v.Length - 1);
+                        }
+                    }
+
+                    Debug.WriteLine("");
+
+                    testCounter++;
+                    Debug.WriteLine(string.Format("Test case {0} : Total hash calc time (s): {1}", testCounter, (float)swCalcHash.ElapsedMilliseconds / 1000.0));
+                    Debug.WriteLine("");
+                    Assert.AreEqual(0, mismatchHashCount, string.Format("Test case {0} : found {1} instances of the rolling hash not matching the real hash", testCounter, mismatchHashCount));
+                }
+            });
+        }
+
+
+
         [Test]
         public void doHashVariances()
         {
