@@ -128,7 +128,12 @@ namespace HackerRankCollection.ProblemSolutions2
             res += getCharValueForHashCalculation(sub[sub.Length - 1]);
             res %= _bigPrime;
 
-            return res;
+            //siga = (siga + Q - pow * (ulong)A[j - 1] % Q) % Q;
+            //siga = (siga * D + (ulong)A[j + B.Length - 1]) % Q;
+
+            long siga = (rollingHash + _bigPrime - getCharValueForHashCalculation(sub[0]) * _powers[n] % _bigPrime) % _bigPrime;
+            siga = (siga * _exponentBase + getCharValueForHashCalculation(sub[sub.Length - 1])) % _bigPrime;
+            return siga;
         }
 
         private static bool WithinTolerance(string sub, string v, long rollinghash, long virushash)
