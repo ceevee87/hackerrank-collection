@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HackerRankCollection.ProblemSolutions2
 {
@@ -44,12 +40,12 @@ namespace HackerRankCollection.ProblemSolutions2
 
         public static long CalculateNewRollingHash(long rollingHash, char newc, char oldc, int loc)
         {
-            long res = (rollingHash + _bigPrime - getCharValueForHashCalculation(oldc) * _powers[loc] % _bigPrime) % _bigPrime;
-            res = (res + getCharValueForHashCalculation(newc) * _powers[loc] % _bigPrime) % _bigPrime;
+            long res = (rollingHash + _bigPrime - (char)(oldc) * _powers[loc] % _bigPrime) % _bigPrime;
+            res = (res + (char)(newc) * _powers[loc] % _bigPrime) % _bigPrime;
             return res;
         }
 
-        private static void InitMaxHashDistance2(string v)
+        private static void InitMaxHashDistance(string v)
         {
             long baseHash = CalculateStringHash(v);
 
@@ -77,12 +73,6 @@ namespace HackerRankCollection.ProblemSolutions2
             }
         }
 
-        private static long getCharValueForHashCalculation(char c)
-        {
-            // no error checking 
-            return (long)c - 96;
-        }
-
         public static long CalculateStringHash(string v)
         {
             long res = 0;
@@ -94,7 +84,7 @@ namespace HackerRankCollection.ProblemSolutions2
 
             for (int ii = 0; ii < v.Length; ii++)
             {
-                res += (getCharValueForHashCalculation(v[ii]) * _powers[v.Length - ii - 1]);
+                res += ((char)(v[ii]) * _powers[v.Length - ii - 1]);
             }
 
             res %= _bigPrime;
@@ -104,8 +94,8 @@ namespace HackerRankCollection.ProblemSolutions2
 
         public static long CalculateNewRollingHash(long rollingHash, string sub, int n)
         {
-            long res = (rollingHash + _bigPrime - getCharValueForHashCalculation(sub[0]) * _powers[n] % _bigPrime) % _bigPrime;
-            res = (res * _exponentBase + getCharValueForHashCalculation(sub[sub.Length - 1])) % _bigPrime;
+            long res = (rollingHash + _bigPrime - (char)(sub[0]) * _powers[n] % _bigPrime) % _bigPrime;
+            res = (res * _exponentBase + (char)(sub[sub.Length - 1])) % _bigPrime;
             return res;
         }
 
@@ -132,7 +122,7 @@ namespace HackerRankCollection.ProblemSolutions2
             List<int> lResult = new List<int>();
 
             InitPowers(v.Length);
-            InitMaxHashDistance2(v);
+            InitMaxHashDistance(v);
 
             long virusHash = CalculateStringHash(v);
             long rollingHash = CalculateStringHash(p.Substring(0, v.Length));
