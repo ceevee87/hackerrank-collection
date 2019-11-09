@@ -44,9 +44,25 @@ namespace HackerRankCollection.ProblemSolutions2
             get { return _toleranceCheckCounter; }
         }
 
-        private static void InitMaxHashDistance(int length)
+
+        public static long CalculateNewRollingHash(long rollingHash, char newc, char oldc, int loc)
         {
-            _maxHashDistance = (long)('z' - 'a') * _powers[length - 1];
+            long res = (rollingHash + _bigPrime - getCharValueForHashCalculation(oldc) * _powers[loc] % _bigPrime) % _bigPrime;
+            res = (res + getCharValueForHashCalculation(newc) * _powers[loc] % _bigPrime) % _bigPrime;
+            return res;
+        }
+
+        private static void InitMaxHashDistance2(string v)
+        {
+            long baseHash = CalculateStringHash(v);
+
+            for (int ii = 0; ii < v.Length; ii++)
+            {
+                long h1 = CalculateNewRollingHash(baseHash, 'a', v[ii], v.Length - ii - 1);
+                long h2 = CalculateNewRollingHash(baseHash, 'z', v[ii], v.Length - ii - 1);
+
+                _maxHashDistance = Math.Max(Math.Max(h1, h2), _maxHashDistance);
+            }
         }
 
         private static void InitMaxHashDistance(string v)
@@ -123,14 +139,6 @@ namespace HackerRankCollection.ProblemSolutions2
 
         public static long CalculateNewRollingHash(long rollingHash, string sub, int n)
         {
-            //long res = rollingHash - getCharValueForHashCalculation(sub[0]) * _powers[n];
-            //res *= _exponentBase;
-            //res += getCharValueForHashCalculation(sub[sub.Length - 1]);
-            //res %= _bigPrime;
-
-            //siga = (siga + Q - pow * (ulong)A[j - 1] % Q) % Q;
-            //siga = (siga * D + (ulong)A[j + B.Length - 1]) % Q;
-
             long siga = (rollingHash + _bigPrime - getCharValueForHashCalculation(sub[0]) * _powers[n] % _bigPrime) % _bigPrime;
             siga = (siga * _exponentBase + getCharValueForHashCalculation(sub[sub.Length - 1])) % _bigPrime;
             return siga;
@@ -138,9 +146,9 @@ namespace HackerRankCollection.ProblemSolutions2
 
         private static bool WithinTolerance(string sub, string v, long rollinghash, long virushash)
         {
-            //if (Math.Abs(rollinghash - virushash) > _maxHashDistance) return false;
+            if (Math.Abs(rollinghash - virushash) > _maxHashDistance) return false;
 
-            if (rollinghash > _maxHash || rollinghash < _minHash) return false;
+            //if (rollinghash > _maxHash || rollinghash < _minHash) return false;
 
             _toleranceCheckCounter++;
 
@@ -161,7 +169,7 @@ namespace HackerRankCollection.ProblemSolutions2
             List<int> lResult = new List<int>();
 
             InitPowers(v.Length);
-            InitMaxHashDistance(v);
+            InitMaxHashDistance2(v);
 
             _debugMsg = "virus hash";
             long virusHash = CalculateStringHash(v);
