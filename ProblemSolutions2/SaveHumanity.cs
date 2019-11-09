@@ -15,9 +15,6 @@ namespace HackerRankCollection.ProblemSolutions2
         private static long _maxHashDistance;
         public static uint _toleranceCheckCounter;
         public static uint _equalityCheckCounter;
-        private static string _debugMsg;
-        private static long _minHash;
-        private static long _maxHash;
 
         public static long BigPrime
         {
@@ -65,45 +62,19 @@ namespace HackerRankCollection.ProblemSolutions2
             }
         }
 
-        private static void InitMaxHashDistance(string v)
-        {
-            long highRangePoint = 0;
-            long lowRangePoint = long.MaxValue;
-
-            StringBuilder vprime = new StringBuilder(v);
-            for (int ii=0; ii< v.Length; ii++)
-            {
-                vprime[ii] = 'a';
-                long h1 = CalculateStringHash(vprime.ToString());
-                vprime[ii] = 'z';
-                long h2 = CalculateStringHash(vprime.ToString());
-
-                highRangePoint = Math.Max(Math.Max(h1, h2), highRangePoint);
-                lowRangePoint = Math.Min(Math.Min(h1, h2), lowRangePoint);
-
-                vprime[ii] = v[ii];
-            }
-            _minHash = lowRangePoint;
-            _maxHash = highRangePoint;
-        }
-
         public static void InitPowers(int n)
         {
-            Stopwatch sw = new Stopwatch();
             // this going to calculate the exponent component of the
             // Rabin-Karp rolling hash. the module with a prime is already 
             // included in these values. 
             _powers = new long[n];
 
-            for (int ii = 0; ii < _powers.Length; ii++) _powers[ii] = 1;
+            _powers[0] = 1;
 
             for (int ii = 1; ii < _powers.Length; ii++)
             {
                 _powers[ii] = (_powers[ii - 1] * _exponentBase) % _bigPrime;
             }
-            //sw.Start();
-            //sw.Stop();
-            //Debug.WriteLine(string.Format("InitPowers : Time elapsed: {0} seconds", (float)sw.ElapsedMilliseconds / 1000.0));
         }
 
         private static long getCharValueForHashCalculation(char c)
@@ -121,34 +92,26 @@ namespace HackerRankCollection.ProblemSolutions2
             // is 0 <= ii < 26 ?
             // is v null?
 
-            //Stopwatch sw = new Stopwatch();
-            //sw.Start();
-
             for (int ii = 0; ii < v.Length; ii++)
             {
-                res += ( getCharValueForHashCalculation(v[ii]) * _powers[v.Length - ii - 1] );
+                res += (getCharValueForHashCalculation(v[ii]) * _powers[v.Length - ii - 1]);
             }
 
             res %= _bigPrime;
 
-            //sw.Stop();
-            //Debug.WriteLine(string.Format("CalculateStringHash ({0}): Time elapsed: {1} milliseconds", _debugMsg, sw.ElapsedMilliseconds));
-
-            return res ;
+            return res;
         }
 
         public static long CalculateNewRollingHash(long rollingHash, string sub, int n)
         {
-            long siga = (rollingHash + _bigPrime - getCharValueForHashCalculation(sub[0]) * _powers[n] % _bigPrime) % _bigPrime;
-            siga = (siga * _exponentBase + getCharValueForHashCalculation(sub[sub.Length - 1])) % _bigPrime;
-            return siga;
+            long res = (rollingHash + _bigPrime - getCharValueForHashCalculation(sub[0]) * _powers[n] % _bigPrime) % _bigPrime;
+            res = (res * _exponentBase + getCharValueForHashCalculation(sub[sub.Length - 1])) % _bigPrime;
+            return res;
         }
 
         private static bool WithinTolerance(string sub, string v, long rollinghash, long virushash)
         {
             if (Math.Abs(rollinghash - virushash) > _maxHashDistance) return false;
-
-            //if (rollinghash > _maxHash || rollinghash < _minHash) return false;
 
             _toleranceCheckCounter++;
 
@@ -171,11 +134,8 @@ namespace HackerRankCollection.ProblemSolutions2
             InitPowers(v.Length);
             InitMaxHashDistance2(v);
 
-            _debugMsg = "virus hash";
             long virusHash = CalculateStringHash(v);
-            _debugMsg = "initial dna hash";
             long rollingHash = CalculateStringHash(p.Substring(0, v.Length));
-            _debugMsg = string.Empty;
 
             for (int ii = 0; ii <= p.Length - v.Length; ii++)
             {
