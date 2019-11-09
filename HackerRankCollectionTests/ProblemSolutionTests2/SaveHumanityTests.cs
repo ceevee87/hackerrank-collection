@@ -26,45 +26,52 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
             string inFile = string.Format("{0}hackerrank{1}_input.txt", _sTestDataRootDir, testNum);
             List<string[]> oData = GetInputData(inFile);
 
-            int testCounter = 0;
-            foreach (string[] arr in oData)
+            Assert.Multiple(() =>
             {
-                Stopwatch swInitPowers = new Stopwatch();
-                Stopwatch swCalcRollingHash = new Stopwatch();
-                Stopwatch swCalcVirusHash = new Stopwatch();
 
-                string p = arr[0];
-                string v = arr[1];
-
-                swInitPowers.Start();
-                SaveHumanity.InitPowers(v.Length);
-                swInitPowers.Stop();
-
-                SaveHumanity.BigPrime = 536870923;
-
-                swCalcVirusHash.Start();
-                long rollingHash = SaveHumanity.CalculateStringHash(p.Substring(0, v.Length));
-                swCalcVirusHash.Stop();
-
-                swCalcRollingHash.Start();
-                for (int ii = 0; ii <= p.Length - v.Length; ii++)
+                int testCounter = 0;
+                long elapsedTime = 0;
+                foreach (string[] arr in oData)
                 {
-                    string sub = p.Substring(ii, v.Length);
-                    if (ii < p.Length - v.Length)
+                    Stopwatch swInitPowers = new Stopwatch();
+                    Stopwatch swCalcRollingHash = new Stopwatch();
+                    Stopwatch swCalcVirusHash = new Stopwatch();
+
+                    string p = arr[0];
+                    string v = arr[1];
+
+                    swInitPowers.Start();
+                    SaveHumanity.InitPowers(v.Length);
+                    swInitPowers.Stop();
+
+                    SaveHumanity.BigPrime = 536870923;
+
+                    swCalcVirusHash.Start();
+                    long rollingHash = SaveHumanity.CalculateStringHash(p.Substring(0, v.Length));
+                    swCalcVirusHash.Stop();
+
+                    swCalcRollingHash.Start();
+                    for (int ii = 0; ii <= p.Length - v.Length; ii++)
                     {
-                        rollingHash = SaveHumanity.CalculateNewRollingHash(rollingHash, p.Substring(ii, v.Length + 1), v.Length - 1);
+                        string sub = p.Substring(ii, v.Length);
+                        if (ii < p.Length - v.Length)
+                        {
+                            rollingHash = SaveHumanity.CalculateNewRollingHash(rollingHash, p.Substring(ii, v.Length + 1), v.Length - 1);
+                        }
                     }
+                    swCalcRollingHash.Stop();
+
+                    Debug.WriteLine(string.Format("Test case {0} : InitPowers (ms): {1}", testCounter, swInitPowers.ElapsedMilliseconds));
+                    Debug.WriteLine(string.Format("Test case {0} : Calc Virus Hash (ms): {1}", testCounter, swCalcVirusHash.ElapsedMilliseconds));
+                    Debug.WriteLine(string.Format("Test case {0} : Total rollinghash calc time (s): {1}", testCounter, (float)swCalcRollingHash.ElapsedMilliseconds / 1000.0));
+                    Debug.WriteLine("");
+
+                    testCounter++;
+
+                    elapsedTime = swCalcRollingHash.ElapsedMilliseconds;
                 }
-                swCalcRollingHash.Stop();
-
-                Debug.WriteLine(string.Format("Test case {0} : InitPowers (ms): {1}", testCounter, swInitPowers.ElapsedMilliseconds));
-                Debug.WriteLine(string.Format("Test case {0} : Calc Virus Hash (ms): {1}", testCounter, swCalcVirusHash.ElapsedMilliseconds));
-                Debug.WriteLine(string.Format("Test case {0} : Total rollinghash calc time (s): {1}", testCounter, (float)swCalcRollingHash.ElapsedMilliseconds / 1000.0));
-                Debug.WriteLine("");
-
-                testCounter++;
-            }
-            Assert.IsTrue(true);
+                Assert.IsTrue(elapsedTime <= 10000);
+            });
         }
 
         [TestCase(3)]
@@ -207,91 +214,18 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
             });
         }
 
-        [Test]
-        public void HackerrankTest2()
+
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(4)]
+        [TestCase(8)]
+        public void HackerrankTests(int testNum)
         {
-            List<string[]> oData = GetInputData(_sTestDataRootDir + "hackerrank2_input.txt");
+            string inFile = string.Format("{0}hackerrank{1}_input.txt", _sTestDataRootDir, testNum);
+            List<string[]> oData = GetInputData(inFile);
 
-            List<string[]> expected = GetAnswerData(_sTestDataRootDir + "hackerrank2_answer.txt", oData.Count);
-
-            int testCounter = 0;
-            Assert.Multiple(() =>
-            {
-                foreach (string[] arr in oData)
-                {
-                    int[] r = SaveHumanity.GetVirusIndices(arr[0], arr[1]);
-                    if (r[0] == -1)
-                    {
-                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), new string[1] { "No Match!" });
-                    }
-                    else
-                    {
-                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), r.Select(i => i.ToString()).ToArray());
-                    }
-                    testCounter++;
-                }
-            });
-        }
-
-        [Test]
-        public void HackerrankTest3()
-        {
-            List<string[]> oData = GetInputData(_sTestDataRootDir + "hackerrank3_input.txt");
-
-            List<string[]> expected = GetAnswerData(_sTestDataRootDir + "hackerrank3_answer.txt", oData.Count);
-
-            int testCounter = 0;
-            Assert.Multiple(() =>
-            {
-                foreach (string[] arr in oData)
-                {
-                    int[] r = SaveHumanity.GetVirusIndices(arr[0], arr[1]);
-                    if (r[0] == -1)
-                    {
-                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), new string[1] { "No Match!" });
-                    }
-                    else
-                    {
-                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), r.Select(i => i.ToString()).ToArray());
-                    }
-                    testCounter++;
-                }
-            });
-        }
-
-        [Test]
-        public void HackerrankTest8()
-        {
-            List<string[]> oData = GetInputData(_sTestDataRootDir + "hackerrank8_input.txt");
-
-            List<string[]> expected = GetAnswerData(_sTestDataRootDir + "hackerrank8_answer.txt", oData.Count);
-
-            int testCounter = 0;
-            Assert.Multiple(() =>
-            {
-                foreach (string[] arr in oData)
-                {
-                    int[] r = SaveHumanity.GetVirusIndices(arr[0], arr[1]);
-                    if (r[0] == -1)
-                    {
-                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), new string[1] { "No Match!" });
-                    }
-                    else
-                    {
-                        CollectionAssert.AreEqual(expected.ElementAt(testCounter), r.Select(i => i.ToString()).ToArray());
-                    }
-                    testCounter++;
-                }
-            });
-        }
-
-        [Test]
-        public void HackerrankTest4()
-        {
-            List<string[]> oData = GetInputData(_sTestDataRootDir + "hackerrank4_input.txt");
-
-            List<string[]> result = new List<string[]>();
-            List<string[]> expected = GetAnswerData(_sTestDataRootDir + "hackerrank4_answer.txt", oData.Count);
+            string ansFile = string.Format("{0}hackerrank{1}_answer.txt", _sTestDataRootDir, testNum);
+            List<string[]> expected = GetAnswerData(ansFile, oData.Count);
 
             int testCounter = 0;
             Stopwatch sw = new Stopwatch();
