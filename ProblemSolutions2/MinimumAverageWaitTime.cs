@@ -12,8 +12,17 @@ namespace HackerRankCollection.ProblemSolutions2
         private long _arrivalTime;
         private long _orderLength;
 
-        public long ArrivalTime { get => _arrivalTime; set => _arrivalTime = value; }
-        public long OrderLength { get => _orderLength; set => _orderLength = value; }
+        public long ArrivalTime
+        {
+            get { return _arrivalTime; }
+            set { _arrivalTime = value; }
+        }
+
+        public long OrderLength
+        {
+            get { return _orderLength; }
+            set { _orderLength = value; }
+        }
 
         public Customer(long at, long ol)
         {
@@ -82,7 +91,7 @@ namespace HackerRankCollection.ProblemSolutions2
                 int left = Left(i);
                 int right = Right(i);
                 int smallest;
-                smallest = (left <= _size && Compare(left,i) <= 0) ? left : i;
+                smallest = (left <= _size && Compare(left, i) <= 0) ? left : i;
 
                 if (right <= _size && Compare(right, smallest) < 0) smallest = right;
 
@@ -96,7 +105,7 @@ namespace HackerRankCollection.ProblemSolutions2
 
             private void HeapifyUp(int k)
             {
-                while (Compare(k,Parent(k)) < 0)
+                while (Compare(k, Parent(k)) < 0)
                 {
                     Swap(k, Parent(k));
                     k = Parent(k);
@@ -146,7 +155,7 @@ namespace HackerRankCollection.ProblemSolutions2
             CustomerCollection custsByArrivalTime = InitCustomerCollection(aCustomers, HeapType.ByArrivalTime);
             CustomerCollection custsByOrderLength = new CustomerCollection(aCustomers.Length, HeapType.ByOrderLength);
 
-            long  waitTimeTotal = 0;
+            long waitTimeTotal = 0;
             long totalTimeElapsed = custsByArrivalTime.Peek.ArrivalTime;
             while (custsByArrivalTime.Size > 0 || custsByOrderLength.Size > 0)
             {

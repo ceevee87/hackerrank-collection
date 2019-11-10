@@ -64,6 +64,7 @@
     <Compile Include="ProblemSolutions2\MinimumAverageWaitTime.cs" />
     <Compile Include="ProblemSolutions2\NoPrefixSet.cs" />
     <Compile Include="ProblemSolutions2\RoadsAndLibraries.cs" />
+    <Compile Include="ProblemSolutions2\SaveHumanity.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
