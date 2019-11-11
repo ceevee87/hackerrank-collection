@@ -63,6 +63,7 @@
     <Compile Include="ProblemSolutions2\MedianUpdates.cs" />
     <Compile Include="ProblemSolutions2\MinimumAverageWaitTime.cs" />
     <Compile Include="ProblemSolutions2\NoPrefixSet.cs" />
+    <Compile Include="ProblemSolutions2\RecordingEpisodes.cs" />
     <Compile Include="ProblemSolutions2\RoadsAndLibraries.cs" />
     <Compile Include="ProblemSolutions2\SaveHumanity.cs" />
     <Compile Include="Program.cs" />

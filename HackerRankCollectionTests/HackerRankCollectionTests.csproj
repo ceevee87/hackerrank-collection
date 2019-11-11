@@ -67,6 +67,7 @@
     <Compile Include="ProblemSolutionTests2\MedianUpdateTests.cs" />
     <Compile Include="ProblemSolutionTests2\MinimumAverageWaitTimeTests.cs" />
     <Compile Include="ProblemSolutionTests2\NoPrefixSetTests.cs" />
+    <Compile Include="ProblemSolutionTests2\RecordingEpisodesTests.cs" />
     <Compile Include="ProblemSolutionTests2\RoadsAndLibrariesTests.cs" />
     <Compile Include="ProblemSolutionTests2\SaveHumanityTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
