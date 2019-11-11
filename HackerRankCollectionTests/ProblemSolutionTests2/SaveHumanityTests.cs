@@ -56,7 +56,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
                         string sub = p.Substring(ii, v.Length);
                         if (ii < p.Length - v.Length)
                         {
-                            rollingHash = SaveHumanity.CalculateNewRollingHash(rollingHash, p.Substring(ii, v.Length + 1), v.Length - 1);
+                            rollingHash = SaveHumanity.CalculateNewRollingHash(rollingHash, p.Substring(ii, v.Length + 1));
                         }
                     }
                     swCalcRollingHash.Stop();
@@ -114,7 +114,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
                         }
                         if (ii < p.Length - v.Length)
                         {
-                            rollingHash = SaveHumanity.CalculateNewRollingHash(rollingHash, p.Substring(ii, v.Length + 1), v.Length - 1);
+                            rollingHash = SaveHumanity.CalculateNewRollingHash(rollingHash, p.Substring(ii, v.Length + 1));
                         }
                     }
 
@@ -190,7 +190,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
             s1[s1.Length - 1] = 'z';
             long s1ShiftedHashCalculated = SaveHumanity.CalculateStringHash(s1.ToString());
 
-            long s2ShiftedHashCalculated = SaveHumanity.CalculateNewRollingHash(s1HashCalculated, s2.ToString(), sLength - 1);
+            long s2ShiftedHashCalculated = SaveHumanity.CalculateNewRollingHash(s1HashCalculated, s2.ToString());
 
             Assert.Multiple(() =>
             {
@@ -206,11 +206,11 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(48128797, SaveHumanity.CalculateNewRollingHash(SaveHumanity.CalculateStringHash("hello"), "hellow", 4), "hash 1 is jacked.");
-                Assert.AreEqual(51329857, SaveHumanity.CalculateNewRollingHash(48128797, "ellowo", 4), "hash 2 is jacked.");
-                Assert.AreEqual(51387788, SaveHumanity.CalculateNewRollingHash(51329857, "llowor", 4), "hash 3 is jacked.");
-                Assert.AreEqual(52893988, SaveHumanity.CalculateNewRollingHash(51387788, "loworl", 4), "hash 4 is jacked.");
-                Assert.AreEqual(56411052, SaveHumanity.CalculateNewRollingHash(52893988, "oworld", 4), "hash 5 is jacked.");
+                Assert.AreEqual(48128797, SaveHumanity.CalculateNewRollingHash(SaveHumanity.CalculateStringHash("hello"), "hellow"), "hash 1 is jacked.");
+                Assert.AreEqual(51329857, SaveHumanity.CalculateNewRollingHash(48128797, "ellowo"), "hash 2 is jacked.");
+                Assert.AreEqual(51387788, SaveHumanity.CalculateNewRollingHash(51329857, "llowor"), "hash 3 is jacked.");
+                Assert.AreEqual(52893988, SaveHumanity.CalculateNewRollingHash(51387788, "loworl"), "hash 4 is jacked.");
+                Assert.AreEqual(56411052, SaveHumanity.CalculateNewRollingHash(52893988, "oworld"), "hash 5 is jacked.");
             });
         }
 

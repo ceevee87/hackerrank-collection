@@ -51,8 +51,8 @@ namespace HackerRankCollection.ProblemSolutions2
 
             for (int ii = 0; ii < v.Length; ii++)
             {
-                long h1 = CalculateNewRollingHash(baseHash, 'a', v[ii], v.Length - ii - 1);
-                long h2 = CalculateNewRollingHash(baseHash, 'z', v[ii], v.Length - ii - 1);
+                long h1 = CalculateNewRollingHash(baseHash, 'a', v[ii], ii);
+                long h2 = CalculateNewRollingHash(baseHash, 'z', v[ii], ii);
 
                 _maxHashDistance = Math.Max(Math.Max(h1, h2), _maxHashDistance);
             }
@@ -65,11 +65,11 @@ namespace HackerRankCollection.ProblemSolutions2
             // included in these values. 
             _powers = new long[n];
 
-            _powers[0] = 1;
+            _powers[n-1] = 1;
 
-            for (int ii = 1; ii < _powers.Length; ii++)
+            for (int ii = n - 2; ii >= 0; ii--)
             {
-                _powers[ii] = (_powers[ii - 1] * _exponentBase) % _bigPrime;
+                _powers[ii] = (_powers[ii + 1] * _exponentBase) % _bigPrime;
             }
         }
 
@@ -84,7 +84,7 @@ namespace HackerRankCollection.ProblemSolutions2
 
             for (int ii = 0; ii < v.Length; ii++)
             {
-                res += ((char)(v[ii]) * _powers[v.Length - ii - 1]);
+                res += ((char)(v[ii]) * _powers[ii]);
             }
 
             res %= _bigPrime;
@@ -92,9 +92,9 @@ namespace HackerRankCollection.ProblemSolutions2
             return res;
         }
 
-        public static long CalculateNewRollingHash(long rollingHash, string sub, int n)
+        public static long CalculateNewRollingHash(long rollingHash, string sub)
         {
-            long res = (rollingHash + _bigPrime - (char)(sub[0]) * _powers[n] % _bigPrime) % _bigPrime;
+            long res = (rollingHash + _bigPrime - (char)(sub[0]) * _powers[0] % _bigPrime) % _bigPrime;
             res = (res * _exponentBase + (char)(sub[sub.Length - 1])) % _bigPrime;
             return res;
         }
@@ -146,7 +146,7 @@ namespace HackerRankCollection.ProblemSolutions2
                 // calculate the hash
                 if (ii < p.Length - v.Length)
                 {
-                    rollingHash = CalculateNewRollingHash(rollingHash, p.Substring(ii, v.Length + 1), v.Length - 1);
+                    rollingHash = CalculateNewRollingHash(rollingHash, p.Substring(ii, v.Length + 1));
                 }
             }
 
