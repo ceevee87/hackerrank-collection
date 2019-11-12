@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HackerRankCollection.ProblemSolutions2
 {
     public class RecordingEpisodes
     {
+        #region episode
         public class Episode
         {
             private int _startTime;
@@ -40,7 +38,7 @@ namespace HackerRankCollection.ProblemSolutions2
                 _id = id;
             }
         }
-
+        #endregion
 
         #region EpisodeCollection
 
@@ -66,6 +64,9 @@ namespace HackerRankCollection.ProblemSolutions2
 
             private int Compare(int a, int b)
             {
+                //if (_heap[a].Id < _heap[b].Id) return -1;
+                //if (_heap[a].Id == _heap[b].Id) return 0;
+
                 if (_heap[a].EndTime < _heap[b].EndTime) return -1;
                 if (_heap[a].EndTime == _heap[b].EndTime) return 0;
                 return 1;
@@ -123,7 +124,7 @@ namespace HackerRankCollection.ProblemSolutions2
         #endregion
 
 
-
+        #region solution
         /*
          * Complete the episodeRecording function below.
          */
@@ -156,7 +157,7 @@ namespace HackerRankCollection.ProblemSolutions2
                     Episode x = heapo.Peek;
                     if (x.StartTime <= curEp.EndTime || episodeIds.Contains(x.Id))
                     {
-                        _ = heapo.Pop();
+                        heapo.Pop();
                     }
                     else
                     {
@@ -165,8 +166,47 @@ namespace HackerRankCollection.ProblemSolutions2
                 }
             }
 
-            return new int[2] { res.ElementAt(0).Id, res.ElementAt(res.Count - 1).Id };
-        }
+            int L;
+            int R;
 
+            if (res.Count == 1)
+            {
+                return new int[2] { res.ElementAt(0).Id, res.ElementAt(0).Id };
+            }
+
+            if (res.Count > 1)
+            {
+                L = res.ElementAt(0).Id;
+                R = res.ElementAt(0).Id;
+
+                int l = L;
+                int r = R;
+                for (int ii = 1; ii < res.Count; ii++)
+                {
+                    if (res.ElementAt(ii).Id - 1 == r)
+                    {
+                        r++;
+                    }
+                    else
+                    {
+                        if ((r - l) > R - L)
+                        {
+                            R = r;
+                            L = l;
+                        }
+                        l = res.ElementAt(ii).Id;
+                        r = l;
+                    }
+                }
+                if ((r - l) > R - L)
+                {
+                    R = r;
+                    L = l;
+                }
+                return new int[2] { L, R };
+            }
+            return new int[2] { -1, -1 };
+        }
+        #endregion
     }
 }

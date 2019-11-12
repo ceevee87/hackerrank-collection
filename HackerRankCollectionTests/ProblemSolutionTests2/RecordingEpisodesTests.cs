@@ -16,10 +16,6 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
                     , Path.GetDirectoryName(Directory.GetParent(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)).FullName)
                     , @"TestData\RecordingEpisodes");
 
-        public void InitialTest()
-        {
-            Assert.IsTrue(true);
-        }
 
         [TestCase("00")]
         public void HackerrankSampleTests(string testId)
@@ -30,12 +26,37 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
             List<int[][]> oData = GetInputData(inFile);
             List<int[]> expected = GetAnswerData(ansFile, oData.Count);
 
-            for (int ii=0; ii < oData.Count; ii++)
+            Assert.Multiple(() =>
             {
-                int[] actual = RecordingEpisodes.EpisodeRecording(oData.ElementAt(ii));
-            }
-            Assert.IsTrue(true);
+                for (int ii = 0; ii < oData.Count; ii++)
+                {
+                    int[] actual = RecordingEpisodes.EpisodeRecording(oData.ElementAt(ii));
+                    CollectionAssert.AreEqual(expected.ElementAt(ii), actual);
+                }
+            });
+        }
 
+        [TestCase("1")]
+        [TestCase("1A")]
+        [TestCase("2")]
+        [TestCase("3")]
+        [TestCase("14")]
+        public void HackerrankTests(string testId)
+        {
+            string inFile = string.Format("{0}hackerrank{1}_input.txt", _sTestDataRootDir, testId);
+            string ansFile = string.Format("{0}hackerrank{1}_answer.txt", _sTestDataRootDir, testId);
+
+            List<int[][]> oData = GetInputData(inFile);
+            List<int[]> expected = GetAnswerData(ansFile, oData.Count);
+
+            Assert.Multiple(() =>
+            {
+                for (int ii = 0; ii < oData.Count; ii++)
+                {
+                    int[] actual = RecordingEpisodes.EpisodeRecording(oData.ElementAt(ii));
+                    CollectionAssert.AreEqual(expected.ElementAt(ii), actual, string.Format("Test case {0} failed.",ii+1));
+                }
+            });
         }
 
         private List<int[][]> GetInputData(string inFile)
