@@ -1,39 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace HackerRankCollection.ProblemSolutions2
 {
-    public class Episode
-    {
-        private int _startTime;
-        private int _endTime;
-        private int _id;
-
-        public int StartTime
-        {
-            get { return _startTime; }
-            set { _startTime = value; }
-        }
-
-        public int EndTime
-        {
-            get { return _endTime; }
-            set { _endTime = value; }
-        }
-
-        public Episode(int at, int ol, int id)
-        {
-            _startTime = at;
-            _endTime = ol;
-            _id = id;
-        }
-    }
-
     public class RecordingEpisodes
     {
+        public class Episode
+        {
+            private int _startTime;
+            private int _endTime;
+            private int _id;
+
+            public int Id
+            {
+                get { return _id; }
+                set { _id = value; }
+            }
+
+            public int StartTime
+            {
+                get { return _startTime; }
+                set { _startTime = value; }
+            }
+
+            public int EndTime
+            {
+                get { return _endTime; }
+                set { _endTime = value; }
+            }
+
+            public Episode(int at, int ol, int id)
+            {
+                _startTime = at;
+                _endTime = ol;
+                _id = id;
+            }
+        }
 
 
         #region EpisodeCollection
@@ -115,6 +121,52 @@ namespace HackerRankCollection.ProblemSolutions2
             }
         }
         #endregion
+
+
+
+        /*
+         * Complete the episodeRecording function below.
+         */
+        public static int[] EpisodeRecording(int[][] episodes)
+        {
+
+            EpisodeCollection heapo = new EpisodeCollection(episodes.Length * 2 + 1);
+
+            int episodeIdCounter = 1;
+            for (int ii = 0; ii < episodes.Length; ii++)
+            {
+                heapo.Push(new Episode(episodes[ii][0], episodes[ii][1], episodeIdCounter));
+                heapo.Push(new Episode(episodes[ii][2], episodes[ii][3], episodeIdCounter));
+                episodeIdCounter++;
+            }
+
+            List<Episode> res = new List<Episode>();
+            HashSet<int> episodeIds = new HashSet<int>();
+
+            Debug.WriteLine(string.Format("Number of heap entries: {0}", heapo.Size));
+
+            while (heapo.Size >= 0)
+            {
+                Episode curEp = heapo.Pop();
+                res.Add(curEp);
+                episodeIds.Add(curEp.Id);
+
+                while (heapo.Size >= 0)
+                {
+                    Episode x = heapo.Peek;
+                    if (x.StartTime <= curEp.EndTime || episodeIds.Contains(x.Id))
+                    {
+                        _ = heapo.Pop();
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return new int[2] { res.ElementAt(0).Id, res.ElementAt(res.Count - 1).Id };
+        }
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using HackerRankCollection.ProblemSolutions2;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,13 +14,29 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
     {
         string _sTestDataRootDir = string.Format(@"{0}\{1}\"
                     , Path.GetDirectoryName(Directory.GetParent(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)).FullName)
-                    , @"TestData\NoPrefixSet");
+                    , @"TestData\RecordingEpisodes");
 
         public void InitialTest()
         {
             Assert.IsTrue(true);
         }
 
+        [TestCase("00")]
+        public void HackerrankSampleTests(string testId)
+        {
+            string inFile = string.Format("{0}sample{1}_input.txt", _sTestDataRootDir, testId);
+            string ansFile = string.Format("{0}sample{1}_answer.txt", _sTestDataRootDir, testId);
+
+            List<int[][]> oData = GetInputData(inFile);
+            List<int[]> expected = GetAnswerData(ansFile, oData.Count);
+
+            for (int ii=0; ii < oData.Count; ii++)
+            {
+                int[] actual = RecordingEpisodes.EpisodeRecording(oData.ElementAt(ii));
+            }
+            Assert.IsTrue(true);
+
+        }
 
         private List<int[][]> GetInputData(string inFile)
         {
@@ -51,9 +68,9 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
 
             using (StreamReader fsr = new StreamReader(ansFile))
             {
-                for (int qItr = 0; qItr < lineCnt; lineCnt++)
+                for (int ii = 0; ii < lineCnt; ii++)
                 {
-                    int[] periods = Array.ConvertAll(fsr.ReadLine().Split(' '), t => Convert.ToInt32(t));
+                    int[] periods = periods = Array.ConvertAll(fsr.ReadLine().Split(' '), t => Convert.ToInt32(t));
                     res.Add(periods);
                 }
             }
