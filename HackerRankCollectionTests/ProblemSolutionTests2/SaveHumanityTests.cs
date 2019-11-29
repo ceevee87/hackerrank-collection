@@ -18,6 +18,27 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
             , @"TestData\SaveHumanity");
 
 
+        [Test]
+        public void KMPTest1()
+        {
+            string S = "ABC ABCDAB ABCDABCDABDE";
+            string pattern = "ABCDABD";
+            int[] expected = new int[1] { 15 } ;
+            int[] r = SaveHumanity.KMPSearch(S, pattern);
+            CollectionAssert.AreEqual(expected, r);
+        }
+
+        [Test]
+        public void KMPTestOneMismatch1()
+        {
+            string S = "ABC ABCDAB ABCDABCDABDE";
+            string pattern = "ABCDABX";
+            int[] expected = new int[3] { 4, 11, 15 };
+            int[] r = SaveHumanity.KMPSearch(S, pattern);
+            CollectionAssert.AreEqual(expected, r);
+        }
+
+
         [TestCase(3)]
         [TestCase(4)]
         [TestCase(8)]
@@ -243,7 +264,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
                     sw.Start();
                     string sFailMsg = string.Format("Failed on sub-test {0}", testCounter + 1);
 
-                    int[] r = SaveHumanity.GetVirusIndices(arr[0], arr[1]);
+                    int[] r = SaveHumanity.GetVirusIndices1(arr[0], arr[1]);
                     if (r[0] == -1)
                     {
                         CollectionAssert.AreEqual(expected.ElementAt(testCounter), new string[1] { "No Match!" }, sFailMsg);
@@ -285,7 +306,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
 
                 foreach (string[] arr in oData)
                 {
-                    int[] r = SaveHumanity.GetVirusIndices(arr[0], arr[1]);
+                    int[] r = SaveHumanity.GetVirusIndices1(arr[0], arr[1]);
                     if (r[0] == -1)
                     {
                         CollectionAssert.AreEqual(expected.ElementAt(testCounter), new string[1] { "No Match!" });
@@ -314,7 +335,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
             foreach (string[] arr in oData)
             {
 
-                int[] r = SaveHumanity.GetVirusIndices(arr[0], arr[1]);
+                int[] r = SaveHumanity.GetVirusIndices1(arr[0], arr[1]);
                 if (r[0] == -1)
                 {
                     result.Add(new string[1] { "No Match!" });
