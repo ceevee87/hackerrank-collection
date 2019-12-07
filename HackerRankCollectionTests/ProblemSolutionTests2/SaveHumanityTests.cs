@@ -29,6 +29,27 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
         }
 
         [Test]
+        public void KMPTest2()
+        {
+            string S = "bana nano bano nano xano nan ano nano y";
+            string pattern = "nano";
+            int[] expected = new int[3] { 5, 15, 33 };
+            int[] r = SaveHumanity.KMPSearch(S, pattern);
+            CollectionAssert.AreEqual(expected, r);
+        }
+
+        [Test]
+        public void KMPTest3()
+        {
+            string S = "jakslkl;jasreoqatm,fcvjkwetr9oq4kagjasdff jakslkl;jsefkl49oassvjlkagrajker94t0cjakslkl;vmasdfXawedef lajsflaweklawertu9awergjlavxcmasdio";
+            string pattern = "jakslkl;";
+            int[] expected = new int[3] { 0, 42, 79 };
+            int[] r = SaveHumanity.KMPSearch(S, pattern);
+            CollectionAssert.AreEqual(expected, r);
+        }
+
+
+        [Test]
         public void KMPTestOneMismatch1()
         {
             string S = "ABC ABCDAB ABCDABCDABDE";
@@ -264,7 +285,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
                     sw.Start();
                     string sFailMsg = string.Format("Failed on sub-test {0}", testCounter + 1);
 
-                    int[] r = SaveHumanity.GetVirusIndices1(arr[0], arr[1]);
+                    int[] r = SaveHumanity.KMPSearch(arr[0], arr[1]);
                     if (r[0] == -1)
                     {
                         CollectionAssert.AreEqual(expected.ElementAt(testCounter), new string[1] { "No Match!" }, sFailMsg);
@@ -306,7 +327,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
 
                 foreach (string[] arr in oData)
                 {
-                    int[] r = SaveHumanity.GetVirusIndices1(arr[0], arr[1]);
+                    int[] r = SaveHumanity.KMPSearch(arr[0], arr[1]);
                     if (r[0] == -1)
                     {
                         CollectionAssert.AreEqual(expected.ElementAt(testCounter), new string[1] { "No Match!" });
@@ -335,7 +356,7 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
             foreach (string[] arr in oData)
             {
 
-                int[] r = SaveHumanity.GetVirusIndices1(arr[0], arr[1]);
+                int[] r = SaveHumanity.KMPSearch(arr[0], arr[1]);
                 if (r[0] == -1)
                 {
                     result.Add(new string[1] { "No Match!" });
