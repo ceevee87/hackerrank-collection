@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace HackerRankCollection.ProblemSolutions2
 {
@@ -11,6 +12,7 @@ namespace HackerRankCollection.ProblemSolutions2
         private static long _maxHashDistance;
         public static uint _toleranceCheckCounter;
         public static uint _equalityCheckCounter;
+        private static readonly int _misMatchLimit = 0;
 
         public static long BigPrime
         {
@@ -173,42 +175,61 @@ namespace HackerRankCollection.ProblemSolutions2
             }
         }
 
-        public static int[] KMPSearch(string baseString, string pat)
+        public static int[] KMPSearch(string S, string P)
         {
             List<int> lResult = new List<int>();
 
-            int M = pat.Length;
-            int N = baseString.Length;
+            StringBuilder baseString = new StringBuilder(S);
+            StringBuilder pat = new StringBuilder(P);
 
             // create lps[] that will hold the longest 
             // prefix suffix values for pattern 
-            int[] lps = new int[M];
+            int[] lps = new int[pat.Length];
             int j = 0; // index for pat[] 
 
-            // Preprocess the pattern (calculate lps[] 
-            // array) 
-            ComputeLPSArray(pat, M, lps);
+            // Preprocess the pattern (calculate lps[] array) 
+            ComputeLPSArray(pat, pat.Length, lps);
 
-            int i = 0; // index for txt[] 
-            bool bAlreadyFoundOneMisMatch = false;
+            int i = 0; // index for baseString[] 
+
+            int misMatchCount = 0;
+
             while (i < baseString.Length)
             {
-                if (pat[j] == baseString[i] || !bAlreadyFoundOneMisMatch)
+                if (misMatchCount < _misMatchLimit && pat[j] != baseString[i])
+                {
+                    misMatchCount++;
+                    //baseString[i] = pat[j];
+                    pat[j] = baseString[i];
+                    continue;
+                }
+
+                if (pat[j] == baseString[i])
                 {
                     j++;
                     i++;
-                    if (!bAlreadyFoundOneMisMatch) bAlreadyFoundOneMisMatch = true;
-                }
-                if (j == M)
-                {
-                    lResult.Add(i - j);
-                    j = lps[j - 1];
-                    bAlreadyFoundOneMisMatch = false;
                 }
 
-                // mismatch after j matches 
-                else if (i < N && pat[j] != baseString[i])
+                if (j == pat.Length)
                 {
+                    lResult.Add(i - pat.Length);
+                    ComputeLPSArray(pat, pat.Length, lps);
+                    j = lps[j - 1];
+                    ComputeLPSArray(new StringBuilder(P), pat.Length, lps);
+                    pat = new StringBuilder(P);
+                    misMatchCount = 0;
+                }
+                // mismatch after j matches 
+                else if (i < baseString.Length && pat[j] != baseString[i])
+                {
+                    if (misMatchCount < _misMatchLimit)
+                    {
+                        continue;
+                    }
+                 
+                    misMatchCount = 0;
+                    pat = new StringBuilder(P);
+
                     // Do not match lps[0..lps[j-1]] characters, 
                     // they will match anyway 
                     if (j != 0)
@@ -217,10 +238,61 @@ namespace HackerRankCollection.ProblemSolutions2
                         i += 1;
                 }
             }
+            if (lResult.Count == 0)
+            {
+                lResult.Add(-1);
+            }
             return lResult.ToArray();
         }
 
-        private static void ComputeLPSArray(string pat, int M, int[] lps)
+        public static int[] KMPSearchOriginal(string baseString, string pat)
+        {
+            List<int> lResult = new List<int>();
+
+            // create lps[] that will hold the longest 
+            // prefix suffix values for pattern 
+            int[] lps = new int[pat.Length];
+            int j = 0; // index for pat[] 
+
+            // Preprocess the pattern (calculate lps[] array) 
+            //ComputeLPSArray(pat, pat.Length, lps);
+
+            int i = 0; // index for baseString[] 
+
+            while (i < baseString.Length)
+            {
+                if (pat[j] == baseString[i])
+                {
+                    j++;
+                    i++;
+                }
+
+                if (j == pat.Length)
+                {
+                    lResult.Add(i - j);
+                    j = lps[j - 1];
+                }
+                // mismatch after j matches 
+                else if (i < baseString.Length && pat[j] != baseString[i])
+                {
+
+                    // Do not match lps[0..lps[j-1]] characters, 
+                    // they will match anyway 
+                    if (j != 0)
+                        j = lps[j - 1];
+                    else
+                        i += 1;
+
+                }
+            }
+            if (lResult.Count == 0)
+            {
+                lResult.Add(-1);
+            }
+            return lResult.ToArray();
+        }
+
+        private static void ComputeLPSArray(StringBuilder pat, int M, int[] lps)
         {
             // length of the previous longest prefix suffix 
             int len = 0;
