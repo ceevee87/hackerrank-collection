@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace HackerRankCollection.ProblemSolutions2
 {
     public static class SaveHumanity
     {
-        private static long _bigPrime = 536870923; //7379219697821987;
         private static long[] _powers;
         private static long _exponentBase = 26;
         private static long _maxHashDistance;
         public static uint _toleranceCheckCounter;
         public static uint _equalityCheckCounter;
+        public static List<mismatchData> _mismatches;
 
-        public static long BigPrime
-        {
-            set { _bigPrime = value; }
-            get { return _bigPrime; }
-        }
+        public static long BigPrime { set; get; } = 536870923;
 
         public static long ExponentBase
         {
@@ -37,11 +34,31 @@ namespace HackerRankCollection.ProblemSolutions2
             get { return _toleranceCheckCounter; }
         }
 
+        public class mismatchData
+        {
+            int loc;
+            char baseStringValue;
+            char virusValue;
+
+            public mismatchData(int l, char b, char v)
+            {
+                loc = l;
+                baseStringValue = b;
+                virusValue = v;
+            }
+
+            public void printResults()
+            {
+                string o = string.Format("difference found at location {0}. Basestring value: {1}, virus value: {2}", loc, baseStringValue, virusValue);
+                Debug.WriteLine(o);
+            }
+
+        }
 
         public static long CalculateNewRollingHash(long rollingHash, char newc, char oldc, int loc)
         {
-            long res = (rollingHash + _bigPrime - (char)(oldc) * _powers[loc] % _bigPrime) % _bigPrime;
-            res = (res + (char)(newc) * _powers[loc] % _bigPrime) % _bigPrime;
+            long res = (rollingHash + BigPrime - (char)(oldc) * _powers[loc] % BigPrime) % BigPrime;
+            res = (res + (char)(newc) * _powers[loc] % BigPrime) % BigPrime;
             return res;
         }
 
@@ -65,11 +82,11 @@ namespace HackerRankCollection.ProblemSolutions2
             // included in these values. 
             _powers = new long[n];
 
-            _powers[n-1] = 1;
+            _powers[n - 1] = 1;
 
             for (int ii = n - 2; ii >= 0; ii--)
             {
-                _powers[ii] = (_powers[ii + 1] * _exponentBase) % _bigPrime;
+                _powers[ii] = (_powers[ii + 1] * _exponentBase) % BigPrime;
             }
         }
 
@@ -87,15 +104,15 @@ namespace HackerRankCollection.ProblemSolutions2
                 res += ((char)(v[ii]) * _powers[ii]);
             }
 
-            res %= _bigPrime;
+            res %= BigPrime;
 
             return res;
         }
 
         public static long CalculateNewRollingHash(long rollingHash, string sub)
         {
-            long res = (rollingHash + _bigPrime - (char)(sub[0]) * _powers[0] % _bigPrime) % _bigPrime;
-            res = (res * _exponentBase + (char)(sub[sub.Length - 1])) % _bigPrime;
+            long res = (rollingHash + BigPrime - (char)(sub[0]) * _powers[0] % BigPrime) % BigPrime;
+            res = (res * _exponentBase + (char)(sub[sub.Length - 1])) % BigPrime;
             return res;
         }
 
@@ -103,7 +120,7 @@ namespace HackerRankCollection.ProblemSolutions2
         {
             if (Math.Abs(rollinghash - virushash) > _maxHashDistance) return false;
 
-            _toleranceCheckCounter++;
+            mismatchData mm = null ;
 
             sbyte count = 1;
             for (int ii = 0; ii < v.Length; ii++)
@@ -111,8 +128,15 @@ namespace HackerRankCollection.ProblemSolutions2
                 if (count < 0) return false;
                 if (sub[ii] != v[ii])
                 {
+                    mm = new mismatchData(ii, sub[ii], v[ii]);
                     count--;
                 }
+            }
+
+            if (count >= 0)
+            {
+                if (mm != null) _mismatches.Add(mm);
+                _toleranceCheckCounter++;
             }
             return (count >= 0);
         }
@@ -123,6 +147,7 @@ namespace HackerRankCollection.ProblemSolutions2
 
             InitPowers(v.Length);
             InitMaxHashDistance(v);
+            _mismatches = new List<mismatchData>();
 
             long virusHash = CalculateStringHash(v);
             long rollingHash = CalculateStringHash(p.Substring(0, v.Length));

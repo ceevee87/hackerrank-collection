@@ -256,11 +256,20 @@ namespace HackerRankCollectionTests.ProblemSolutionTests2
                     sw.Stop();
 
                     string dbgResult = (r[0] == -1) ? "No Match!" : string.Format("{0} locations found.", r.Length);
-                    Debug.WriteLine(string.Format("Number of checks done because hash was within tolerance: {0}", SaveHumanity.ToleranceCheckCounter));
+                    Debug.WriteLine(string.Format("Number of matches off by one found: {0}", SaveHumanity.ToleranceCheckCounter));
                     Debug.WriteLine(string.Format("Number of equality checks performed: {0}", SaveHumanity.EqualityCheckCounter));
                     Debug.WriteLine(dbgResult);
                     Debug.WriteLine(string.Format("Time elapsed: {0} seconds", (float)sw.ElapsedMilliseconds / 1000.0));
                     Debug.WriteLine("");
+                    if (SaveHumanity._mismatches.Count > 0)
+                    { 
+                        Debug.WriteLine("Mismatch data follows");
+                        
+                        for (int ii = 0; ii < SaveHumanity._mismatches.Count; ii++) 
+                        {
+                            SaveHumanity._mismatches.ElementAt(ii).printResults();
+                        }
+                    }
                     testCounter++;
 
                     sw.Reset();
